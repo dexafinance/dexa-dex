@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import { useLocation } from 'react-router-dom'
 
-import logo from 'images/miaw/cat_logo.png'
+import logo from 'images/dexa/dexa_logo.png'
 
 import { COLOR, STYLE } from 'consts'
 
@@ -13,6 +13,8 @@ import { RoutePath } from 'types'
 import useRoute from 'hooks/common/useRoute'
 import useLayout from 'hooks/common/useLayout'
 import { IconChevronDown } from '@tabler/icons'
+
+import { TradeTypeEnum, LpProvideTypeEnum } from 'types'
 
 const StyledContainer = styled(Row)`
   align-items: center;
@@ -47,17 +49,13 @@ const Menu = (): ReactElement => {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false)
 
   let menuList = [
+    // {
+    //   to: RoutePath.lpTower,
+    //   title: 'Lp Tower',
+    // },
     {
-      to: RoutePath.lpTower,
-      title: 'Lp Tower',
-    },
-    {
-      to: RoutePath.say_miaw,
-      title: 'Say Miaw',
-    },
-    {
-      to: RoutePath.miaw_paper,
-      title: 'Miaw Paper',
+      to: RoutePath.dexa_paper,
+      title: 'Lite Paper',
     },
   ]
 
@@ -95,12 +93,18 @@ const Menu = (): ReactElement => {
           <Row
             style={{ alignItems: 'center', height: 60, padding: '0 16px' }}
             onClick={(): void => {
-              push(RoutePath.home)
+              push(RoutePath.home, {
+                symbol: 'Luna',
+                tradeType: TradeTypeEnum.buy,
+                lpType: LpProvideTypeEnum.provide,
+              })
               setIsOpenMobileMenu(false)
             }}
           >
             <FormImage src={logo} size={30} style={{ marginRight: 6 }} />
-            <FormText fontType="B14">Miaw Trader</FormText>
+            <FormText fontType="B14" style={{ color: '#313148' }}>
+              Dexa Finance
+            </FormText>
           </Row>
           <View style={{ padding: '0 22px' }}>
             {_.map(menuList, (menu, index) => {
@@ -133,13 +137,21 @@ const Menu = (): ReactElement => {
     </>
   ) : (
     <StyledContainer>
-      <StyledBrand onClick={(): void => push(RoutePath.home)}>
+      <StyledBrand
+        onClick={(): void =>
+          push(RoutePath.home, {
+            symbol: 'Luna',
+            tradeType: TradeTypeEnum.buy,
+            lpType: LpProvideTypeEnum.provide,
+          })
+        }
+      >
         <FormImage src={logo} size={30} style={{ marginRight: 6 }} />
         <FormText
           fontType={{ default: 'B24', mobile: 'B20' }}
           color={COLOR.primary._400}
         >
-          Miaw Trader
+          Dexa Finance
         </FormText>
       </StyledBrand>
 

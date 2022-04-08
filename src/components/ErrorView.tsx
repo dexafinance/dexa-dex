@@ -12,6 +12,7 @@ import FormText from './FormText'
 import Button from './Button'
 import { RoutePath } from 'types'
 import useRoute from 'hooks/common/useRoute'
+import { TradeTypeEnum, LpProvideTypeEnum } from 'types'
 
 const StyledContainer = styled(View)``
 
@@ -44,7 +45,11 @@ const ErrorView = ({ error }: { error?: any }): ReactElement => {
               theme="outline"
               style={{ width: 250 }}
               onClick={(): void => {
-                push(RoutePath.home)
+                push(RoutePath.home, {
+                  symbol: 'Luna',
+                  tradeType: TradeTypeEnum.buy,
+                  lpType: LpProvideTypeEnum.provide,
+                })
               }}
             >
               Return to main page

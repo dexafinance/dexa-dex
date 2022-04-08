@@ -14,6 +14,7 @@ import {
 const useNetwork = (): {
   isMainnet: boolean
   chainId: string
+  lcd: string
   whitelist: TokenType[]
   lpOfLpList: LpofLpType[]
   lpStakingList: LpStakingType[]
@@ -84,6 +85,7 @@ const useNetwork = (): {
     lpStakingList,
     limitOrder,
     chainId: network.chainID,
+    lcd: network.lcd,
     getSymbolByContractOrDenom,
     miawToken,
     mantleApi,

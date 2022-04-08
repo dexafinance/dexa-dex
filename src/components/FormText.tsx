@@ -64,7 +64,7 @@ const getFontStyle = (
 }
 
 const FormText = ({
-  fontType = 'R18',
+  fontType = 'R16',
   children,
   color,
   style,

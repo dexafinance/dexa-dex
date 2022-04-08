@@ -67,6 +67,9 @@ const StyledDexDenomItem = styled(Row)<{ selected: boolean }>`
   opacity: ${({ selected }): number => (selected ? 1 : 0.8)};
   margin-right: 10px;
 `
+// selectedPairToken.pairType.dex === DexEnum.terraswap
+// try support limit order for all dex
+// const supportLimitOrder = (dex: DexEnum):boolean => true
 
 const SwapBase = ({
   pairList,
@@ -119,11 +122,16 @@ const SwapBase = ({
                   <FormText style={{ padding: '0 4px' }}>/</FormText>
                   <FormImage src={denomSrc} size={30} />
                 </Row>
-                {x.dex === DexEnum.terraswap && (
+                {/* {supportLimitOrder(x.dex) && (
                   <View>
                     <FormText fontType="R14">Limit order</FormText>
                   </View>
-                )}
+                )} */}
+                <View>
+                  <FormText fontType="R14">
+                    {x.dex === DexEnum.terraswap ? "Terraswap" : "Astroport"}
+                  </FormText>
+                </View>
               </View>
             </StyledDexDenomItem>
           )
@@ -202,7 +210,7 @@ const TokenInfo = ({
             />
             {false === isMobileWidth && (
               <FormText
-                fontType={{ default: 'B32', mobile: 'B24' }}
+                fontType={{ default: 'B24', mobile: 'B18' }}
                 style={{ paddingRight: 10 }}
               >
                 {token.symbol}
@@ -213,7 +221,7 @@ const TokenInfo = ({
         </StyledSymbolPrice>
       </StyledTokenLogo>
       <StyledNameAddress>
-        <FormText fontType="R20">{token.name}</FormText>
+        <FormText fontType="R16">{token.name}</FormText>
         <CopyToClipboard
           text={token.contractOrDenom}
           onCopy={(): void => {
@@ -229,14 +237,14 @@ const TokenInfo = ({
         >
           <StyledCopy style={{ alignItems: 'center' }}>
             <FormText
-              fontType={{ default: 'R18', mobile: 'R16' }}
+              fontType={{ default: 'R16', mobile: 'R14' }}
               color={COLOR.gray._400}
             >
               {`(${UTIL.truncate(token.contractOrDenom, [10, 10])}`}
             </FormText>
             <IconCopy size={18} color={COLOR.gray._400} />
             <FormText
-              fontType={{ default: 'R18', mobile: 'R16' }}
+              fontType={{ default: 'R16', mobile: 'R14' }}
               color={COLOR.gray._400}
             >
               {')'}
@@ -253,7 +261,7 @@ const TokenInfo = ({
               style={{ paddingRight: 4 }}
             />
             <LinkA link={chartLink}>
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
+              <FormText fontType={'R16'} color={COLOR.primary._400}>
                 {isMobileWidth ? 'Chart' : 'Coinhall Chart'}
               </FormText>
             </LinkA>
@@ -267,7 +275,7 @@ const TokenInfo = ({
               style={{ paddingRight: 4 }}
             />
             <LinkA link={dashboardLink}>
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
+              <FormText fontType={'R16'} color={COLOR.primary._400}>
                 {isMobileWidth ? 'Dashboard' : 'Terra Swap Dashboard'}
               </FormText>
             </LinkA>

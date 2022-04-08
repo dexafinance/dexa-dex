@@ -20,10 +20,10 @@ const StyledInputContainer = styled(Row)`
 
 const StyledInput = styled.input`
   flex: 1;
-  padding: 0 16px;
-  height: 36px;
+  padding: 0 12px;
+  height: 30px;
   border: none;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   width: 100%;
   min-width: 120px;

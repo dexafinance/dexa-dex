@@ -1,4 +1,4 @@
-# Miaw Trader
+# Dexa Finance
 
 ## Instructions
 

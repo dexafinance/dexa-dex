@@ -42,35 +42,37 @@ const StyledDesc = styled(FormText)`
 const Main = (): ReactElement => {
   return (
     <StyledContainer>
-      <StyledMainTitle fontType="B32">Miaw paper</StyledMainTitle>
+      <StyledMainTitle fontType="B32">Lite paper</StyledMainTitle>
       <StyledCard>
         <StyledSection>
-          <StyledSubTitle fontType="B24">What the MIAW</StyledSubTitle>
+          <StyledSubTitle fontType="B24">What is Dexa Finance</StyledSubTitle>
           <StyledDesc>
-            <LinkA link="https://github.com/miaw-team">
+            Hey #LUNAtics! Tired of monitoring price all day for trading in DEXs
+            such as terraswap, astroport? We have your back. Introducing Dexa
+            Finance - the DEX on Terra Blockchain that allows limit order. We
+            are in final stage to publish beta version. More👇👇👇
+          </StyledDesc>
+          <StyledDesc>
+            <LinkA link="https://github.com/dexafinance">
               <FormText fontType={'R18'} color={COLOR.primary._400}>
                 - Open source project
               </FormText>
             </LinkA>
           </StyledDesc>
           <StyledDesc>
-            <LinkA link="https://github.com/miaw-team/miaw-trader">
+            <LinkA link="https://github.com/dexafinance/dexa-dex">
               <FormText fontType={'R18'} color={COLOR.primary._400}>
                 * miaw-trader scource code
               </FormText>
             </LinkA>
           </StyledDesc>
           <StyledDesc>
-            <LinkA link="https://github.com/miaw-team/miaw-lp-staking">
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
-                * lp staking contract scource code
-              </FormText>
-            </LinkA>
-          </StyledDesc>
-          <StyledDesc>
             - Token,Lp,Pair contracts are based on The Terraswap factory
           </StyledDesc>
-          <StyledDesc>- MIAW was made by a dev who loves the Terra</StyledDesc>
+          <StyledDesc>
+            - Dexa Finance was made by a dev turned product manager who loves
+            the Terra
+          </StyledDesc>
         </StyledSection>
 
         <StyledSection>

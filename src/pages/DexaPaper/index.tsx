@@ -5,8 +5,8 @@ import { RoutePath } from 'types'
 
 import Main from './Main'
 
-const SayMiaw = (): ReactElement => {
-  return <Route exact path={RoutePath.say_miaw} component={Main} />
+const DexaPaper = (): ReactElement => {
+  return <Route exact path={RoutePath.dexa_paper} component={Main} />
 }
 
-export default SayMiaw
+export default DexaPaper

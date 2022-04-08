@@ -62,7 +62,7 @@ const usePairHistory = ({
         data: FetchResponseType
       }>(APIURL.TERRASWAP_API, { query })
 
-      return fetchData.data.data.pair
+      return fetchData.data?.data?.pair
     },
     {
       enabled: !!pairContract && to > 0 && from > 0,

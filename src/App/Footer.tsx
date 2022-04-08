@@ -21,17 +21,17 @@ const StyledImgBox = styled(View)`
 
 const community = [
   {
-    href: 'https://github.com/miaw-cat?tab=repositories',
+    href: 'https://github.com/dexafinance?tab=repositories',
     src: github,
     alt: 'Github',
   },
   {
-    href: 'https://discord.gg/8gJMBzkN',
+    href: 'https://discord.gg/ngQ3fVJD',
     src: discord,
     alt: 'Discord',
   },
   {
-    href: 'https://twitter.com/miawtrader',
+    href: 'https://twitter.com/DexaFinance',
     src: twitter,
     alt: 'Twitter',
   },

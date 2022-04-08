@@ -27,7 +27,7 @@ import { ExtractPoolResponseType } from 'logics/pool'
 import useNetwork from 'hooks/common/useNetwork'
 
 const StyledCard = styled(Card)`
-  width: 400px;
+  min-width: 200px;
   @media ${STYLE.media.tablet} {
     width: fit-content;
   }
@@ -52,7 +52,7 @@ const StyledTokenItem = styled(View)`
 `
 
 const StyledTokenItemBox = styled(View)`
-  height: 700px;
+  height: 300px;
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -155,21 +155,21 @@ const TokenItem = ({
             </View>
           )}
         </View>
-        <FormText fontType="B16" color={COLOR.primary._400}>
+        <FormText fontType="B14" color={COLOR.primary._400}>
           {token.symbol}
         </FormText>
       </Row>
       <Row style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-        <FormText fontType="B16" color={COLOR.gray._600}>
+        <FormText fontType="B14" color={COLOR.gray._600}>
           {displayPrice}
         </FormText>
-        <FormText fontType="R14" color={COLOR.gray._600}>
+        <FormText fontType="R12" color={COLOR.gray._600}>
           {getSymbolByContractOrDenom(token_1_ContractOrDenom)}
         </FormText>
       </Row>
 
       <View style={{ alignItems: 'center' }}>
-        <FormText fontType="B16" color={getPoolSizeSafty}>
+        <FormText fontType="B14" color={getPoolSizeSafty}>
           {displayUstPoolSize}
         </FormText>
       </View>
@@ -204,7 +204,7 @@ const SortTitle = ({
         }}
       >
         {typeof title === 'string' ? (
-          <FormText fontType="B16" color={COLOR.gray._600}>
+          <FormText fontType="B14" color={COLOR.gray._600}>
             {title}
           </FormText>
         ) : (
@@ -289,7 +289,7 @@ const TokenList = ({
 
   return (
     <StyledCard>
-      <Row style={{ paddingBottom: 20, alignItems: 'center' }}>
+      <Row style={{ paddingBottom: 12, alignItems: 'center' }}>
         <View style={{ flex: 1 }}>
           <FormInput
             inputProps={{ value: filter, placeholder: 'Symbol, Name' }}
@@ -298,7 +298,7 @@ const TokenList = ({
         </View>
         {closeModal && <IconX onClick={closeModal} size={24} />}
       </Row>
-      <Row style={{ justifyContent: 'flex-end', marginBottom: 10 }}>
+      <Row style={{ justifyContent: 'flex-end', marginBottom: 8 }}>
         <View style={{ paddingRight: 10 }}>
           <GroupFilter
             title="ANC"
@@ -324,7 +324,7 @@ const TokenList = ({
         />
         <SortTitle
           title={
-            <FormText fontType="B16" color={COLOR.gray._600}>
+            <FormText fontType="B14" color={COLOR.gray._600}>
               Price
             </FormText>
           }

@@ -59,6 +59,10 @@ const StyledLimitOrderButton = styled(FormText)`
   margin-bottom: 10px;
 `
 
+// selectedPairToken.pairType.dex === DexEnum.terraswap
+// try support limit order for all dex
+const supportLimitOrder = (dex: DexEnum): boolean => true
+
 const Buy = ({
   buyReturn,
   useLimitOrderBuyReturn,
@@ -90,7 +94,7 @@ const Buy = ({
 
   return (
     <>
-      {dex === DexEnum.terraswap && (
+      {supportLimitOrder(dex) && (
         <View style={{ alignItems: 'flex-end' }}>
           <StyledLimitOrderButton
             fontType="R16"
@@ -170,7 +174,7 @@ const Sell = ({
 
   return (
     <>
-      {dex === DexEnum.terraswap && (
+      {supportLimitOrder(dex) && (
         <View style={{ alignItems: 'flex-end' }}>
           <StyledLimitOrderButton
             fontType="R16"
@@ -279,8 +283,8 @@ const Trade = ({
 
   return (
     <StyledCard>
-      <StyledLayout isLimitOrder={dex === DexEnum.terraswap}>
-        {dex === DexEnum.terraswap && <MyOrder myOrderReturn={myOrderReturn} />}
+      <StyledLayout isLimitOrder={supportLimitOrder(dex)}>
+        {supportLimitOrder(dex) && <MyOrder myOrderReturn={myOrderReturn} />}
         <View style={{ flex: 1 }}>
           <SelectTab
             options={[
