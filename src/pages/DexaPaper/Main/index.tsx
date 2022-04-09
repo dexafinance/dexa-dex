@@ -80,7 +80,7 @@ const Main = (): ReactElement => {
           <StyledDesc>
             1/ Limit order is only supported on #terraswap pools which has very
             high slippage due to its low liquidity. More pools should be added
-            especially #astroport
+            especially #astroport with low slippage
           </StyledDesc>
           <StyledDesc>
             2/ Having to pay fee in MIAW create a friction point. CEXs/DEXs
@@ -128,6 +128,15 @@ const Main = (): ReactElement => {
           </StyledSubTitle>
           {/* IconSquareCheck */}
           <StyledDesc>
+            At this stage, we've only updated UI and small improvements on UX,
+            while still interact with smart contract from miaw-trader, and fee
+            still has to paid in MIAW. You can buy MIAW using normal BUY instead
+            of Limit Order. So basically only frontend web is changed for your
+            convenience, everything else is the same to make sure you have same
+            trust while interacting with miaw-trader.com. You can check the
+            order placed here will also appear in miaw-trader.com
+          </StyledDesc>
+          <StyledDesc>
             <IconSquare color={COLOR.primary._600} /> Support limit order on
             astroport pool
           </StyledDesc>
@@ -153,6 +162,14 @@ const Main = (): ReactElement => {
           <StyledDesc>
             <IconSquare color={COLOR.gray._900} /> More to be defined and
             collection from community feedbacks
+          </StyledDesc>
+          <StyledDesc>
+            <LinkA link="https://docs.google.com/forms/d/e/1FAIpQLScRnfOUbe2lSAWnmUDSMaezg_42WXVLM9CU8iUW28GxKFiBKg/viewform">
+              <FormText fontType={'R18'} color={COLOR.primary._600}>
+                Again, click here to join our waiting list and give your
+                brilliant ideas so we can serve you better
+              </FormText>
+            </LinkA>
           </StyledDesc>
         </StyledSection>
         <StyledSection>
