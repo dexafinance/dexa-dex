@@ -94,9 +94,10 @@ const Buy = ({
 
   return (
     <>
-      {supportLimitOrder(dex) && (
+      {dex === DexEnum.terraswap && (
         <View style={{ alignItems: 'flex-end' }}>
           <StyledLimitOrderButton
+            // disabled={selectedPairToken.pairType.dex === DexEnum.terraswap}
             fontType="R16"
             color={buyLimitOrder ? COLOR.primary._400 : COLOR.text}
             onClick={(): void => {

@@ -45,7 +45,7 @@ const StyledCard = styled(Card)`
 
 const StyledListHeader = styled(Row)`
   padding: 5px;
-  margin-top: 4px;
+  margin-top: 8px;
   border-top: 1px solid ${COLOR.gray._600};
   border-bottom: 1px solid ${COLOR.gray._600};
 `
@@ -104,7 +104,7 @@ const Title = ({
         }}
       >
         {typeof title === 'string' ? (
-          <FormText fontType="B14" color={COLOR.gray._600}>
+          <FormText fontType="R14" color={COLOR.gray._600}>
             {title}
           </FormText>
         ) : (
@@ -231,7 +231,7 @@ const OrderList = ({
                 <View
                   style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
                 >
-                  <FormText fontType="B14" color={COLOR.primary._400}>
+                  <FormText fontType="R14" color={COLOR.primary._400}>
                     {`${UTIL.formatAmount(item.offerAmount, { toFix: 3 })}`}
                   </FormText>
                 </View>
@@ -239,7 +239,7 @@ const OrderList = ({
                   style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
                 >
                   <FormText
-                    fontType="B14"
+                    fontType="R14"
                     color={isPositive ? COLOR.success : COLOR.error}
                   >
                     {`${UTIL.formatAmount(item.askAmount, { toFix: 3 })}`}
@@ -283,7 +283,7 @@ const OrderList = ({
               <View
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
               >
-                <FormText fontType="B14" color={COLOR.primary._400}>
+                <FormText fontType="R14" color={COLOR.primary._400}>
                   {`${UTIL.formatAmount(item.askAmount, { toFix: 3 })}`}
                 </FormText>
               </View>
@@ -291,7 +291,7 @@ const OrderList = ({
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
               >
                 <FormText
-                  fontType="B14"
+                  fontType="R14"
                   color={isPositive ? COLOR.success : COLOR.error}
                 >
                   {`${UTIL.formatAmount(item.offerAmount, { toFix: 3 })}`}

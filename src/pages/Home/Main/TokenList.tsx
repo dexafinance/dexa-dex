@@ -9,12 +9,13 @@ import {
   IconCheckbox,
   IconSquare,
 } from '@tabler/icons'
-import ANCLogo from 'images/whitelist/ANC.png'
-import MIRLogo from 'images/whitelist/MIR.svg'
+// import ANCLogo from 'images/whitelist/ANC.png'
+// import MIRLogo from 'images/whitelist/MIR.svg'
 
 import { COLOR, STYLE, UTIL } from 'consts'
 
-import { FormImage, FormText, Card, Row, View, FormInput } from 'components'
+//FormImage, 
+import { FormText, Card, Row, View, FormInput } from 'components'
 
 import { RoutePath, TokenInfoGoupEnum, TokenType, uToken } from 'types'
 import useRoute from 'hooks/common/useRoute'
@@ -28,6 +29,7 @@ import useNetwork from 'hooks/common/useNetwork'
 
 const StyledCard = styled(Card)`
   min-width: 200px;
+  margin-bottom: 20px;
   @media ${STYLE.media.tablet} {
     width: fit-content;
   }
@@ -48,7 +50,7 @@ const StyledTokenItem = styled(View)`
   padding:10px 0;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 3fr 2fr 2fr;
 `
 
 const StyledTokenItemBox = styled(View)`
@@ -58,6 +60,10 @@ const StyledTokenItemBox = styled(View)`
   ::-webkit-scrollbar {
     display: none;
   }
+`
+
+const StyledIconStar = styled(IconStar)`
+  margin-right: 4px;
 `
 
 const TokenItem = ({
@@ -85,14 +91,14 @@ const TokenItem = ({
     return token_0_PriceBn.toFixed(3)
   }, [token_0_Price])
 
-  const groupSrc = useMemo(() => {
-    if (token.group === TokenInfoGoupEnum.mirror) {
-      return MIRLogo
-    }
-    if (token.group === TokenInfoGoupEnum.anc) {
-      return ANCLogo
-    }
-  }, [token.group])
+  // const groupSrc = useMemo(() => {
+  //   if (token.group === TokenInfoGoupEnum.mirror) {
+  //     return MIRLogo
+  //   }
+  //   if (token.group === TokenInfoGoupEnum.anc) {
+  //     return ANCLogo
+  //   }
+  // }, [token.group])
 
   const displayUstPoolSize = useMemo(() => {
     const bn = UTIL.toBn(token_1_PoolSize as string)
@@ -123,18 +129,19 @@ const TokenItem = ({
         closeModal && closeModal()
       }}
     >
-      <Row style={{ alignItems: 'center' }}>
-        <IconStar
-          fill={isFavorite ? COLOR.rainbow.yellow : 'none'}
-          color={isFavorite ? COLOR.rainbow.yellow : COLOR.gray._400}
-          onClick={(event): void => {
-            event.stopPropagation()
-            isFavorite
-              ? removeFavoriteList({ symbol: token.symbol })
-              : addFavoriteList({ symbol: token.symbol })
-          }}
-        />
-        <View style={{ position: 'relative' }}>
+      <View>
+        <Row style={{ alignItems: 'center' }}>
+          <StyledIconStar
+            fill={isFavorite ? COLOR.rainbow.yellow : 'none'}
+            color={isFavorite ? COLOR.rainbow.yellow : COLOR.gray._400}
+            onClick={(event): void => {
+              event.stopPropagation()
+              isFavorite
+                ? removeFavoriteList({ symbol: token.symbol })
+                : addFavoriteList({ symbol: token.symbol })
+            }}
+          />
+          {/* <View style={{ position: 'relative' }}>
           <FormImage
             src={token.logo}
             size={20}
@@ -154,22 +161,20 @@ const TokenItem = ({
               />
             </View>
           )}
-        </View>
-        <FormText fontType="B14" color={COLOR.primary._400}>
-          {token.symbol}
-        </FormText>
-      </Row>
-      <Row style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-        <FormText fontType="B14" color={COLOR.gray._600}>
+        </View> */}
+          <FormText fontType="R14" color={COLOR.primary._400}>
+            {token.symbol}/{getSymbolByContractOrDenom(token_1_ContractOrDenom)}
+          </FormText>
+        </Row>
+      </View>
+      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+        <FormText fontType="R14" color={COLOR.gray._600}>
           {displayPrice}
         </FormText>
-        <FormText fontType="R12" color={COLOR.gray._600}>
-          {getSymbolByContractOrDenom(token_1_ContractOrDenom)}
-        </FormText>
-      </Row>
+      </View>
 
-      <View style={{ alignItems: 'center' }}>
-        <FormText fontType="B14" color={getPoolSizeSafty}>
+      <View style={{ alignItems: 'flex-end' }}>
+        <FormText fontType="R14" color={getPoolSizeSafty}>
           {displayUstPoolSize}
         </FormText>
       </View>
@@ -204,7 +209,7 @@ const SortTitle = ({
         }}
       >
         {typeof title === 'string' ? (
-          <FormText fontType="B14" color={COLOR.gray._600}>
+          <FormText fontType="R14" color={COLOR.gray._600}>
             {title}
           </FormText>
         ) : (
@@ -324,7 +329,7 @@ const TokenList = ({
         />
         <SortTitle
           title={
-            <FormText fontType="B14" color={COLOR.gray._600}>
+            <FormText fontType="R14" color={COLOR.gray._600}>
               Price
             </FormText>
           }

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import { useRecoilValue } from 'recoil'
 import { IconUrgent } from '@tabler/icons'
-import animationData from 'images/cat_idle.json'
+import animationData from 'images/icon-success.json'
 import Lottie from 'react-lottie'
 
 import { COLOR, STYLE } from 'consts'
@@ -38,7 +38,7 @@ const StyledCard = styled(Card)`
 `
 
 const StyledInfoBox = styled(View)`
-  background-color: ${COLOR.gray._800};
+  background-color: ${COLOR.gray._600};
   align-items: center;
   padding: 10px;
   border-radius: 8px;

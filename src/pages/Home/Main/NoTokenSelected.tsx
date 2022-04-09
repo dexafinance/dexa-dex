@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
 import styled from 'styled-components'
-import Lottie from 'react-lottie'
+// import Lottie from 'react-lottie'
 
-import animationData from 'images/cat_ball.json'
-
-import { View, FormText, Card } from 'components'
+// import animationData from 'images/cat_ball.json'
+// View, 
+import { FormText, Card } from 'components'
 
 const StyledContainer = styled(Card)`
   align-items: center;
@@ -13,7 +13,7 @@ const StyledContainer = styled(Card)`
 const NoTokenSelected = (): ReactElement => {
   return (
     <StyledContainer>
-      <View style={{ width: 300 }}>
+      {/* <View style={{ width: 300 }}>
         <Lottie
           options={{
             loop: true,
@@ -21,7 +21,7 @@ const NoTokenSelected = (): ReactElement => {
             animationData,
           }}
         />
-      </View>
+      </View> */}
       <FormText fontType="B16">Select a token to trade or provide</FormText>
     </StyledContainer>
   )

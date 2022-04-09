@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import Lottie from 'react-lottie'
-import animationData from 'images/loading.json'
+import animationData from 'images/icon-loading.json'
 
 const Loading = ({ size = 300 }: { size?: number }): ReactElement => {
   return (

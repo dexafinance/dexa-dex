@@ -33,31 +33,31 @@ const getFontStyle = (
 } => {
   switch (fontType) {
     case 'B32':
-      return { fontSize: 32, fontWeight: 700 }
+      return { fontSize: 32, fontWeight: 600 }
     case 'R32':
       return { fontSize: 32, fontWeight: 400 }
     case 'B24':
-      return { fontSize: 24, fontWeight: 700 }
+      return { fontSize: 24, fontWeight: 600 }
     case 'R24':
       return { fontSize: 24, fontWeight: 400 }
     case 'B20':
-      return { fontSize: 20, fontWeight: 700 }
+      return { fontSize: 20, fontWeight: 600 }
     case 'R20':
       return { fontSize: 20, fontWeight: 400 }
     case 'B18':
-      return { fontSize: 18, fontWeight: 700 }
+      return { fontSize: 18, fontWeight: 600 }
     case 'R18':
       return { fontSize: 18, fontWeight: 400 }
     case 'B16':
-      return { fontSize: 16, fontWeight: 700 }
+      return { fontSize: 16, fontWeight: 600 }
     case 'R16':
       return { fontSize: 16, fontWeight: 400 }
     case 'B14':
-      return { fontSize: 14, fontWeight: 700 }
+      return { fontSize: 14, fontWeight: 600 }
     case 'R14':
       return { fontSize: 14, fontWeight: 400 }
     case 'B12':
-      return { fontSize: 12, fontWeight: 700 }
+      return { fontSize: 12, fontWeight: 600 }
     case 'R12':
       return { fontSize: 12, fontWeight: 400 }
   }

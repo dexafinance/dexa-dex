@@ -33,7 +33,6 @@ import { Coin } from '@terra-money/terra.js'
 
 const StyledCard = styled(Card)`
   min-width: 200px;
-  margin-top: 12px;
   @media ${STYLE.media.tablet} {
     width: fit-content;
   }
@@ -41,6 +40,7 @@ const StyledCard = styled(Card)`
 
 const StyledListHeader = styled(Row)`
   padding: 5px;
+  margin-top: 8px;
   border-top: 1px solid ${COLOR.gray._600};
   border-bottom: 1px solid ${COLOR.gray._600};
 `
@@ -85,7 +85,7 @@ const Title = ({
         }}
       >
         {typeof title === 'string' ? (
-          <FormText fontType="B14" color={COLOR.gray._600}>
+          <FormText fontType="R14" color={COLOR.gray._600}>
             {title}
           </FormText>
         ) : (
@@ -181,7 +181,7 @@ const TxInfoNew = ({
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
               >
                 <FormText
-                  fontType="B14"
+                  fontType="R14"
                   color={
                     item.action === TradeTypeEnum.buy
                       ? COLOR.success
@@ -200,7 +200,7 @@ const TxInfoNew = ({
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
               >
                 <FormText
-                  fontType="B14"
+                  fontType="R14"
                   color={
                     item.action === TradeTypeEnum.buy
                       ? COLOR.success
@@ -215,10 +215,8 @@ const TxInfoNew = ({
               </View>
 
               <View style={{ alignItems: 'flex-end' }}>
-                <FormText fontType="B14">
-                  <FormText fontType="R14">
-                    {item.timestamp.format('HH:mm:ss')}
-                  </FormText>
+                <FormText fontType="R14">
+                  {item.timestamp.format('HH:mm:ss')}
                 </FormText>
               </View>
             </StyledTokenItem>

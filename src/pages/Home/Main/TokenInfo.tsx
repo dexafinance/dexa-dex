@@ -129,7 +129,7 @@ const SwapBase = ({
                 )} */}
                 <View>
                   <FormText fontType="R14">
-                    {x.dex === DexEnum.terraswap ? "Terraswap" : "Astroport"}
+                    {x.dex === DexEnum.terraswap ? 'Terraswap' : 'Astroport'}
                   </FormText>
                 </View>
               </View>

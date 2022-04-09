@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import styled from 'styled-components'
-import catFootprintPng from 'images/cat_footprint.png'
+// import catFootprintPng from 'images/cat_footprint.png'
 import QrCode from 'qrcode.react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { toast } from 'react-toastify'
@@ -8,7 +8,8 @@ import { toast } from 'react-toastify'
 import { STYLE, WHITELIST, COLOR } from 'consts'
 
 import { View, Card, FormText, LinkA } from 'components'
-import { IconSquare, IconSquareCheck } from '@tabler/icons'
+//IconSquareCheck
+import { IconSquare } from '@tabler/icons'
 
 const StyledContainer = styled(View)`
   ${STYLE.setMediaWidth()}
@@ -17,10 +18,10 @@ const StyledContainer = styled(View)`
   }
 `
 
-const StyledCard = styled(Card)`
-  background-image: url(${catFootprintPng});
-  background-size: cover;
-`
+//  background-image: url(${catFootprintPng});
+//  background-size: cover;
+
+const StyledCard = styled(Card)``
 
 const StyledSection = styled(View)`
   margin-bottom: 20px;
@@ -33,7 +34,7 @@ const StyledDesc = styled(FormText)`
   flex-direction: row;
   align-items: center;
   white-space: pre-wrap;
-  word-break: break-all;
+  word-break: normal;
   background-color: ${COLOR.white};
   width: fit-content;
   padding: 0 5px;
@@ -42,7 +43,7 @@ const StyledDesc = styled(FormText)`
 const Main = (): ReactElement => {
   return (
     <StyledContainer>
-      <StyledMainTitle fontType="B32">Lite paper</StyledMainTitle>
+      <StyledMainTitle fontType="B32">About us</StyledMainTitle>
       <StyledCard>
         <StyledSection>
           <StyledSubTitle fontType="B24">What is Dexa Finance</StyledSubTitle>
@@ -50,103 +51,162 @@ const Main = (): ReactElement => {
             Hey #LUNAtics! Tired of monitoring price all day for trading in DEXs
             such as terraswap, astroport? We have your back. Introducing Dexa
             Finance - the DEX on Terra Blockchain that allows limit order. We
-            are in final stage to publish beta version. More👇👇👇
+            are in final stage to publish beta version.
           </StyledDesc>
           <StyledDesc>
-            <LinkA link="https://github.com/dexafinance">
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
-                - Open source project
-              </FormText>
-            </LinkA>
-          </StyledDesc>
-          <StyledDesc>
-            <LinkA link="https://github.com/dexafinance/dexa-dex">
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
-                * miaw-trader scource code
-              </FormText>
-            </LinkA>
-          </StyledDesc>
-          <StyledDesc>
-            - Token,Lp,Pair contracts are based on The Terraswap factory
-          </StyledDesc>
-          <StyledDesc>
-            - Dexa Finance was made by a dev turned product manager who loves
-            the Terra
+            Dexa Finance was made by an engineer turned product manager, who
+            loves the Terra ecosystem and its stablecoin $UST concept. I'm also
+            a frequent trader and have tried several trading platform, from CEXs
+            such as Binance to various DEXs. While it is superior to keep UST in
+            our own non-custodial wallet for security and also easy to put to
+            Anchor Protocol to earn yield, when we want to buy or sell tokens it
+            is not easy to buy or sell at a good price. Several times I had to
+            transfer my LUNA or UST to CEXs to trade. Furthermore, being a
+            product manager and working very closely with several product
+            designers for several years, I think there are many opportunity to
+            add value to DeFi in term of usability especially for non-tech.
           </StyledDesc>
         </StyledSection>
-
         <StyledSection>
           <StyledSubTitle fontType="B24">
-            Token Distribution plan for MIAW V1
+            Alternatives for limit order on Terra
           </StyledSubTitle>
-          <StyledDesc fontType="B20">100M Total supply</StyledDesc>
           <StyledDesc>
-            {'- 15% LP Staking reward. 5years, 5M>4M>3M>2M>1M'}
+            The only option we have right now is Miaw Trader at
+            https://miaw-trader.com I have used it some times but found it still
+            lack behind compared to experience on CEXs. Below are some
+            limitation I find from community feedbacks
           </StyledDesc>
-          <StyledDesc>{'- 11% Community funds'}</StyledDesc>
-          <StyledDesc>{'- 3% Lp Supply'}</StyledDesc>
-          <StyledDesc>{'- 1% Team'}</StyledDesc>
-          <StyledDesc>{'- 70% burned'}</StyledDesc>
+          <StyledDesc>
+            1/ Limit order is only supported on #terraswap pools which has very
+            high slippage due to its low liquidity. More pools should be added
+            especially #astroport
+          </StyledDesc>
+          <StyledDesc>
+            2/ Having to pay fee in MIAW create a friction point. CEXs/DEXs
+            usually allow to pay fee in trading pair in form of slippage fee or
+            maker fee. How about being able to pay fee in $UST?
+          </StyledDesc>
+          <StyledDesc>
+            3/ Lack of information on how it works and lack of audit for smart
+            contract risks.
+          </StyledDesc>
         </StyledSection>
-
         <StyledSection>
-          <StyledSubTitle fontType="B24">Roadmap for MIAW V1</StyledSubTitle>
+          <StyledSubTitle fontType="B24">Join our waiting list</StyledSubTitle>
+          <StyledDesc>We're all ears from you. </StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> SayMiaw
+            <LinkA link="https://docs.google.com/forms/d/e/1FAIpQLScRnfOUbe2lSAWnmUDSMaezg_42WXVLM9CU8iUW28GxKFiBKg/viewform">
+              <FormText fontType={'R18'} color={COLOR.primary._600}>
+                Click here to join our waiting list and give early feedback so
+                we can serve you better
+              </FormText>
+            </LinkA>
           </StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> LpTower
-          </StyledDesc>
-          <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> LpStaking
-          </StyledDesc>
-          <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> Impermanent gain/loss
-            chart
-          </StyledDesc>
-          <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> Limit order
-          </StyledDesc>
-          <StyledDesc>
-            <IconSquare color={COLOR.gray._900} /> Any interesting ideas
+            <LinkA link="https://discord.gg/ngQ3fVJD">
+              <FormText fontType={'R18'} color={COLOR.primary._600}>
+                Or you can join our Discord for further discussion.
+              </FormText>
+            </LinkA>
           </StyledDesc>
         </StyledSection>
-
         <StyledSection>
-          <StyledSubTitle fontType="B24">Keeping token prices</StyledSubTitle>
-          <StyledDesc fontType="B18">1. Say Miaw</StyledDesc>
+          <StyledSubTitle fontType="B24">
+            Token Distribution plan
+          </StyledSubTitle>
           <StyledDesc>
-            {'-> Burn MIAW through SayMiaw with various events'}
-          </StyledDesc>
-          <StyledDesc fontType="B18">2. Limit order</StyledDesc>
-          <StyledDesc>
-            {'-> Token will be used for the limit order fee '}
+            No plan in beta launching, revenues will be used for security,
+            audit, team, operations. Our target is to gradually convert to DAO
+            with sustainable revenue streams for operation with best interest
+            for #LUNAtics community.
           </StyledDesc>
         </StyledSection>
-
+        <StyledSection>
+          <StyledSubTitle fontType="B24">
+            Roadmap for Dexa Finance
+          </StyledSubTitle>
+          {/* IconSquareCheck */}
+          <StyledDesc>
+            <IconSquare color={COLOR.primary._600} /> Support limit order on
+            astroport pool
+          </StyledDesc>
+          <StyledDesc>
+            <IconSquare color={COLOR.primary._600} /> Fee payment in UST
+          </StyledDesc>
+          <StyledDesc>
+            <IconSquare color={COLOR.primary._600} /> Improve UX, includes
+          </StyledDesc>
+          <StyledDesc>
+            - Candlestick chart for price movement visualization
+          </StyledDesc>
+          <StyledDesc>- Show all limit orders on selected pair</StyledDesc>
+          <StyledDesc>- Easy fee payment option</StyledDesc>
+          <StyledDesc>
+            <IconSquare color={COLOR.primary._600} /> Smart contract executor
+            for small delay time
+          </StyledDesc>
+          <StyledDesc>
+            <IconSquare color={COLOR.primary._600} /> Adding testcases and
+            security audit
+          </StyledDesc>
+          <StyledDesc>
+            <IconSquare color={COLOR.gray._900} /> More to be defined and
+            collection from community feedbacks
+          </StyledDesc>
+        </StyledSection>
+        <StyledSection>
+          <StyledSubTitle fontType="B24">Transparancy</StyledSubTitle>
+          <StyledDesc>
+            Cryptocurrencies and blockchain technologies are still in early
+            stage with many risks, to earn trust from community we put
+            transparency and security at best, that's why we opensourced all our
+            source codes and anyone can build the smart contract themselves and
+            check the checksum of deployed smart contract to make sure the
+            deployed version is in synced with the published source code. To
+            address security, part of the revenue streams are allocated for
+            following purposes:
+          </StyledDesc>
+          <StyledDesc>- Security audit</StyledDesc>
+          <StyledDesc>
+            - Insurance for users interacting with smart contract
+          </StyledDesc>
+          <StyledDesc>- Bug bounty programs</StyledDesc>
+          <br />
+          <StyledDesc>Related source codes can be found at:</StyledDesc>
+          <LinkA link="https://github.com/dexafinance/dexa-limit-order">
+            <FormText color={COLOR.primary._600}>
+              - dexa-limit-order smart contract source code
+            </FormText>
+          </LinkA>
+          <LinkA link="https://github.com/dexafinance/dexa-dex">
+            <FormText color={COLOR.primary._600}>
+              - dexa-dex web frontend source code
+            </FormText>
+          </LinkA>
+        </StyledSection>
         <StyledSection>
           <StyledSubTitle fontType="B24">Need support?</StyledSubTitle>
           <StyledDesc>
-            <LinkA link="https://discord.gg/W4HkFYq4AE">
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
+            <LinkA link="https://discord.gg/ngQ3fVJD">
+              <FormText fontType={'R18'} color={COLOR.primary._600}>
                 - Discord
               </FormText>
             </LinkA>
           </StyledDesc>
           <StyledDesc>
-            <LinkA link="https://github.com/miaw-cat/miaw-trader/issues">
-              <FormText fontType={'R18'} color={COLOR.primary._400}>
+            <LinkA link="https://github.com/dexafinance/dexa-dex/issues">
+              <FormText fontType={'R18'} color={COLOR.primary._600}>
                 - Github issues
               </FormText>
             </LinkA>
           </StyledDesc>
         </StyledSection>
-
         <StyledSection>
           <StyledSubTitle fontType="B24">Support Developer</StyledSubTitle>
 
           <CopyToClipboard
-            text={WHITELIST.address.miawDeveloper}
+            text={WHITELIST.address.dexaDeveloper}
             onCopy={(): void => {
               toast(`Copied address!`, {
                 position: 'top-center',
@@ -159,11 +219,11 @@ const Main = (): ReactElement => {
             }}
           >
             <StyledDesc color={COLOR.primary._400}>
-              {`- ${WHITELIST.address.miawDeveloper}`}
+              {`- ${WHITELIST.address.dexaDeveloper} (click to copy)`}
             </StyledDesc>
           </CopyToClipboard>
           <br />
-          <QrCode value={WHITELIST.address.miawDeveloper} size={200} />
+          <QrCode value={WHITELIST.address.dexaDeveloper} size={200} />
         </StyledSection>
       </StyledCard>
     </StyledContainer>

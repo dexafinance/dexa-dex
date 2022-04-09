@@ -911,7 +911,7 @@ const testnetLpStakingList: LpStakingType[] = [
 ]
 
 const address = {
-  miawDeveloper: 'terra1mxwpyavs4v5rpwndh3uc90e3qaw2wqqndnmt3j',
+  dexaDeveloper: 'terra19alhg9mfcy0fc658qv26y7kxyjwl88h32v44c4',
 }
 
 const mainnetLimitOrder =

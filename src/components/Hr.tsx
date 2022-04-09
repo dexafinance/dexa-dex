@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import { COLOR } from 'consts'
 
 const StyledSolidHr = styled.div`
-  background-color: ${COLOR.gray._900};
+  background-color: ${COLOR.gray._800};
   height: 1px;
 `
 const StyledDashedHr = styled.div`
-  border-bottom: 1px dashed ${COLOR.gray._900};
+  border-bottom: 1px dashed ${COLOR.gray._800};
   height: 1px;
 `
 

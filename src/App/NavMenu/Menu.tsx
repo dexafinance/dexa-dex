@@ -55,7 +55,7 @@ const Menu = (): ReactElement => {
     // },
     {
       to: RoutePath.dexa_paper,
-      title: 'Lite Paper',
+      title: 'About Us',
     },
   ]
 
