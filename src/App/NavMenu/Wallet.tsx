@@ -77,6 +77,11 @@ const StyledDisconnectWallet = styled(View)`
   align-items: center;
 `
 
+const StyledIconWallet = styled(IconWallet)`
+  margin-left: 4px;
+  margin-right: 4px;
+`
+
 const Wallet = (): ReactElement => {
   const [showWalletInfo, setShowWalletInfo] = useState(false)
 
@@ -89,7 +94,7 @@ const Wallet = (): ReactElement => {
   })
 
   const onClickCopyAddress = (): void => {
-    toast(`Copied Miaw!`, {
+    toast(`Copied!`, {
       position: 'top-center',
       autoClose: 2000,
       hideProgressBar: true,
@@ -116,8 +121,11 @@ const Wallet = (): ReactElement => {
               setShowWalletInfo(true)
             }}
           >
-            <IconWallet size={16} color={COLOR.gray._600} />
-            <FormText fontType="B16" color={COLOR.gray._600}>
+            <FormText fontType="R16" color={COLOR.gray._800}>
+              {UTIL.truncate(connectedWallet.walletAddress)}
+            </FormText>
+            <StyledIconWallet size={16} color={COLOR.gray._600} />
+            <FormText fontType="R16" color={COLOR.gray._600}>
               {UTIL.formatAmount(uusdBal)} UST
             </FormText>
           </StyledUserWalletBtn>

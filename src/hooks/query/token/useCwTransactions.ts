@@ -225,21 +225,21 @@ const extractTxHistory = (
 
         // execute_msg:
         // { send: {msg: 'eyJ3aXRoZHJhd19saXF1aWRpdHkiOnt9fQ==', amount: '4180000', contract: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552'} }
-        if (unitPrice < 100) {
-          console.log(
-            'txList with invalid unitPrice',
-            unitPrice,
-            tx,
-            'baseContractOrDenom',
-            baseContractOrDenom,
-            'amountIn',
-            amountIn[0].amount.toFixed(3),
-            amountIn,
-            'amountOut',
-            amountOut[0].amount.toFixed(3),
-            amountOut
-          )
-        }
+        // if (unitPrice < 100) {
+        //   console.log(
+        //     'txList with invalid unitPrice',
+        //     unitPrice,
+        //     tx,
+        //     'baseContractOrDenom',
+        //     baseContractOrDenom,
+        //     'amountIn',
+        //     amountIn[0].amount.toFixed(3),
+        //     amountIn,
+        //     'amountOut',
+        //     amountOut[0].amount.toFixed(3),
+        //     amountOut
+        //   )
+        // }
 
         txRows.push({
           txhash: tx.txhash,
@@ -318,7 +318,7 @@ const useTokenPairHistory = ({
           { params: { offset, limit: limit, account: tokenPairContract } }
         )
 
-        console.log('fetchData', fetchData)
+        // console.log('fetchData', fetchData)
 
         // if (fetchData?.data) {
         return fetchData?.data

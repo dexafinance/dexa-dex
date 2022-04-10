@@ -11,13 +11,15 @@ import useNetwork from 'hooks/common/useNetwork'
 import { useConnectedWallet } from '@terra-money/wallet-provider'
 import usePool from 'hooks/query/pair/usePool'
 
+import useTokenPairHistory from 'hooks/query/token/useCwTransactions'
+
 import { STYLE, UTIL, COLOR } from 'consts'
 // import { COLOR } from 'consts'
 
 //LinkFinder,FormImage
 import { FormText, Row, View, Card } from 'components'
 //uToken, Token
-import { ContractAddr, Token, PairType } from 'types'
+import { ContractAddr, uToken, Token, PairType, TradeTypeEnum } from 'types'
 // import { ContractAddr, uToken  } from 'types'
 // import useLayout from 'hooks/common/useLayout'
 // import useTokenPairHistory from 'hooks/query/token/useCw20History'
@@ -179,6 +181,23 @@ const OrderList = ({
     unitTokenOrDenom: tradeBaseContract,
   })
 
+  // get latest BUY / SELL order to show on the order list so that user have good reference price
+  const { txList } = useTokenPairHistory({
+    tokenPairContract: pairContract,
+    baseContractOrDenom: tradeBaseContract as ContractAddr,
+    offset: 0,
+    limit: 100,
+  })
+
+  let buyTxs = txList.filter((t) => t.action === TradeTypeEnum.buy)
+  if (buyTxs && buyTxs.length > 0) {
+    buyTxs = buyTxs.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1))
+  }
+  let sellTxs = txList.filter((t) => t.action === TradeTypeEnum.sell)
+  if (sellTxs && sellTxs.length > 0) {
+    sellTxs = sellTxs.sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1))
+  }
+
   // const { limitOrderList, setOrderId, tokenForBuySymbol, tokenToBuySymbol } =
   //   orders
 
@@ -205,7 +224,7 @@ const OrderList = ({
           (item, index) => {
             // const uusdBn = UTIL.toBn(item.uusd)
             // const isPositive = uusdBn.isPositive()
-            const isPositive = true
+            // const isPositive = true
             // let action = 'BUY'
             // console.log(
             //   'tx',
@@ -218,9 +237,9 @@ const OrderList = ({
             // )
             return (
               // <StyledTxInfoItem key={`txList-${index}`}>
-              <StyledTokenItem key={`txList-${index}`}>
+              <StyledTokenItem key={`txListSell-${index}`}>
                 <View style={{ alignItems: 'flex-start' }}>
-                  <FormText fontType="R14">
+                  <FormText fontType="R14" color={COLOR.primary._600}>
                     $
                     {UTIL.formatAmount(
                       UTIL.microfy(item.unitPrice.toString() as Token),
@@ -238,10 +257,7 @@ const OrderList = ({
                 <View
                   style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
                 >
-                  <FormText
-                    fontType="R14"
-                    color={isPositive ? COLOR.success : COLOR.error}
-                  >
+                  <FormText fontType="R14" color={COLOR.primary._400}>
                     {`${UTIL.formatAmount(item.askAmount, { toFix: 3 })}`}
                   </FormText>
                 </View>
@@ -249,15 +265,86 @@ const OrderList = ({
             )
           }
         )}
+        {sellTxs && sellTxs.length > 0 && (
+          <StyledTokenItem key={`txListSell-${displayItem}`}>
+            <View style={{ alignItems: 'flex-start' }}>
+              <FormText fontType="R12" color={COLOR.primary._600}>
+                {`${UTIL.formatAmount(
+                  UTIL.microfy(sellTxs[0].unitPrice.toString() as Token),
+                  {
+                    toFix: 3,
+                  }
+                )}`}
+              </FormText>
+            </View>
+            <View
+              style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
+            >
+              <FormText fontType="R12" color={COLOR.primary._400}>
+                {`${UTIL.formatAmount(
+                  sellTxs[0].amountIn.amount.toString() as uToken,
+                  { toFix: 3 }
+                )}`}
+              </FormText>
+            </View>
+            <View
+              style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
+            >
+              <FormText fontType="R12" color={COLOR.primary._400}>
+                {`${UTIL.formatAmount(
+                  sellTxs[0].amountIn.amount.toString() as uToken,
+                  { toFix: 3 }
+                )}`}
+              </FormText>
+            </View>
+          </StyledTokenItem>
+        )}
       </StyledTokenItemBox>
       <StyledTokenPrice>
         <TokenPrice token={token} pairType={pairType} />
       </StyledTokenPrice>
       <StyledTokenItemBox>
+        {buyTxs && buyTxs.length > 0 && (
+          <StyledTokenItem key={`txListBuy-${displayItem}`}>
+            <View style={{ alignItems: 'flex-start' }}>
+              <FormText fontType="R12" color={COLOR.primary._600}>
+                $
+                {UTIL.formatAmount(
+                  UTIL.microfy(buyTxs[0].unitPrice.toString() as Token),
+                  { toFix: 3 }
+                )}
+              </FormText>
+            </View>
+            <View
+              style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
+            >
+              <FormText fontType="R12" color={COLOR.primary._400}>
+                {`${UTIL.formatAmount(
+                  buyTxs[0].amountOut.amount.toString() as uToken,
+                  {
+                    toFix: 3,
+                  }
+                )}`}
+              </FormText>
+            </View>
+            <View
+              style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
+            >
+              <FormText fontType="R12" color={COLOR.primary._400}>
+                {`${UTIL.formatAmount(
+                  buyTxs[0].amountOut.amount.toString() as uToken,
+                  {
+                    toFix: 3,
+                  }
+                )}`}
+              </FormText>
+            </View>
+          </StyledTokenItem>
+        )}
         {_.map(buyOrders.slice(0, displayItem), (item, index) => {
           // const uusdBn = UTIL.toBn(item.uusd)
           // const isPositive = uusdBn.isPositive()
-          const isPositive = true
+          // const isPositive = true
           // let action = 'BUY'
           // console.log(
           //   'tx',
@@ -270,9 +357,9 @@ const OrderList = ({
           // )
           return (
             // <StyledTxInfoItem key={`txList-${index}`}>
-            <StyledTokenItem key={`txList-${index}`}>
+            <StyledTokenItem key={`txListBuy-${index}`}>
               <View style={{ alignItems: 'flex-start' }}>
-                <FormText fontType="R14">
+                <FormText fontType="R14" color={COLOR.primary._600}>
                   $
                   {UTIL.formatAmount(
                     UTIL.microfy(item.unitPrice.toString() as Token),
@@ -290,10 +377,7 @@ const OrderList = ({
               <View
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
               >
-                <FormText
-                  fontType="R14"
-                  color={isPositive ? COLOR.success : COLOR.error}
-                >
+                <FormText fontType="R14" color={COLOR.primary._400}>
                   {`${UTIL.formatAmount(item.offerAmount, { toFix: 3 })}`}
                 </FormText>
               </View>

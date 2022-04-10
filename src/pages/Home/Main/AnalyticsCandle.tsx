@@ -156,7 +156,7 @@ const AnalyticsCandle = ({
   const baseContractOrDenom: ContractAddr = WHITELIST.tokenInfo[tradeBase]
     .contractOrDenom as ContractAddr
 
-  console.log('tradeBase', tradeBase, baseContractOrDenom)
+  // console.log('tradeBase', tradeBase, baseContractOrDenom)
 
   // const { getSymbolByContractOrDenom } = useNetwork()
   const [options] = useState({
@@ -359,7 +359,7 @@ const AnalyticsCandle = ({
   //   },
   // ]
 
-  console.log('analyticsList', options, analyticsList)
+  // console.log('analyticsList', options, analyticsList)
 
   return (
     // <StyledContainer>

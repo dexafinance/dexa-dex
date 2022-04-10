@@ -89,7 +89,11 @@ const Main = (): ReactElement => {
   useEffect(() => {
     if (selectedToken?.token) {
       const list = selectedToken.token.pairList
-      setSelectedPairToken({ ...selectedToken, pairType: list[0] })
+      // temporarily default to terraswap as only limit order is supported in terraswap
+      setSelectedPairToken({
+        ...selectedToken,
+        pairType: list.length > 1 ? list[1] : list[0],
+      })
     }
   }, [selectedToken?.token])
 

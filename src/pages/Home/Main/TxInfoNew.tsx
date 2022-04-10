@@ -199,14 +199,7 @@ const TxInfoNew = ({
               <View
                 style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}
               >
-                <FormText
-                  fontType="R14"
-                  color={
-                    item.action === TradeTypeEnum.buy
-                      ? COLOR.success
-                      : COLOR.primary._400
-                  }
-                >
+                <FormText fontType="R14">
                   {`${UTIL.formatAmount(
                     forAmount?.amount.toString() as uToken,
                     { toFix: 3 }
