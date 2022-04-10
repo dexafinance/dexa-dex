@@ -54,7 +54,7 @@ const Menu = (): ReactElement => {
     //   title: 'Lp Tower',
     // },
     {
-      to: RoutePath.dexa_paper,
+      to: RoutePath.aboutus,
       title: 'About Us',
     },
   ]

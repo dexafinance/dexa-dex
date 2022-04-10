@@ -5,6 +5,8 @@ export enum RoutePath {
 
   dexa_paper = '/dexa_paper',
 
+  aboutus = '/about-us',
+
   send = '/send',
 }
 
@@ -36,5 +38,6 @@ export type RouteParams = {
     lpStakingIndex: string
   }
   [RoutePath.dexa_paper]: undefined
+  [RoutePath.aboutus]: undefined
   [RoutePath.send]: undefined
 }

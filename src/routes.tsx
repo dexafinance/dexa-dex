@@ -14,7 +14,7 @@ const SwitchPages = (): ReactElement => {
       <Redirect exact from="/" to={RoutePath.home + '?symbol=Luna'} />
       <Route path={RoutePath.home} component={HomePage} />
       <Route path={RoutePath.lpTower} component={LpTowerPage} />
-      <Route path={RoutePath.dexa_paper} component={DexaPaperPage} />
+      <Route path={RoutePath.aboutus} component={DexaPaperPage} />
       <Route path={RoutePath.send} component={SendMiawPage} />
     </Switch>
   )
