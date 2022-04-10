@@ -8,7 +8,7 @@ const StyledText = styled(View)`
   color: ${COLOR.text};
   font-stretch: normal;
   font-style: normal;
-  line-height: 1.3;
+  line-height: 1.4;
 `
 
 const Text = (props: HTMLAttributes<HTMLDivElement>): ReactElement => {

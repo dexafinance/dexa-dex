@@ -73,8 +73,8 @@ const Main = (): ReactElement => {
           </StyledSubTitle>
           <StyledDesc>
             The only option we have right now is Miaw Trader at
-            https://miaw-trader.com I have used it some times but found it still
-            lack behind compared to experience on CEXs. Below are some
+            https://miaw-trader.com I have used it for some times but found it
+            still lack behind compared to experience on CEXs. Below are some
             limitation I find from community feedbacks
           </StyledDesc>
           <StyledDesc>
@@ -131,11 +131,17 @@ const Main = (): ReactElement => {
             At this stage, we've only updated UI and small improvements on UX,
             while still interact with smart contract from miaw-trader, and fee
             still has to paid in MIAW. You can buy MIAW using normal BUY instead
-            of Limit Order. So basically only frontend web is changed for your
+            of Limit Order. So basically only frontend web is improved for your
             convenience, everything else is the same to make sure you have same
             trust while interacting with miaw-trader.com. You can check the
             order placed here will also appear in miaw-trader.com
           </StyledDesc>
+          <br />
+          <StyledDesc>
+            Kudos to miaw-team for their initial work that inspired us.
+          </StyledDesc>
+          <br />
+          <StyledDesc>Following are what on our roadmap:</StyledDesc>
           <StyledDesc>
             <IconSquare color={COLOR.primary._600} /> Support limit order on
             astroport pool
