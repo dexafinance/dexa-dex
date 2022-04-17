@@ -11,7 +11,7 @@ import {
   PostTxStatus,
   TokenDenomEnum,
   ContractAddr,
-  TokenType,
+  TokenInfoType,
 } from 'types'
 
 import usePostTx from '../usePostTx'
@@ -45,10 +45,10 @@ export type UseLimitOrderBuyReturn = {
   updateAskPrice: (value: Token) => void
   askPriceErrMsg: string
 
-  miawToken: TokenType
-  miawAmount: Token
-  setMiawAmount: (value: Token) => void
-  miawAmountErrMsg: string
+  feeToken: TokenInfoType
+  feeTokenAmount: Token
+  setFeeTokenAmount: (value: Token) => void
+  feeTokenAmountErrMsg: string
 
   fee?: Fee
 
@@ -70,7 +70,7 @@ const useLimitOrderBuy = ({
   askTokenSymbol: string
   pairContract: ContractAddr
 }): UseLimitOrderBuyReturn => {
-  const { limitOrder, miawToken } = useNetwork()
+  const { limitOrder, feeToken } = useNetwork()
   const { balance: uusdBal } = useMyBalance({
     contractOrDenom: TokenDenomEnum.uusd,
   })
@@ -79,8 +79,8 @@ const useLimitOrderBuy = ({
     contractOrDenom: offerDenom,
   })
 
-  const { balance: miawBal } = useMyBalance({
-    contractOrDenom: miawToken.contractOrDenom,
+  const { balance: feeTokenBal } = useMyBalance({
+    contractOrDenom: feeToken.contractOrDenom,
   })
 
   const { getSubmitOrderMsgs } = useFabricator()
@@ -91,7 +91,9 @@ const useLimitOrderBuy = ({
     token_0_ContractOrDenom: askContractOrDenom,
   })
 
+  // allow input price to be larger 1% of simulated price
   const askTokenPrice = UTIL.toBn(poolInfo?.token_0_Price)
+    .multipliedBy(1.01)
     .dp(6)
     .toString(10) as Token
 
@@ -132,20 +134,20 @@ const useLimitOrderBuy = ({
     })
   }, [offerAmount])
 
-  const myMiawAmount = UTIL.demicrofy(miawBal)
-  const [miawAmount, setMiawAmount] = useState<Token>('1' as Token)
-  const miawAmountErrMsg = useMemo(() => {
+  const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
+  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('1' as Token)
+  const feeTokenAmountErrMsg = useMemo(() => {
     return validateFormInputAmount({
-      input: miawAmount,
-      max: myMiawAmount,
-      min: '1' as Token,
+      input: feeTokenAmount,
+      max: myFeeTokenAmount,
+      min: '0.25' as Token,
     })
-  }, [miawAmount, myMiawAmount])
+  }, [feeTokenAmount, myFeeTokenAmount])
 
   const invalidForm =
     postTxResult.status === PostTxStatus.BROADCAST ||
     askAmount.trim() === '' ||
-    !!miawAmountErrMsg ||
+    !!feeTokenAmountErrMsg ||
     !!askAmountErrMsg ||
     !!askPriceErrMsg
 
@@ -153,20 +155,21 @@ const useLimitOrderBuy = ({
     let msgs: MsgExecuteContract[] = []
     if (Number(askAmount) > 0 && Number(offerAmount) > 0) {
       msgs = getSubmitOrderMsgs({
+        pairContract,
         offerAmount,
         askAmount,
         limitOrderContract: limitOrder,
         offerContractOrDenom: offerDenom,
         askContractOrDenom,
-        feeContractOrDenom: miawToken.contractOrDenom,
-        feeAmount: miawAmount,
+        feeContractOrDenom: feeToken.contractOrDenom,
+        feeAmount: feeTokenAmount,
       })
     }
     return {
       msgs,
       feeDenoms: ['uusd'],
     }
-  }, [walletAddress, offerAmount, askAmount, miawAmount])
+  }, [walletAddress, offerAmount, askAmount, feeTokenAmount])
 
   const { fee } = useCalcFee({
     isValid: !invalidForm,
@@ -237,10 +240,10 @@ const useLimitOrderBuy = ({
     updateAskPrice,
     askPriceErrMsg,
 
-    miawToken,
-    miawAmount,
-    setMiawAmount,
-    miawAmountErrMsg,
+    feeToken,
+    feeTokenAmount,
+    setFeeTokenAmount,
+    feeTokenAmountErrMsg,
 
     fee,
     onClickLimitOrderBuy,

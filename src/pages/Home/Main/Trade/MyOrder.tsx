@@ -7,6 +7,9 @@ import { COLOR, UTIL, STYLE } from 'consts'
 import { FormText, View, Row } from 'components'
 import { UseMyOrderReturn } from 'hooks/common/trade/useMyOrder'
 import { IconCircleX, IconMoodEmpty } from '@tabler/icons'
+import { addressTokenMap, testnetAddressTokenMap } from 'consts/whitelist'
+
+import useNetwork from 'hooks/common/useNetwork'
 
 const StyledContainer = styled(View)`
   @media ${STYLE.media.mobile} {
@@ -35,8 +38,10 @@ const MyOrder = ({
 }: {
   myOrderReturn: UseMyOrderReturn
 }): ReactElement => {
-  const { limitOrderList, setOrderId, tokenForBuySymbol, tokenToBuySymbol } =
-    myOrderReturn
+  //tokenForBuySymbol, tokenToBuySymbol
+  const { limitOrderList, setOrderId } = myOrderReturn
+  const { isMainnet } = useNetwork()
+  const addrTokenMap = isMainnet ? addressTokenMap : testnetAddressTokenMap
 
   return (
     <StyledContainer>
@@ -95,12 +100,12 @@ const MyOrder = ({
                 </FormText>
               </View>
               <View style={{ flex: 1, alignItems: 'center' }}>
-                <FormText>{`${UTIL.formatAmount(
-                  item.toBuyAmount
-                )} ${tokenToBuySymbol}`}</FormText>
+                <FormText>{`${UTIL.formatAmount(item.toBuyAmount)} ${
+                  addrTokenMap[item.offerContractOrDenom]
+                }`}</FormText>
                 <FormText fontType="R14">{`(${UTIL.formatAmount(
                   item.toSellAmount
-                )} ${tokenForBuySymbol})`}</FormText>
+                )} ${addrTokenMap[item.askContractOrDenom]})`}</FormText>
               </View>
               <StyledCancleButton
                 onClick={(): void => {

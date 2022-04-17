@@ -6,8 +6,7 @@ import { STYLE, COLOR } from 'consts'
 
 import { View, Modal, FormText, Row } from 'components'
 
-//DexEnum, 
-import { PairType, RoutePath, TokenType } from 'types'
+import { PairType, RoutePath, TokenType, DexEnum, TradeTypeEnum } from 'types'
 
 import useRoute from 'hooks/common/useRoute'
 import useLayout from 'hooks/common/useLayout'
@@ -19,7 +18,8 @@ import OrderList from './OrderList'
 // import LpProvide from './LpProvide'
 import TokenList from './TokenList'
 import NoTokenSelected from './NoTokenSelected'
-import TxInfoNew from './TxInfoNew'
+// import TxInfoNew from './TxInfoNew'
+import TxInfoSplitView from './TxInfoSplitView'
 import AnalyticsCandle from './AnalyticsCandle'
 
 const StyledContainer = styled(View)`
@@ -45,26 +45,33 @@ const StyledContainer = styled(View)`
 const StyledLayout = styled(View)`
   display: grid;
   padding: 20px;
-  grid-template-columns: 300px 1fr 300px;
-  column-gap: 20px;
+  grid-template-columns: minmax(200px, 300px) 1fr 300px;
+  column-gap: 12px;
 
   @media ${STYLE.media.tablet} {
+    padding: 0;
+    grid-template-columns: 300px auto;
+  }
+
+  @media ${STYLE.media.mobile} {
     padding: 0;
     grid-template-columns: 1fr;
   }
 `
 
-  // grid-template-rows: auto 1fr;
+// grid-template-rows: auto 1fr;
 const StyledTokenInfoBox = styled(View)`
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: 20px;
+  row-gap: 12px;
 `
 const StyledTokenListBox = styled(View)``
 
 const Main = (): ReactElement => {
   const { routeParams } = useRoute<RoutePath.home>()
-  const tokenSymbol = routeParams?.symbol
+  const tokenSymbol = routeParams?.symbol || 'Luna'
+  // const dex = routeParams?.dex || DexEnum.astroport
+  // const limitOrder = routeParams?.limitOrder || 1
 
   const { isTabletWidth, isMobileWidth } = useLayout()
 
@@ -89,10 +96,14 @@ const Main = (): ReactElement => {
   useEffect(() => {
     if (selectedToken?.token) {
       const list = selectedToken.token.pairList
+
       // temporarily default to terraswap as only limit order is supported in terraswap
       setSelectedPairToken({
         ...selectedToken,
-        pairType: list.length > 1 ? list[1] : list[0],
+        pairType:
+          list.length > 1 && list[1].dex === DexEnum.astroport
+            ? list[1]
+            : list[0],
       })
     }
   }, [selectedToken?.token])
@@ -132,6 +143,16 @@ const Main = (): ReactElement => {
               {...selectedPairToken}
               // dex={selectedPairToken.pairType.dex}
             />
+            <TxInfoSplitView
+              title="Recent selling transaction"
+              tradeType={TradeTypeEnum.sell}
+              {...selectedPairToken}
+            ></TxInfoSplitView>
+            <TxInfoSplitView
+              title="Recent buying transaction"
+              tradeType={TradeTypeEnum.buy}
+              {...selectedPairToken}
+            ></TxInfoSplitView>
           </StyledTokenListBox>
         )}
         <StyledTokenInfoBox>
@@ -143,6 +164,7 @@ const Main = (): ReactElement => {
               />
               {false === isMobileWidth && (
                 <AnalyticsCandle
+                  token={selectedPairToken.token}
                   pairContract={selectedPairToken.pairType.pair}
                   tradeBase={selectedPairToken.pairType.base}
                 />
@@ -171,12 +193,12 @@ const Main = (): ReactElement => {
               closeModal={closeModal}
               tokenListReturn={tokenListReturn}
             />
-            {selectedPairToken && <TxInfoNew {...selectedPairToken} />}
+            {/* {selectedPairToken && <TxInfoNew {...selectedPairToken} />} */}
           </Modal>
         ) : (
           <StyledTokenListBox>
             <TokenList tokenListReturn={tokenListReturn} />
-            {selectedPairToken && <TxInfoNew {...selectedPairToken} />}
+            {/* {selectedPairToken && <TxInfoNew {...selectedPairToken} />} */}
           </StyledTokenListBox>
         )}
       </StyledLayout>

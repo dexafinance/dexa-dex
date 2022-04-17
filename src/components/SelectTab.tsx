@@ -27,7 +27,7 @@ const StyledTabItem = styled(FormText)<{ selected: boolean }>`
     selected ? `2px solid ${COLOR.primary._600} ` : ''};
   color: ${({ selected }): string =>
     selected ? COLOR.gray._900 : COLOR.gray._400};
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 `
 
 const SelectTab = <T,>({

@@ -96,6 +96,7 @@ const useAllOrders = ({
               : TradeTypeEnum.sell,
           offerContractOrDenom,
           askContractOrDenom,
+          hasOwnBidding: item.bidder_addr === bidderAddr,
         } as ExtractLimitOrdersType
       }
     ).sort((a, b) => b.unitPrice - a.unitPrice)

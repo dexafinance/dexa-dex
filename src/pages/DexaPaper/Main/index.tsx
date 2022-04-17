@@ -9,7 +9,7 @@ import { STYLE, WHITELIST, COLOR } from 'consts'
 
 import { View, Card, FormText, LinkA } from 'components'
 //IconSquareCheck
-import { IconSquare } from '@tabler/icons'
+import { IconSquare, IconSquareCheck } from '@tabler/icons'
 
 const StyledContainer = styled(View)`
   ${STYLE.setMediaWidth()}
@@ -24,7 +24,7 @@ const StyledContainer = styled(View)`
 const StyledCard = styled(Card)``
 
 const StyledSection = styled(View)`
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 `
 
 const StyledMainTitle = styled(FormText)``
@@ -128,33 +128,25 @@ const Main = (): ReactElement => {
           </StyledSubTitle>
           {/* IconSquareCheck */}
           <StyledDesc>
-            At this stage, we've only updated UI and small improvements on UX
-            based on miaw-trader frontend source code (forked and modify), while
-            still interact with smart contract from miaw-trader, and fee still
-            has to paid in MIAW. You can buy MIAW using normal BUY (swap)
-            instead of Limit Order as it does not require MIAW to pay fee. So
-            basically only frontend web is improved for your convenience,
-            everything else is the same to make sure you have same trust while
-            interacting with miaw-trader.com. You can check the order placed
-            here will also appear in miaw-trader.com
-          </StyledDesc>
-          <br />
-          <StyledDesc>
-            Kudos to miaw-team for their initial work. If you are from
-            miaw-trader team don't hesitate to contact us through twitter or
-            discord for possible cooperation.
+            As miaw-trader team seems inactive and have little maintainence and
+            improvements, we have decided to step up to help Terra ecosystem
+            grow even more. At initial stage, we have forked both limit order
+            and web fronend from miaw-trader and make some important
+            improvements. Kudos and really appreciate miaw-team for their work.
+            If you are from miaw-trader team don't hesitate to contact us
+            through twitter or discord for possible cooperation.
           </StyledDesc>
           <br />
           <StyledDesc>Following are what on our roadmap:</StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.primary._600} /> Support limit order on
-            astroport pool
+            <IconSquareCheck color={COLOR.primary._600} /> Support limit order
+            on astroport pool
           </StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.primary._600} /> Fee payment in UST
+            <IconSquareCheck color={COLOR.primary._600} /> Fee payment in UST
           </StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.primary._600} /> Improve UX, includes
+            <IconSquareCheck color={COLOR.primary._600} /> Improve UX, includes
           </StyledDesc>
           <StyledDesc>
             - Candlestick chart for price movement visualization

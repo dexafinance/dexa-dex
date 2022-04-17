@@ -29,7 +29,7 @@ import useNetwork from 'hooks/common/useNetwork'
 
 const StyledCard = styled(Card)`
   min-width: 200px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   @media ${STYLE.media.tablet} {
     width: fit-content;
   }
@@ -47,18 +47,33 @@ const StyledSort = styled(View)`
 
 const StyledTokenItem = styled(View)`
   ${STYLE.clickable}
-  padding:10px 0;
+  padding:8px 10px 10px 0px;
   align-items: center;
   display: grid;
   grid-template-columns: 3fr 2fr 2fr;
 `
-
+//display: none;
 const StyledTokenItemBox = styled(View)`
-  height: 300px;
+  height: 400px;
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
-    display: none;
+    width: 10px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 `
 

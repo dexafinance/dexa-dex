@@ -5,7 +5,7 @@ import { STYLE } from 'consts'
 
 import { View, FormText } from 'components'
 
-import useNetwork from 'hooks/common/useNetwork'
+// import useNetwork from 'hooks/common/useNetwork'
 
 import Send from './Send'
 
@@ -17,8 +17,8 @@ const StyledContainer = styled(View)`
 `
 
 const Main = (): ReactElement => {
-  const { miawToken } = useNetwork()
-
+  // const { miawToken } = useNetwork()
+  const miawToken = undefined
   return (
     <StyledContainer>
       {miawToken ? (

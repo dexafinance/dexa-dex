@@ -46,10 +46,10 @@ const LimitOrderSellForm = ({
     updateAskPrice,
     askPriceErrMsg,
 
-    miawToken,
-    miawAmount,
-    setMiawAmount,
-    miawAmountErrMsg,
+    feeToken,
+    feeTokenAmount,
+    setFeeTokenAmount,
+    feeTokenAmountErrMsg,
 
     fee,
   } = useLimitOrderSellReturn
@@ -59,7 +59,7 @@ const LimitOrderSellForm = ({
   })
 
   const { balance: miawBal } = useMyBalance({
-    contractOrDenom: miawToken.contractOrDenom,
+    contractOrDenom: feeToken.contractOrDenom,
   })
 
   const feeData = useMemo(
@@ -125,22 +125,22 @@ const LimitOrderSellForm = ({
           <FormLabel>Fee for priority</FormLabel>
           <FormInput
             number
-            suffix={miawToken.symbol}
+            suffix={feeToken.symbol}
             onChangeValue={(value): void => {
-              setMiawAmount(value as Token)
+              setFeeTokenAmount(value as Token)
             }}
             inputProps={{
               placeholder: '0',
-              value: miawAmount,
+              value: feeTokenAmount,
             }}
-            isError={!!miawAmountErrMsg}
-            helperText={miawAmountErrMsg}
+            isError={!!feeTokenAmountErrMsg}
+            helperText={feeTokenAmountErrMsg}
           />
           <StyledMaxBalance>
             <MaxButton
               value={miawBal}
               onClick={(value): void => {
-                setMiawAmount(UTIL.demicrofy(value) as Token)
+                setFeeTokenAmount(UTIL.demicrofy(value) as Token)
               }}
             />
           </StyledMaxBalance>

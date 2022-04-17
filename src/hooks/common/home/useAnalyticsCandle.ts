@@ -23,9 +23,11 @@ export type UseAnalyticsCandleReturn = {
 const useAnalyticsCandle = ({
   pairContract,
   baseContractOrDenom,
+  otherContractOrDenom,
 }: {
   pairContract: ContractAddr
   baseContractOrDenom: ContractAddr
+  otherContractOrDenom: ContractAddr
 }): UseAnalyticsCandleReturn => {
   // const [inputValue, setInputValue] = useState<string>('1')
   // const [from, setFrom] = useState<number>(moment().subtract(2, 'month').unix())
@@ -35,6 +37,7 @@ const useAnalyticsCandle = ({
   const { txList } = useTokenPairHistory({
     tokenPairContract: pairContract,
     baseContractOrDenom,
+    otherContractOrDenom,
     offset: 0,
     limit: 100,
   })

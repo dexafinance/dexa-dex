@@ -47,6 +47,8 @@ const isEven = (value: number): boolean => value % 2 === 0
 
 const isOdd = (value: number): boolean => !isEven(value)
 
+const getFixed = (value: number): number => (value > 2 ? 3 : 5)
+
 const microfy = (value: Token): uToken =>
   toBn(value).multipliedBy(asset.TERRA_DECIMAL).toString(10) as uToken
 
@@ -141,4 +143,5 @@ export default {
   toBase64,
   fromBase64,
   formatPercentage,
+  getFixed,
 }

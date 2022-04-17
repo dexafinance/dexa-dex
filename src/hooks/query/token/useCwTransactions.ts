@@ -143,9 +143,14 @@ const getMultiSendAmount = (
 }
 
 const getAmount = (
+  // add tx info to debug
+  tx: string,
   address: string,
+  executor: string,
   matchedMsg?: LogFinderAmountResult[][]
 ): [Coin[], Coin[]] => {
+  // only get amounts between pair contract address and executor (sender) address
+  // because the rest could be fee / tax and should be execluded from actual received amount
   const amountIn: Coin[] = []
   const amountOut: Coin[] = []
   matchedMsg?.forEach((matchedLog) => {
@@ -157,12 +162,29 @@ const getAmount = (
         const sender = log.transformed?.sender
         const recipient = log.transformed?.recipient
 
-        // console.log('getAmount', 'address', address, 'sender', sender)
-        if (address === sender) {
+        // if (
+        //   tx ===
+        //   '7D9DF2B3857372DF3A7F9C8E722E11EBA07862D2C1BBDFAFE4A2066D872F6B2C'
+        // ) {
+        //   console.log(
+        //     tx,
+        //     'getAmount',
+        //     'address',
+        //     address,
+        //     executor,
+        //     'sender',
+        //     sender,
+        //     'receiver',
+        //     recipient,
+        //     amounts
+        //   )
+        // }
+
+        if (address === sender && executor === recipient) {
           getRenderAmount(amounts, amountOut)
         }
 
-        if (address === recipient) {
+        if (address === recipient && executor === sender) {
           getRenderAmount(amounts, amountIn)
         }
       })
@@ -177,6 +199,7 @@ const extractTxHistory = (
   //   data: FetchResponseType['pair']
   tokenPairContract: ContractAddr,
   baseContractOrDenom: ContractAddr,
+  otherContractOrDenom: ContractAddr,
   data: { next: number; txs: TxResponse[] }
 ): TxsHistoryType[] => {
   //   const isToken0Ust = pair.token0.symbol === 'uusd'
@@ -194,26 +217,39 @@ const extractTxHistory = (
   if (data?.txs) {
     let txRows: TxsHistoryType[] = []
     data.txs.forEach((tx) => {
-      // console.log(tokenPairContract, 'tx', tx)
       const matchedLogs = getTxAmounts(
         JSON.stringify(tx),
         createLogMatcherForAmounts(ruleArray),
         tokenPairContract
       )
 
-      // console.log('matchedLogs', matchedLogs)
+      const sender = tx.tx.value.msg[0].value.sender
 
-      const [amountIn, amountOut] = getAmount(tokenPairContract!, matchedLogs)
+      const [amountIn, amountOut] = getAmount(
+        tx.txhash,
+        tokenPairContract!,
+        sender,
+        matchedLogs
+      )
+
       const isSuccess = !tx.code
       // skip LP providing transaction
       const isSwap =
         isSuccess &&
         amountIn.length > 0 &&
         amountOut.length > 0 &&
-        amountIn[0].denom !== amountOut[0].denom
+        amountIn[0].denom !== amountOut[0].denom &&
+        (amountIn[0].denom === baseContractOrDenom ||
+          amountIn[0].denom === otherContractOrDenom) &&
+        (amountOut[0].denom === baseContractOrDenom ||
+          amountOut[0].denom === otherContractOrDenom)
+
       if (isSwap) {
         // some tx are providing LP or withdrawing LP will only have one side withdraw / transfer
         // console.log('extractTxHistory', tx, amountIn, amountOut)
+        // https://finder.terra.money/bombay-12/tx/367213FC202079D8827DBDB805E6AB58766397A7990423F2BB78BCD19119BA56
+        // can see that first amount is sent to terra fee collector
+        // so not simply take first element
         let action = TradeTypeEnum.buy
         let unitPrice = +amountIn[0].amount / +amountOut[0].amount
         if (amountIn[0].denom === baseContractOrDenom) {
@@ -223,23 +259,19 @@ const extractTxHistory = (
           unitPrice = +amountOut[0].amount / +amountIn[0].amount
         }
 
-        // execute_msg:
-        // { send: {msg: 'eyJ3aXRoZHJhd19saXF1aWRpdHkiOnt9fQ==', amount: '4180000', contract: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552'} }
-        // if (unitPrice < 100) {
-        //   console.log(
-        //     'txList with invalid unitPrice',
-        //     unitPrice,
-        //     tx,
-        //     'baseContractOrDenom',
-        //     baseContractOrDenom,
-        //     'amountIn',
-        //     amountIn[0].amount.toFixed(3),
-        //     amountIn,
-        //     'amountOut',
-        //     amountOut[0].amount.toFixed(3),
-        //     amountOut
-        //   )
-        // }
+        // console.log(
+        //   'matchedLogs',
+        //   tx,
+        //   tx.txhash,
+        //   tx.tx.value.msg[0].value.sender,
+        //   matchedLogs,
+        //   isSwap,
+        //   amountIn[0],
+        //   amountOut[0],
+        //   +amountOut[0].amount,
+        //   +amountIn[0].amount,
+        //   unitPrice
+        // )
 
         txRows.push({
           txhash: tx.txhash,
@@ -250,11 +282,9 @@ const extractTxHistory = (
           unitPrice,
         })
       }
-      //   return getRow(tx, chainId, tokenPairContract, matchedLogs)
     })
 
     return txRows
-    // setTxsRow((stack) => [...stack, ...txRow])
   }
 
   return []
@@ -263,11 +293,13 @@ const extractTxHistory = (
 const useTokenPairHistory = ({
   tokenPairContract,
   baseContractOrDenom,
+  otherContractOrDenom,
   offset = 0,
   limit = 100,
 }: {
   tokenPairContract: ContractAddr
   baseContractOrDenom: ContractAddr
+  otherContractOrDenom: ContractAddr
   offset: number
   limit: number
 }): UseCw20HistoryReturn => {
@@ -331,7 +363,12 @@ const useTokenPairHistory = ({
   const txList = useMemo(
     () =>
       data
-        ? extractTxHistory(tokenPairContract!, baseContractOrDenom, data)
+        ? extractTxHistory(
+            tokenPairContract!,
+            baseContractOrDenom,
+            otherContractOrDenom,
+            data
+          )
         : [],
     [data]
   )

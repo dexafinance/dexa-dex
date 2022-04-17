@@ -94,9 +94,11 @@ const Menu = (): ReactElement => {
             style={{ alignItems: 'center', height: 60, padding: '0 16px' }}
             onClick={(): void => {
               push(RoutePath.home, {
-                symbol: 'Luna',
                 tradeType: TradeTypeEnum.buy,
                 lpType: LpProvideTypeEnum.provide,
+                // limitOrder: 1,
+                // dex: DexEnum.astroport,
+                symbol: 'Luna',
               })
               setIsOpenMobileMenu(false)
             }}
@@ -140,9 +142,11 @@ const Menu = (): ReactElement => {
       <StyledBrand
         onClick={(): void =>
           push(RoutePath.home, {
-            symbol: 'Luna',
             tradeType: TradeTypeEnum.buy,
             lpType: LpProvideTypeEnum.provide,
+            // limitOrder: 1,
+            // dex: DexEnum.astroport,
+            symbol: 'Luna',
           })
         }
       >

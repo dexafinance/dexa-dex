@@ -13,6 +13,7 @@ import useReactQuery from 'hooks/common/useReactQuery'
 
 export type ExtractLimitOrdersType = {
   orderId: number
+  pairContract: ContractAddr
   feeAmount: uToken
   offerAmount: uToken
   askAmount: uToken
@@ -28,11 +29,11 @@ export type UseTokenInfoReturn = {
 const useOrders = ({
   limitOrderContract,
   bidderAddr,
-  pairContract,
-}: {
+}: // pairContract,
+{
   limitOrderContract: ContractAddr
   bidderAddr: string
-  pairContract: ContractAddr
+  // pairContract: ContractAddr
 }): UseTokenInfoReturn => {
   const { wasmFetch } = useLCD()
   const { data, refetch } = useReactQuery(
@@ -40,7 +41,7 @@ const useOrders = ({
       QueryKeyEnum.LIMIT_ORDER_ORDERS,
       limitOrderContract,
       bidderAddr,
-      pairContract,
+      // pairContract,
     ],
     () =>
       wasmFetch<limitOrder.Orders, limitOrder.OrdersResponse>({
@@ -59,7 +60,8 @@ const useOrders = ({
 
   const orders = useMemo(() => {
     return _.map(
-      data?.orders.filter((x) => x.pair_addr === pairContract),
+      // filter((x) => x.pair_addr === pairContract)
+      data?.orders,
       (item) => {
         const offerContractOrDenom =
           'token' in item.offer_asset.info
@@ -72,6 +74,7 @@ const useOrders = ({
 
         return {
           orderId: item.order_id,
+          pairContract: item.pair_addr,
           feeAmount: item.fee_amount,
           offerAmount: item.offer_asset.amount,
           askAmount: item.ask_asset.amount,

@@ -1,3 +1,5 @@
+// import { DexEnum } from 'types'
+
 export enum RoutePath {
   home = '/home',
 
@@ -29,6 +31,8 @@ export type RouteParams = {
   [RoutePath.home]: {
     tradeType: TradeTypeEnum
     lpType: LpProvideTypeEnum
+    // limitOrder: number
+    // dex: DexEnum
     symbol: string
   }
   [RoutePath.lpTower]: {

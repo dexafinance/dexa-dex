@@ -11,6 +11,7 @@ import {
   TradeTypeEnum,
   uLP,
   uToken,
+  // DexEnum,
 } from 'types'
 
 import { FormImage, View, Row, Card, FormText, Button } from 'components'
@@ -141,9 +142,11 @@ const LpStakingItem = ({
             style={{ width: 100, height: 26 }}
             onClick={(e): void => {
               push(RoutePath.home, {
-                symbol: tokenSymbol,
                 tradeType: TradeTypeEnum.buy,
                 lpType: LpProvideTypeEnum.provide,
+                // dex: DexEnum.astroport,
+                // limitOrder: 1,
+                symbol: tokenSymbol,
               })
               e.stopPropagation()
             }}

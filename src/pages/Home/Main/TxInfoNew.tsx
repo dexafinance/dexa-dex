@@ -108,6 +108,7 @@ const TxInfoNew = ({
   const { txList } = useTokenPairHistory({
     tokenPairContract: pairContract,
     baseContractOrDenom: tradeBaseContract as ContractAddr,
+    otherContractOrDenom: token.contractOrDenom as ContractAddr,
     offset: 0,
     limit: 100,
   })

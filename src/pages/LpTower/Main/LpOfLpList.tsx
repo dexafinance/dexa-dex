@@ -13,6 +13,7 @@ import {
   TradeTypeEnum,
   LpProvideTypeEnum,
   uToken,
+  // DexEnum,
 } from 'types'
 
 import { FormImage, View, Row, Card, FormText, Button } from 'components'
@@ -228,9 +229,11 @@ const LpOfLpItem = ({
               style={{ width: 100, height: 26 }}
               onClick={(e): void => {
                 push(RoutePath.home, {
-                  symbol: item.token_0_ProvideSymbol || '',
                   tradeType: TradeTypeEnum.buy,
                   lpType: LpProvideTypeEnum.provide,
+                  // dex: DexEnum.astroport,
+                  // limitOrder: 1,
+                  symbol: item.token_0_ProvideSymbol || '',
                 })
                 e.stopPropagation()
               }}
@@ -265,9 +268,11 @@ const LpOfLpItem = ({
               style={{ width: 100, height: 26 }}
               onClick={(e): void => {
                 push(RoutePath.home, {
-                  symbol: item.token_1_ProvideSymbol || '',
                   tradeType: TradeTypeEnum.buy,
                   lpType: LpProvideTypeEnum.provide,
+                  // dex: DexEnum.astroport,
+                  // limitOrder: 1,
+                  symbol: item.token_1_ProvideSymbol || '',
                 })
                 e.stopPropagation()
               }}

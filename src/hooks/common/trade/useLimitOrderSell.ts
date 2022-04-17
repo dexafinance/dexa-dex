@@ -11,7 +11,7 @@ import {
   PostTxStatus,
   TokenDenomEnum,
   ContractAddr,
-  TokenType,
+  TokenInfoType,
 } from 'types'
 
 import usePostTx from '../usePostTx'
@@ -42,10 +42,10 @@ export type UseLimitOrderSellReturn = {
   updateAskPrice: (value: Token) => void
   askPriceErrMsg: string
 
-  miawToken: TokenType
-  miawAmount: Token
-  setMiawAmount: (value: Token) => void
-  miawAmountErrMsg: string
+  feeToken: TokenInfoType
+  feeTokenAmount: Token
+  setFeeTokenAmount: (value: Token) => void
+  feeTokenAmountErrMsg: string
 
   fee?: Fee
 
@@ -67,7 +67,7 @@ const useLimitOrderSell = ({
   askTokenSymbol: string
   pairContract: ContractAddr
 }): UseLimitOrderSellReturn => {
-  const { limitOrder, miawToken } = useNetwork()
+  const { limitOrder, feeToken } = useNetwork()
   const { balance: uusdBal } = useMyBalance({
     contractOrDenom: TokenDenomEnum.uusd,
   })
@@ -76,8 +76,8 @@ const useLimitOrderSell = ({
     contractOrDenom: offerContractOrDenom,
   })
 
-  const { balance: miawBal } = useMyBalance({
-    contractOrDenom: miawToken.contractOrDenom,
+  const { balance: feeTokenBal } = useMyBalance({
+    contractOrDenom: feeToken.contractOrDenom,
   })
 
   const { getSubmitOrderMsgs } = useFabricator()
@@ -115,20 +115,20 @@ const useLimitOrderSell = ({
     return '0' as Token
   }, [offerAmount, askPrice])
 
-  const myMiawAmount = UTIL.demicrofy(miawBal)
-  const [miawAmount, setMiawAmount] = useState<Token>('1' as Token)
-  const miawAmountErrMsg = useMemo(() => {
+  const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
+  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('1' as Token)
+  const feeTokenAmountErrMsg = useMemo(() => {
     return validateFormInputAmount({
-      input: miawAmount,
-      max: myMiawAmount,
-      min: '1' as Token,
+      input: feeTokenAmount,
+      max: myFeeTokenAmount,
+      min: '0.25' as Token,
     })
-  }, [miawAmount, myMiawAmount])
+  }, [feeTokenAmount, myFeeTokenAmount])
 
   const invalidForm =
     postTxResult.status === PostTxStatus.BROADCAST ||
     offerAmount.trim() === '' ||
-    !!miawAmountErrMsg ||
+    !!feeTokenAmountErrMsg ||
     !!offerAmountErrMsg ||
     !!askPriceErrMsg
 
@@ -136,20 +136,21 @@ const useLimitOrderSell = ({
     let msgs: MsgExecuteContract[] = []
     if (Number(askAmount) > 0 && Number(offerAmount) > 0) {
       msgs = getSubmitOrderMsgs({
+        pairContract,
         offerAmount,
         askAmount,
         limitOrderContract: limitOrder,
         offerContractOrDenom,
         askContractOrDenom: askDenom,
-        feeContractOrDenom: miawToken.contractOrDenom,
-        feeAmount: miawAmount,
+        feeContractOrDenom: feeToken.contractOrDenom,
+        feeAmount: feeTokenAmount,
       })
     }
     return {
       msgs,
       feeDenoms: ['uusd'],
     }
-  }, [walletAddress, offerAmount, askAmount, miawAmount])
+  }, [walletAddress, offerAmount, askAmount, feeTokenAmount])
 
   const { fee } = useCalcFee({
     isValid: !invalidForm,
@@ -218,10 +219,10 @@ const useLimitOrderSell = ({
     updateAskPrice,
     askPriceErrMsg,
 
-    miawToken,
-    miawAmount,
-    setMiawAmount,
-    miawAmountErrMsg,
+    feeToken,
+    feeTokenAmount,
+    setFeeTokenAmount,
+    feeTokenAmountErrMsg,
 
     fee,
     onClickLimitOrderSell,

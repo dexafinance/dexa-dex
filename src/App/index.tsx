@@ -12,11 +12,18 @@ import Footer from './Footer'
 import SelectWallet from './SelectWallet'
 import PostTxResult from './PostTxResult'
 
+import useNetwork from '../hooks/common/useNetwork'
+
 import useApp from './useApp'
 
 const StyledContainer = styled(View)`
   min-height: 100%;
   background: linear-gradient(${COLOR.gray._50}, #f8e5d0);
+`
+const Banner = styled(View)`
+  min-height: 100%;
+  background: ${COLOR.warning};
+  text-align: center;
 `
 
 const StyledBody = styled(View)`
@@ -25,11 +32,12 @@ const StyledBody = styled(View)`
 
 const InitializeApp = (): ReactElement => {
   const { initComplete } = useApp()
-
+  const { isMainnet } = useNetwork()
   return (
     <>
       {initComplete && (
         <StyledContainer>
+          {!isMainnet && <Banner>TESTNET</Banner>}
           <NavMenu />
           <StyledBody>{routes()}</StyledBody>
           <Footer />

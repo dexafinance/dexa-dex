@@ -56,7 +56,7 @@ const StyledLimitOrderButton = styled(FormText)`
   border: 1px solid ${COLOR.gray._600};
   width: fit-content;
   padding: 5px 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 `
 
 // selectedPairToken.pairType.dex === DexEnum.terraswap
@@ -86,15 +86,15 @@ const Buy = ({
     submitErrMsg: loBuySubmitErrMsg,
   } = useLimitOrderBuyReturn
 
-  const [buyLimitOrder, setBuyLimitOrder] = useState(false)
+  const [buyLimitOrder, setBuyLimitOrder] = useState(true)
 
   useEffect(() => {
-    setBuyLimitOrder(false)
+    setBuyLimitOrder(true)
   }, [dex])
-
+  //dex === DexEnum.terraswap
   return (
     <>
-      {dex === DexEnum.terraswap && (
+      {supportLimitOrder(dex) && (
         <View style={{ alignItems: 'flex-end' }}>
           <StyledLimitOrderButton
             // disabled={selectedPairToken.pairType.dex === DexEnum.terraswap}
@@ -167,10 +167,10 @@ const Sell = ({
     submitErrMsg: loSellSubmitErrMsg,
   } = useLimitOrderSellReturn
 
-  const [sellLimitOrder, setSellLimitOrder] = useState(false)
+  const [sellLimitOrder, setSellLimitOrder] = useState(true)
 
   useEffect(() => {
-    setSellLimitOrder(false)
+    setSellLimitOrder(true)
   }, [dex])
 
   return (

@@ -17,13 +17,17 @@ import astroportLogo from 'images/astroport.svg'
 import { UTIL, STYLE, COLOR, APIURL, WHITELIST } from 'consts'
 
 import { FormText, Card, FormImage, Row, LinkA, View } from 'components'
-import { DexEnum, PairType, TokenType } from 'types'
+import { DexEnum, PairType, TokenType, Token } from 'types'
 import useLayout from 'hooks/common/useLayout'
 
 import usePool from 'hooks/query/pair/usePool'
 import useNetwork from 'hooks/common/useNetwork'
 
 const StyledContainer = styled(Card)``
+
+const StyledFormText = styled(FormText)`
+  margin-bottom: 4px;
+`
 
 const StyledSymbolPrice = styled(Row)`
   align-items: center;
@@ -90,7 +94,7 @@ const SwapBase = ({
 }): ReactElement => {
   return (
     <View style={{ borderTop: `1px solid gray`, paddingTop: 6, marginTop: 6 }}>
-      <FormText fontType="B14">Select Dex / Denom</FormText>
+      <StyledFormText fontType="B14">Select Dex / Denom</StyledFormText>
       <Row>
         {_.map(pairList, (x, i) => {
           const dexSrc =
@@ -156,14 +160,13 @@ const TokenPrice = ({
     token_0_ContractOrDenom: token.contractOrDenom,
   })
 
-  const token_0_Price = poolInfo?.token_0_Price
+  const token_0_Price = poolInfo?.token_0_Price || ('0' as Token)
 
   const displayPrice = useMemo(() => {
-    const token_0_PriceBn = UTIL.toBn(token_0_Price)
-    if (token_0_PriceBn.isLessThan(0.01)) {
-      return token_0_PriceBn.toFixed(6)
-    }
-    return token_0_PriceBn.toFixed(3)
+    const token_0_PriceBn = UTIL.toBn(token_0_Price).toNumber()
+    return UTIL.formatAmount(UTIL.microfy(token_0_Price), {
+      toFix: UTIL.getFixed(token_0_PriceBn),
+    })
   }, [token_0_Price])
 
   return (

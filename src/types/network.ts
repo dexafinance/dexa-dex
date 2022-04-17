@@ -50,6 +50,7 @@ export enum TokenKeyEnum {
   KUJI = 'KUJI',
   ALTE = 'ALTE',
   ASTRO = 'ASTRO',
+  xASTRO = 'xASTRO',
   WHALE = 'WHALE',
   APOLLO = 'APOLLO',
   LUNI = 'LUNI',
@@ -57,6 +58,11 @@ export enum TokenKeyEnum {
   ORNE = 'ORNE',
   PLY = 'PLY',
   tSHIBA = 'tSHIBA',
+  LOCAL = 'LOCAL',
+  MARS = 'MARS',
+  LUNAX = 'LUNAX',
+  PRISM = 'PRISM',
+  xPRISM = 'xPRISM',
 }
 
 export type AddressMap = {

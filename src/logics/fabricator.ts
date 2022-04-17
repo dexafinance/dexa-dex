@@ -294,6 +294,7 @@ export const fabricateBurn = ({
 export type FabricateSubmitOrderOption = {
   sender: ContractAddr
   limitOrderContract: ContractAddr
+  pairContract: ContractAddr
   offerAmount: Token
   askAmount: Token
   offerContractOrDenom: ContractAddr | TokenDenomEnum
@@ -304,6 +305,7 @@ export type FabricateSubmitOrderOption = {
 
 export const fabricateSubmitOrder = ({
   sender,
+  pairContract,
   offerAmount,
   askAmount,
   limitOrderContract,
@@ -316,25 +318,36 @@ export const fabricateSubmitOrder = ({
 
   const coinList = []
   const tokenAllowanceMsg = []
+  let newOfferAmount = offerAmount
 
-  tokenAllowanceMsg.push(
-    new MsgExecuteContract(sender, feeContractOrDenom, {
-      increase_allowance: {
-        spender: limitOrderContract,
-        amount: UTIL.microfy(feeAmount),
-        expires: { never: {} },
-      },
-    })
-  )
+  if (feeContractOrDenom === offerContractOrDenom) {
+    newOfferAmount = UTIL.toBn(offerAmount)
+      .plus(UTIL.toBn(feeAmount))
+      .toString() as Token
+  } else {
+    if (UTIL.isNativeDenom(feeContractOrDenom)) {
+      coinList.push(new Coin(feeContractOrDenom, UTIL.microfy(feeAmount)))
+    } else {
+      tokenAllowanceMsg.push(
+        new MsgExecuteContract(sender, feeContractOrDenom, {
+          increase_allowance: {
+            spender: limitOrderContract,
+            amount: UTIL.microfy(feeAmount),
+            expires: { never: {} },
+          },
+        })
+      )
+    }
+  }
 
   if (offerIsNativeDenom) {
-    coinList.push(new Coin(offerContractOrDenom, UTIL.microfy(offerAmount)))
+    coinList.push(new Coin(offerContractOrDenom, UTIL.microfy(newOfferAmount)))
   } else {
     tokenAllowanceMsg.push(
       new MsgExecuteContract(sender, offerContractOrDenom, {
         increase_allowance: {
           spender: limitOrderContract,
-          amount: UTIL.microfy(offerAmount),
+          amount: UTIL.microfy(newOfferAmount),
           expires: { never: {} },
         },
       })
@@ -353,6 +366,7 @@ export const fabricateSubmitOrder = ({
       limitOrderContract,
       {
         submit_order: {
+          pair_addr: pairContract,
           offer_asset: { info: offerInfo, amount: UTIL.microfy(offerAmount) },
           ask_asset: { info: askInfo, amount: UTIL.microfy(askAmount) },
           fee_amount: UTIL.microfy(feeAmount),

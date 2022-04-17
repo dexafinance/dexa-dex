@@ -36,10 +36,13 @@ export type UseMyOrderReturn = {
   setOrderId: (value: number) => void
   limitOrderList: {
     orderId: number
+    pairContract: ContractAddr
     type: string
     price: Token
     toBuyAmount: uToken
     toSellAmount: uToken
+    offerContractOrDenom: ContractAddr | TokenDenomEnum
+    askContractOrDenom: ContractAddr | TokenDenomEnum
   }[]
 
   fee?: Fee
@@ -86,7 +89,7 @@ const useMyOrder = ({
   const { orders, refetch } = useOrders({
     limitOrderContract: limitOrder,
     bidderAddr: walletAddress,
-    pairContract,
+    // pairContract,
   })
 
   const limitOrderList = useMemo(() => {
@@ -102,10 +105,13 @@ const useMyOrder = ({
               .toString(10) as Token)
       return {
         orderId: item.orderId,
+        pairContract: item.pairContract,
         type,
         price,
         toBuyAmount: type === 'Buy' ? item.askAmount : item.offerAmount,
         toSellAmount: type === 'Buy' ? item.offerAmount : item.askAmount,
+        offerContractOrDenom: item.offerContractOrDenom,
+        askContractOrDenom: item.askContractOrDenom,
       }
     })
   }, [orders])

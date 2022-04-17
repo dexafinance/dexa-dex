@@ -9,6 +9,7 @@ import {
   LpofLpType,
   LpStakingType,
   TokenDenomEnum,
+  TokenInfoType,
 } from 'types'
 
 const useNetwork = (): {
@@ -22,7 +23,7 @@ const useNetwork = (): {
   getSymbolByContractOrDenom: (
     contractOrDenom: ContractAddr | TokenDenomEnum
   ) => string
-  miawToken: TokenType
+  feeToken: TokenInfoType
   mantleApi: string
 } => {
   const { network } = useWallet()
@@ -41,6 +42,11 @@ const useNetwork = (): {
 
   const whitelist = useMemo(
     () => (isMainnet ? WHITELIST.mainnetTokenList : WHITELIST.testnetTokenList),
+    [isMainnet]
+  )
+
+  const tokenInfo = useMemo(
+    () => (isMainnet ? WHITELIST.tokenInfo : WHITELIST.testnetTokenInfo),
     [isMainnet]
   )
 
@@ -76,7 +82,9 @@ const useNetwork = (): {
     }
   }
 
-  const miawToken = whitelist.find((x) => x.symbol === 'MIAW')! as TokenType
+  // const miawToken = whitelist.find((x) => x.symbol === 'MIAW')! as TokenType
+  // const feeToken = whitelist.find((x) => x.symbol === 'UST')! as TokenType
+  const feeToken = tokenInfo.UST
 
   return {
     isMainnet,
@@ -87,7 +95,7 @@ const useNetwork = (): {
     chainId: network.chainID,
     lcd: network.lcd,
     getSymbolByContractOrDenom,
-    miawToken,
+    feeToken,
     mantleApi,
   }
 }

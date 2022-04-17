@@ -8,7 +8,7 @@ import { FormText, Card } from 'components'
 
 const StyledContainer = styled(Card)`
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 `
 const NoTokenSelected = (): ReactElement => {
   return (

@@ -5,6 +5,8 @@ import { IconMoodCry } from '@tabler/icons'
 
 import { COLOR } from 'consts'
 
+// import { DexEnum } from 'types'
+
 import View from './View'
 import Card from './Card'
 import Hr from './Hr'
@@ -46,9 +48,11 @@ const ErrorView = ({ error }: { error?: any }): ReactElement => {
               style={{ width: 250 }}
               onClick={(): void => {
                 push(RoutePath.home, {
-                  symbol: 'Luna',
                   tradeType: TradeTypeEnum.buy,
                   lpType: LpProvideTypeEnum.provide,
+                  // limitOrder: 1,
+                  // dex: DexEnum.astroport,
+                  symbol: 'Luna',
                 })
               }}
             >
