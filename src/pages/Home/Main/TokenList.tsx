@@ -92,7 +92,7 @@ const TokenItem = ({
 }): ReactElement => {
   const { token_0_Price, token_1_PoolSize, token_1_ContractOrDenom } = poolInfo
   const { insertRouteParam } = useRoute<RoutePath.home>()
-  const { getSymbolByContractOrDenom } = useNetwork()
+  const { getSymbolByContractOrDenom, tokenInfo } = useNetwork()
   const { addFavoriteList, removeFavoriteList, favoriteList } =
     useFavoriteToken()
 
@@ -140,7 +140,10 @@ const TokenItem = ({
   return (
     <StyledTokenItem
       onClick={(): void => {
-        insertRouteParam('symbol', token.symbol)
+        insertRouteParam(
+          'symbol',
+          token.symbol + '_' + tokenInfo[token.pairList[0].base].symbol
+        )
         closeModal && closeModal()
       }}
     >

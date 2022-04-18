@@ -4,7 +4,7 @@ const TERRA_DECIMAL = 1e6
 
 const symbolOfDenom: Record<TokenDenomEnum, TokenSymbolEnum> = {
   [TokenDenomEnum.uusd]: TokenSymbolEnum.UST,
-  [TokenDenomEnum.uluna]: TokenSymbolEnum.Luna,
+  [TokenDenomEnum.uluna]: TokenSymbolEnum.LUNA,
 }
 
 export default {

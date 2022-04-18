@@ -32,7 +32,7 @@ export type UseTokenListReturn = {
 }
 
 const useTokenList = (): UseTokenListReturn => {
-  const { whitelist, isMainnet } = useNetwork()
+  const { whitelist, tokenInfo, isMainnet } = useNetwork()
   const [filter, setFilter] = useState('')
   const [groupFilter, setGroupFilter] = useState<TokenInfoGoupEnum[]>([])
   const [sortBy, setSortBy] = useState<SortTypeEnum>(SortTypeEnum.poolSize)
@@ -82,7 +82,11 @@ const useTokenList = (): UseTokenListReturn => {
       return _.map(filteredList, (token) => {
         const symbol = token.symbol
 
-        const poolInfo = poolInfoList.find((x) => x.symbol === symbol)?.poolInfo
+        const poolInfo = poolInfoList.find(
+          (x) =>
+            x.symbol === symbol &&
+            x.otherSymbol === tokenInfo[token.pairList[0].base].symbol
+        )?.poolInfo
 
         return { token, poolInfo }
       })

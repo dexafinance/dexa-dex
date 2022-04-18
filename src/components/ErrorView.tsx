@@ -14,7 +14,7 @@ import FormText from './FormText'
 import Button from './Button'
 import { RoutePath } from 'types'
 import useRoute from 'hooks/common/useRoute'
-import { TradeTypeEnum, LpProvideTypeEnum } from 'types'
+import { TradeTypeEnum, LpProvideTypeEnum, TokenKeyEnum } from 'types'
 
 const StyledContainer = styled(View)``
 
@@ -52,7 +52,7 @@ const ErrorView = ({ error }: { error?: any }): ReactElement => {
                   lpType: LpProvideTypeEnum.provide,
                   // limitOrder: 1,
                   // dex: DexEnum.astroport,
-                  symbol: 'Luna',
+                  symbol: TokenKeyEnum.LUNA,
                 })
               }}
             >

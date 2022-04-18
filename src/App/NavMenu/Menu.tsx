@@ -9,7 +9,7 @@ import { COLOR, STYLE } from 'consts'
 
 import { FormText, Row, FormImage, View, Modal } from 'components'
 
-import { RoutePath } from 'types'
+import { RoutePath, TokenKeyEnum } from 'types'
 import useRoute from 'hooks/common/useRoute'
 import useLayout from 'hooks/common/useLayout'
 import { IconChevronDown } from '@tabler/icons'
@@ -98,7 +98,7 @@ const Menu = (): ReactElement => {
                 lpType: LpProvideTypeEnum.provide,
                 // limitOrder: 1,
                 // dex: DexEnum.astroport,
-                symbol: 'Luna',
+                symbol: TokenKeyEnum.LUNA,
               })
               setIsOpenMobileMenu(false)
             }}
@@ -146,7 +146,7 @@ const Menu = (): ReactElement => {
             lpType: LpProvideTypeEnum.provide,
             // limitOrder: 1,
             // dex: DexEnum.astroport,
-            symbol: 'Luna',
+            symbol: TokenKeyEnum.LUNA,
           })
         }
       >

@@ -11,10 +11,12 @@ import {
 import useReactQuery from 'hooks/common/useReactQuery'
 import useSimulate from '../token/useSimulate'
 import { ExtractPoolResponseType, poolResponseParser } from 'logics/pool'
+import useNetwork from 'hooks/common/useNetwork'
 
 export type UsePoolReturn = {
   poolInfoList: {
     symbol: string
+    otherSymbol: string
     poolInfo: ExtractPoolResponseType
   }[]
   refetch: () => void
@@ -31,6 +33,7 @@ const usePoolList = ({
 }): UsePoolReturn => {
   const { simulate } = useSimulate()
   const { wasmFetch } = useLCD()
+  const { contractOrDenomMap, tokenInfo } = useNetwork()
   const { data: poolInfoList = [], refetch } = useReactQuery(
     [QueryKeyEnum.POOL, pairTypeList],
     async () => {
@@ -50,8 +53,12 @@ const usePoolList = ({
             simulate,
             token_0_ContractOrDenom: item.token_0_ContractOrDenom,
           })
+
           return {
             symbol: item.symbol,
+            otherSymbol:
+              tokenInfo[contractOrDenomMap[poolInfo.token_1_ContractOrDenom]]
+                .symbol,
             poolInfo,
           }
         })

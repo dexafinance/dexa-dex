@@ -69,7 +69,6 @@ const useBuy = ({
   toTokenSymbol: string
   pairContract: ContractAddr
 }): UseBuyReturn => {
-  console.log('useBuy', pairContract)
   const { balance: uusdBal } = useMyBalance({
     contractOrDenom: TokenDenomEnum.uusd,
   })

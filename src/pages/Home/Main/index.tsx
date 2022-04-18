@@ -6,7 +6,14 @@ import { STYLE, COLOR } from 'consts'
 
 import { View, Modal, FormText, Row } from 'components'
 
-import { PairType, RoutePath, TokenType, DexEnum, TradeTypeEnum } from 'types'
+import {
+  PairType,
+  RoutePath,
+  TokenType,
+  DexEnum,
+  TradeTypeEnum,
+  TokenKeyEnum,
+} from 'types'
 
 import useRoute from 'hooks/common/useRoute'
 import useLayout from 'hooks/common/useLayout'
@@ -21,6 +28,8 @@ import NoTokenSelected from './NoTokenSelected'
 // import TxInfoNew from './TxInfoNew'
 import TxInfoSplitView from './TxInfoSplitView'
 import AnalyticsCandle from './AnalyticsCandle'
+
+import useNetwork from 'hooks/common/useNetwork'
 
 const StyledContainer = styled(View)`
   max-width: 100%;
@@ -69,12 +78,13 @@ const StyledTokenListBox = styled(View)``
 
 const Main = (): ReactElement => {
   const { routeParams } = useRoute<RoutePath.home>()
-  const tokenSymbol = routeParams?.symbol || 'Luna'
+  const tokenSymbol =
+    routeParams?.symbol || TokenKeyEnum.LUNA + '_' + TokenKeyEnum.UST
   // const dex = routeParams?.dex || DexEnum.astroport
   // const limitOrder = routeParams?.limitOrder || 1
 
   const { isTabletWidth, isMobileWidth } = useLayout()
-
+  const { tokenInfo } = useNetwork()
   const [showList, setShowList] = useState(false)
 
   const closeModal = (): void => {
@@ -84,8 +94,14 @@ const Main = (): ReactElement => {
   const tokenListReturn = useTokenList()
   const { sortedList } = tokenListReturn
 
+  const symbols = tokenSymbol.split('_')
+
   const selectedToken = useMemo(() => {
-    return sortedList.find((x) => x.token.symbol === tokenSymbol)
+    return sortedList.find(
+      (x) =>
+        x.token.symbol === symbols[0] &&
+        tokenInfo[x.token.pairList[0].base].symbol === symbols[1]
+    )
   }, [sortedList, tokenSymbol])
 
   const [selectedPairToken, setSelectedPairToken] = useState<{

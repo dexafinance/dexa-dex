@@ -7,7 +7,7 @@ export enum TokenDenomEnum {
 
 export enum TokenSymbolEnum {
   UST = 'UST',
-  Luna = 'Luna',
+  LUNA = 'LUNA',
 }
 
 // Native currencies
@@ -15,7 +15,7 @@ export type uUST = string & NominalType<TokenDenomEnum.uusd>
 export type UST = string & NominalType<TokenSymbolEnum.UST>
 
 export type uLuna = string & NominalType<TokenDenomEnum.uluna>
-export type Luna = string & NominalType<TokenSymbolEnum.Luna>
+export type Luna = string & NominalType<TokenSymbolEnum.LUNA>
 
 export type uNative = uUST | uLuna
 export type Native = UST | Luna
