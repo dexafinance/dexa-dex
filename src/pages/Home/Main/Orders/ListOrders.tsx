@@ -7,6 +7,7 @@ import { COLOR, UTIL, STYLE } from 'consts'
 import { FormText, View, Row } from 'components'
 import { UseMyOrderReturn } from 'hooks/common/trade/useMyOrder'
 import { IconCircleX, IconMoodEmpty } from '@tabler/icons'
+import { TradeTypeEnum } from 'types'
 
 const StyledContainer = styled(View)`
   @media ${STYLE.media.mobile} {
@@ -78,7 +79,11 @@ const ListOrders = ({
                 }}
               >
                 <FormText
-                  color={item.type === 'Buy' ? COLOR.success : COLOR.error}
+                  color={
+                    item.type === TradeTypeEnum.buy
+                      ? COLOR.success
+                      : COLOR.error
+                  }
                 >
                   {item.type}
                 </FormText>

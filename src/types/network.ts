@@ -80,6 +80,7 @@ export enum DexEnum {
 export type PairType = {
   dex: DexEnum
   base: TokenKeyEnum
+  otherToken: TokenKeyEnum
   pair: ContractAddr
   lp: ContractAddr
 }

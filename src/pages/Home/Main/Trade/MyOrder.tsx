@@ -7,9 +7,10 @@ import { COLOR, UTIL, STYLE } from 'consts'
 import { FormText, View, Row } from 'components'
 import { UseMyOrderReturn } from 'hooks/common/trade/useMyOrder'
 import { IconCircleX, IconMoodEmpty } from '@tabler/icons'
-import { addressTokenMap, testnetAddressTokenMap } from 'consts/whitelist'
+// import { addressTokenMap, testnetAddressTokenMap } from 'consts/whitelist'
 
 import useNetwork from 'hooks/common/useNetwork'
+import { TradeTypeEnum } from 'types'
 
 const StyledContainer = styled(View)`
   @media ${STYLE.media.mobile} {
@@ -40,8 +41,8 @@ const MyOrder = ({
 }): ReactElement => {
   //tokenForBuySymbol, tokenToBuySymbol
   const { limitOrderList, setOrderId } = myOrderReturn
-  const { isMainnet } = useNetwork()
-  const addrTokenMap = isMainnet ? addressTokenMap : testnetAddressTokenMap
+  const { contractOrDenomMap } = useNetwork()
+  // const addrTokenMap = isMainnet ? addressTokenMap : testnetAddressTokenMap
 
   return (
     <StyledContainer>
@@ -83,7 +84,11 @@ const MyOrder = ({
                 }}
               >
                 <FormText
-                  color={item.type === 'Buy' ? COLOR.success : COLOR.error}
+                  color={
+                    item.type === TradeTypeEnum.buy
+                      ? COLOR.success
+                      : COLOR.error
+                  }
                 >
                   {item.type}
                 </FormText>
@@ -101,11 +106,17 @@ const MyOrder = ({
               </View>
               <View style={{ flex: 1, alignItems: 'center' }}>
                 <FormText>{`${UTIL.formatAmount(item.toBuyAmount)} ${
-                  addrTokenMap[item.offerContractOrDenom]
+                  item.type === TradeTypeEnum.buy
+                    ? contractOrDenomMap[item.askContractOrDenom]
+                    : contractOrDenomMap[item.offerContractOrDenom]
                 }`}</FormText>
                 <FormText fontType="R14">{`(${UTIL.formatAmount(
                   item.toSellAmount
-                )} ${addrTokenMap[item.askContractOrDenom]})`}</FormText>
+                )} ${
+                  item.type === TradeTypeEnum.buy
+                    ? contractOrDenomMap[item.offerContractOrDenom]
+                    : contractOrDenomMap[item.askContractOrDenom]
+                })`}</FormText>
               </View>
               <StyledCancleButton
                 onClick={(): void => {

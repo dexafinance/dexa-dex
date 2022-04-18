@@ -12,6 +12,7 @@ import {
   PostTxStatus,
   TokenDenomEnum,
   ContractAddr,
+  TradeTypeEnum,
 } from 'types'
 
 import usePostTx from '../usePostTx'
@@ -37,7 +38,7 @@ export type UseMyOrderReturn = {
   limitOrderList: {
     orderId: number
     pairContract: ContractAddr
-    type: string
+    type: TradeTypeEnum
     price: Token
     toBuyAmount: uToken
     toSellAmount: uToken
@@ -70,7 +71,7 @@ const useMyOrder = ({
 
   const { getCancelOrderMsgs } = useFabricator()
   const connectedWallet = useConnectedWallet()
-  const { limitOrder } = useNetwork()
+  const { limitOrder, tokenInfo, pairContractMap } = useNetwork()
 
   const { poolInfo } = usePool({
     pairContract,
@@ -94,9 +95,21 @@ const useMyOrder = ({
 
   const limitOrderList = useMemo(() => {
     return _.map(orders, (item) => {
-      const type = item.offerContractOrDenom === forBuyDenom ? 'Buy' : 'Sell'
+      // console.log(
+      //   'debug',
+      //   item,
+      //   item.offerContractOrDenom,
+      //   pairContractMap[item.pairContract].base,
+      //   tokenInfo[pairContractMap[item.pairContract].base].contractOrDenom,
+      //   item.askContractOrDenom
+      // )
+      const type =
+        item.offerContractOrDenom ===
+        tokenInfo[pairContractMap[item.pairContract].base].contractOrDenom
+          ? TradeTypeEnum.buy
+          : TradeTypeEnum.sell
       const price =
-        type === 'Buy'
+        type === TradeTypeEnum.buy
           ? (UTIL.toBn(item.offerAmount)
               .div(item.askAmount)
               .toString(10) as Token)
@@ -108,8 +121,10 @@ const useMyOrder = ({
         pairContract: item.pairContract,
         type,
         price,
-        toBuyAmount: type === 'Buy' ? item.askAmount : item.offerAmount,
-        toSellAmount: type === 'Buy' ? item.offerAmount : item.askAmount,
+        toBuyAmount:
+          type === TradeTypeEnum.buy ? item.askAmount : item.offerAmount,
+        toSellAmount:
+          type === TradeTypeEnum.buy ? item.offerAmount : item.askAmount,
         offerContractOrDenom: item.offerContractOrDenom,
         askContractOrDenom: item.askContractOrDenom,
       }

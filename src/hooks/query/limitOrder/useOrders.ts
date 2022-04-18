@@ -8,6 +8,7 @@ import {
   ContractAddr,
   uToken,
   TokenDenomEnum,
+  TradeTypeEnum,
 } from 'types'
 import useReactQuery from 'hooks/common/useReactQuery'
 
@@ -19,6 +20,7 @@ export type ExtractLimitOrdersType = {
   askAmount: uToken
   offerContractOrDenom: ContractAddr | TokenDenomEnum
   askContractOrDenom: ContractAddr | TokenDenomEnum
+  action: TradeTypeEnum
 }
 
 export type UseTokenInfoReturn = {

@@ -555,12 +555,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MIAW,
         pair: 'terra12mzh5cp6tgc65t2cqku5zvkjj8xjtuv5v9whyd' as ContractAddr,
         lp: 'terra1hvz34zmk4h6k896t94vd8d5qjdchhnkdndunzx' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.ALTE,
+        otherToken: TokenKeyEnum.MIAW,
         pair: 'terra1c7uxt89gap5gcclvhtqvx3wpd0ee2dpjhf0ct6' as ContractAddr,
         lp: 'terra19umy5s6eal7kekrddw792wmcftxvsktc2wxzpf' as ContractAddr,
       },
@@ -572,12 +574,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.Luna,
         pair: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552' as ContractAddr,
         lp: 'terra1m24f7k4g66gnh9f7uncp32p722v0kyt3q4l3u5' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.Luna,
         pair: 'terra1tndcaqxkpc5ce9qee5ggqf430mr2z3pefe5wj6' as ContractAddr,
         lp: 'terra17dkr9rnmtmu7x4azrpupukvur2crnptyfvsrvr' as ContractAddr,
       },
@@ -589,12 +593,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.bLuna,
         pair: 'terra1j66jatn3k50hjtg2xemnjm8s7y8dws9xqa5y8w' as ContractAddr,
         lp: 'terra1htw7hm40ch0hacm8qpgd24sus4h0tq3hsseatl' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.bLuna,
         pair: 'terra1jxazgm67et0ce260kvrpfv50acuushpjsz2y0p' as ContractAddr,
         lp: 'terra1nuy34nwnsh53ygpc4xprlj263cztw7vc99leh2' as ContractAddr,
       },
@@ -606,6 +612,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.TWD,
         pair: 'terra1etdkg9p0fkl8zal6ecp98kypd32q8k3ryced9d' as ContractAddr,
         lp: 'terra1c9wr85y8p8989tr58flz5gjkqp8q2r6murwpm9' as ContractAddr,
       },
@@ -617,12 +624,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.STT,
         pair: 'terra1m95udvvdame93kl6j2mk8d03kc982wqgr75jsr' as ContractAddr,
         lp: 'terra14p4srhzd5zng8vghly5artly0s53dmryvg3qc6' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.STT,
         pair: 'terra19pg6d7rrndg4z4t0jhcd7z9nhl3p5ygqttxjll' as ContractAddr,
         lp: 'terra1uwhf02zuaw7grj6gjs7pxt5vuwm79y87ct5p70' as ContractAddr,
       },
@@ -634,6 +643,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.LOTA,
         pair: 'terra1pn20mcwnmeyxf68vpt3cyel3n57qm9mp289jta' as ContractAddr,
         lp: 'terra1t4xype7nzjxrzttuwuyh9sglwaaeszr8l78u6e' as ContractAddr,
       },
@@ -645,6 +655,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.bETH,
         pair: 'terra1c0afrdc5253tkp5wt7rxhuj42xwyf2lcre0s7c' as ContractAddr,
         lp: 'terra1jvewsf7922dm47wr872crumps7ktxd7srwcgte' as ContractAddr,
       },
@@ -656,12 +667,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.ANC,
         pair: 'terra1qr2k6yjjd5p2kaewqvg93ag74k6gyjr7re37fs' as ContractAddr,
         lp: 'terra1wmaty65yt7mjw6fjfymkd9zsm6atsq82d9arcd' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.ANC,
         pair: 'terra1gm5p3ner9x9xpwugn9sp6gvhd0lwrtkyrecdn3' as ContractAddr,
         lp: 'terra1gecs98vcuktyfkrve9czrpgtg0m3aq586x6gzm' as ContractAddr,
       },
@@ -673,12 +686,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MIR,
         pair: 'terra143xxfw5xf62d5m32k3t4eu9s82ccw80lcprzl9' as ContractAddr,
         lp: 'terra17trxzqjetl0q6xxep0s2w743dhw2cay0x47puc' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MIR,
         pair: 'terra1amv303y8kzxuegvurh0gug2xe9wkgj65enq2ux' as ContractAddr,
         lp: 'terra17gjf2zehfvnyjtdgua9p9ygquk6gukxe7ucgwh' as ContractAddr,
       },
@@ -690,12 +705,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MINE,
         pair: 'terra134m8n2epp0n40qr08qsvvrzycn2zq4zcpmue48' as ContractAddr,
         lp: 'terra16unvjel8vvtanxjpw49ehvga5qjlstn8c826qe' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MINE,
         pair: 'terra178jydtjvj4gw8earkgnqc80c3hrmqj4kw2welz' as ContractAddr,
         lp: 'terra1rqkyau9hanxtn63mjrdfhpnkpddztv3qav0tq2' as ContractAddr,
       },
@@ -707,6 +724,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.SPEC,
         pair: 'terra1tn8ejzw8kpuc87nu42f6qeyen4c7qy35tl8t20' as ContractAddr,
         lp: 'terra1y9kxxm97vu4ex3uy0rgdr5h2vt7aze5sqx7jyl' as ContractAddr,
       },
@@ -718,30 +736,33 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.VKR,
         pair: 'terra15s2wgdeqhuc4gfg7sfjyaep5cch38mwtzmwqrx' as ContractAddr,
         lp: 'terra1lw36qqz72mxajrfgkv24lahudq3ehmkpc305yc' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.VKR,
         pair: 'terra1e59utusv5rspqsu8t37h5w887d9rdykljedxw0' as ContractAddr,
         lp: 'terra17fysmcl52xjrs8ldswhz7n6mt37r9cmpcguack' as ContractAddr,
       },
     ],
   },
-
   {
     ...tokenInfo[TokenKeyEnum.ALTE],
     pairList: [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.ALTE,
         pair: 'terra18adm0emn6j3pnc90ldechhun62y898xrdmfgfz' as ContractAddr,
         lp: 'terra1x3musrr03tl3dy9xhagm6r5nthwwxgx0hezc79' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.ALTE,
         pair: 'terra1kh2g4fnhvqtnwwpqa84eywn72ve9vdkp5chhlx' as ContractAddr,
         lp: 'terra1c5khguw3ensqawepuxh7vdzfpxa9ulwauhm0r5' as ContractAddr,
       },
@@ -753,6 +774,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.XTRA,
         pair: 'terra1uvchkwq4kv0vhy23c78hyy72zks2hqtpctklh2' as ContractAddr,
         lp: 'terra1pndz6cy4t42qae4m7avkjjyu6vlcrlrx3hep0k' as ContractAddr,
       },
@@ -764,6 +786,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.aUST,
         pair: 'terra1z50zu7j39s2dls8k9xqyxc89305up0w7f7ec3n' as ContractAddr,
         lp: 'terra1umup8qvslkayek0af8u7x2r3r5ndhk2fwhdxz5' as ContractAddr,
       },
@@ -775,6 +798,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.GLOW,
         pair: 'terra1p44kn7l233p7gcj0v3mzury8k7cwf4zt6gsxs5' as ContractAddr,
         lp: 'terra1khm4az2cjlzl76885x2n7re48l9ygckjuye0mt' as ContractAddr,
       },
@@ -786,50 +810,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
-        pair: 'terra1ycp5lnn0qu4sq4wq7k63zax9f05852xt9nu3yc' as ContractAddr,
-        lp: 'terra1l0wqwge0vtfmukx028pluxsr7ee2vk8gl5mlxr' as ContractAddr,
-      },
-    ],
-  },
-  {
-    ...tokenInfo[TokenKeyEnum.XTRA],
-    pairList: [
-      {
-        dex: DexEnum.terraswap,
-        base: TokenKeyEnum.UST,
-        pair: 'terra1uvchkwq4kv0vhy23c78hyy72zks2hqtpctklh2' as ContractAddr,
-        lp: 'terra1pndz6cy4t42qae4m7avkjjyu6vlcrlrx3hep0k' as ContractAddr,
-      },
-    ],
-  },
-  {
-    ...tokenInfo[TokenKeyEnum.aUST],
-    pairList: [
-      {
-        dex: DexEnum.terraswap,
-        base: TokenKeyEnum.UST,
-        pair: 'terra1z50zu7j39s2dls8k9xqyxc89305up0w7f7ec3n' as ContractAddr,
-        lp: 'terra1umup8qvslkayek0af8u7x2r3r5ndhk2fwhdxz5' as ContractAddr,
-      },
-    ],
-  },
-  {
-    ...tokenInfo[TokenKeyEnum.GLOW],
-    pairList: [
-      {
-        dex: DexEnum.terraswap,
-        base: TokenKeyEnum.UST,
-        pair: 'terra1p44kn7l233p7gcj0v3mzury8k7cwf4zt6gsxs5' as ContractAddr,
-        lp: 'terra1khm4az2cjlzl76885x2n7re48l9ygckjuye0mt' as ContractAddr,
-      },
-    ],
-  },
-  {
-    ...tokenInfo[TokenKeyEnum.ATLO],
-    pairList: [
-      {
-        dex: DexEnum.terraswap,
-        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.ATLO,
         pair: 'terra1ycp5lnn0qu4sq4wq7k63zax9f05852xt9nu3yc' as ContractAddr,
         lp: 'terra1l0wqwge0vtfmukx028pluxsr7ee2vk8gl5mlxr' as ContractAddr,
       },
@@ -841,12 +822,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.LOCAL,
         pair: 'terra1ltjtvt27ra3vrhyfmv4x4wymez7kwal5tzx3mq' as ContractAddr,
         lp: '' as ContractAddr,
       },
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.LOCAL,
         pair: 'terra1296jw27cq8svlg4ywm8t84u448p3zs7mcqg9ra' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -858,12 +841,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MARS,
         pair: 'terra15sut89ms4lts4dd5yrcuwcpctlep3hdgeu729f' as ContractAddr,
         lp: '' as ContractAddr,
       },
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MARS,
         pair: 'terra19wauh79y42u5vt62c5adt2g5h4exgh26t3rpds' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -875,6 +860,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.LUNAX,
         pair: 'terra1llhpkqd5enjfflt27u3jx0jcp5pdn6s9lfadx3' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -886,12 +872,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.LUNAX,
         pair: 'terra1zrzy688j8g6446jzd88vzjzqtywh6xavww92hy' as ContractAddr,
         lp: '' as ContractAddr,
       },
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.LUNAX,
         pair: 'terra1qswfc7hmmsnwf7f2nyyx843sug60urnqgz75zu' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -910,6 +898,7 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.PRISM,
         pair: 'terra10nfk6fcz5nc5uru964qmpels9ctg6j0vczjgl7' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -921,12 +910,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.PRISM,
+        otherToken: TokenKeyEnum.xPRISM,
         pair: 'terra1urt608par6rkcancsjzm76472phptfwq397gpm' as ContractAddr,
         lp: '' as ContractAddr,
       },
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.PRISM,
+        otherToken: TokenKeyEnum.xPRISM,
         pair: 'terra1c868juk7lk9vuvetf0644qgxscsu4xwag6yaxs' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -938,12 +929,14 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.ASTRO,
         pair: 'terra1pufczag48fwqhsmekfullmyu02f93flvfc9a25' as ContractAddr,
         lp: '' as ContractAddr,
       },
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.ASTRO,
         pair: 'terra1l7xu2rl3c7qmtx3r5sd2tz25glf6jh8ul7aag7' as ContractAddr,
         lp: '' as ContractAddr,
       },
@@ -955,84 +948,13 @@ const mainnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.ASTRO,
+        otherToken: TokenKeyEnum.xASTRO,
         pair: 'terra14q2h9nce4spj8n74g6kppj3yf86qx8hsrqngfh' as ContractAddr,
         lp: '' as ContractAddr,
       },
     ],
   },
 ]
-
-export const addressTokenMap: Record<string, TokenKeyEnum> = {
-  terra1cl7whtrqmz5ldr553q69qahck8xvk80fm33qjx: TokenKeyEnum.ATLO,
-  terra13zx49nk8wjavedjzu8xkk95r3t0ta43c9ptul7: TokenKeyEnum.GLOW,
-  terra1kvjscdgwuvwc6uzm4rqfjl6nlmuhj28tequlnc: TokenKeyEnum.XTRA,
-  terra1hzh9vpxhsk8253se0vv5jj6etdvxu3nv8z07zu: TokenKeyEnum.aUST,
-  terra1vtr50tw0pgqpes34zqu60n554p9x4950wk8f63: TokenKeyEnum.MIAW,
-  uusd: TokenKeyEnum.UST,
-  uluna: TokenKeyEnum.Luna,
-  terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp: TokenKeyEnum.bLuna,
-  terra19djkaepjjswucys4npd5ltaxgsntl7jf0xz7w6: TokenKeyEnum.TWD,
-  terra13xujxcrc9dqft4p9a8ls0w3j0xnzm6y2uvve8n: TokenKeyEnum.STT,
-  terra1ez46kxtulsdv07538fh5ra5xj8l68mu8eg24vr: TokenKeyEnum.LOTA,
-  terra1dzhzukyezv0etz22ud940z7adyv7xgcjkahuun: TokenKeyEnum.bETH,
-  terra14z56l0fp2lsf86zy3hty2z47ezkhnthtr9yq76: TokenKeyEnum.ANC,
-  terra15gwkyepfc6xgca5t5zefzwy42uts8l2m4g40k6: TokenKeyEnum.MIR,
-  terra1vxtwu4ehgzz77mnfwrntyrmgl64qjs75mpwqaz: TokenKeyEnum.mAAPL,
-  terra1g4x2pzmkc9z3mseewxf758rllg08z3797xly0n: TokenKeyEnum.mABNB,
-  terra1qelfthdanju7wavc5tq0k5r0rhsyzyyrsn09qy: TokenKeyEnum.mAMC,
-  terra18ej5nsuu867fkx4tuy2aglpvqjrkcrjjslap3z: TokenKeyEnum.mAMD,
-  terra165nd2qmrtszehcfrntlplzern7zl4ahtlhd5t2: TokenKeyEnum.mAMZN,
-  terra1w7zgkcyt7y4zpct9dw8mw362ywvdlydnum2awa: TokenKeyEnum.mBABA,
-  terra1rhhvx8nzfrx5fufkuft06q5marfkucdqwq5sjw: TokenKeyEnum.mBTC,
-  terra18wayjpyq28gd970qzgjfmsjj7dmgdk039duhph: TokenKeyEnum.mCOIN,
-  terra19ya4jpvjvvtggepvmmj6ftmwly3p7way0tt08r: TokenKeyEnum.mDOT,
-  terra1dk3g53js3034x4v5c3vavhj2738une880yu6kx: TokenKeyEnum.mETH,
-  terra1mqsjugsugfprn3cvgxsrr8akkvdxv2pzc74us7: TokenKeyEnum.mFB,
-  terra1l5lrxtwd98ylfy09fn866au6dp76gu8ywnudls: TokenKeyEnum.mGLXY,
-  terra1m6j6j9gw728n82k78s0j9kq8l5p6ne0xcc820p: TokenKeyEnum.mGME,
-  terra1h8arz2k547uvmpxctuwush3jzc8fun4s96qgwt: TokenKeyEnum.mGOOGL,
-  terra137drsu8gce5thf6jr5mxlfghw36rpljt3zj73v: TokenKeyEnum.mGS,
-  terra10h7ry7apm55h4ez502dqdv9gr53juu85nkd4aq: TokenKeyEnum.mIAU,
-  terra1227ppwxxj3jxz8cfgq00jgnxqcny7ryenvkwj6: TokenKeyEnum.mMSFT,
-  terra1jsxngqasf2zynj5kyh0tgq9mj3zksa5gk35j4k: TokenKeyEnum.mNFLX,
-  terra1csk6tc7pdmpr782w527hwhez6gfv632tyf72cp: TokenKeyEnum.mQQQ,
-  terra1kscs6uhrqwy6rx5kuw5lwpuqvm3t6j2d6uf2lp: TokenKeyEnum.mSLV,
-  terra1aa00lpfexyycedfg5k2p60l9djcmw0ue5l8fhc: TokenKeyEnum.mSPY,
-  terra1u43zu5amjlsgty5j64445fr9yglhm53m576ugh: TokenKeyEnum.mSQ,
-  terra14y5affaarufk3uscy2vr6pe6w6zqf2wpjzn5sh: TokenKeyEnum.mTSLA,
-  terra1cc3enj9qgchlrj34cnzhwuclc4vl2z3jl7tkqg: TokenKeyEnum.mTWTR,
-  terra1lvmx8fsagy70tv0fhmfzdw9h6s3sy4prz38ugf: TokenKeyEnum.mUSO,
-  terra19cmt6vzvhnnnfsmccaaxzy2uaj06zjktu6yzjx: TokenKeyEnum.mVIXY,
-  terra17jnhankdfl8vyzj6vejt7ag8uz0cjc9crkl2h7: TokenKeyEnum.DPH,
-  terra1kcthelkax4j9x8d3ny6sdag0qmxxynl3qtcrpy: TokenKeyEnum.MINE,
-  terra1s5eczhe0h0jutf46re52x5z4r03c8hupacxmdr: TokenKeyEnum.SPEC,
-  terra1dy9kmlm4anr92e42mrkjwzyvfqwz66un00rwr5: TokenKeyEnum.VKR,
-  terra12897djskt9rge8dtmm86w654g7kzckkd698608: TokenKeyEnum.PSI,
-  terra1xfsdgcemqwxp4hhnyk4rle6wr22sseq7j07dnn: TokenKeyEnum.KUJI,
-  terra15tztd7v9cmv0rhyh37g843j8vfuzp8kw0k5lqv: TokenKeyEnum.ALTE,
-  terra1xj49zyqrwpv5k928jwfpfy2ha668nwdgkwlrg3: TokenKeyEnum.ASTRO,
-  terra1php5m8a6qd68z02t3zpw4jv2pj4vgw4wz0t8mz: TokenKeyEnum.WHALE,
-  terra100yeqvww74h4yaejj6h733thgcafdaukjtw397: TokenKeyEnum.APOLLO,
-  terra1m3tdguf59xq3pa2twk5fjte5g6szj5y9x5npy7: TokenKeyEnum.LUNI,
-  terra1r5506ckw5tfr3z52jwlek8vg9sn3yflrqrzfsc: TokenKeyEnum.TLAND,
-  terra1hnezwjqlhzawcrfysczcxs6xqxu2jawn729kkf: TokenKeyEnum.ORNE,
-  terra13awdgcx40tz5uygkgm79dytez3x87rpg4uhnvu: TokenKeyEnum.PLY,
-  terra140k6k2pmh2lmy4q4wyz5znqmtgwvs3gkgfeevq: TokenKeyEnum.tSHIBA,
-  terra1vchw83qt25j89zqwdpmdzj722sqxthnckqzxxp: TokenKeyEnum.LOCAL,
-  terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n: TokenKeyEnum.MARS,
-  terra17y9qkl8dfkeg4py7n0g5407emqnemc3yqk5rup: TokenKeyEnum.LUNAX,
-  terra1dh9478k2qvqhqeajhn75a2a7dsnf74y5ukregw: TokenKeyEnum.PRISM,
-  terra1042wzrwg2uk6jqxjm34ysqquyr9esdgm5qyswz: TokenKeyEnum.xPRISM,
-  terra14lpnyzc9z4g3ugr4lhm8s4nle0tq8vcltkhzh7: TokenKeyEnum.xASTRO,
-}
-
-export const testnetAddressTokenMap: Record<string, TokenKeyEnum> = {
-  uusd: TokenKeyEnum.UST,
-  uluna: TokenKeyEnum.Luna,
-  terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x: TokenKeyEnum.bLuna,
-  terra1qu5fractk8lgq23gh8efvlywal6rsd9ds8r73l: TokenKeyEnum.MIAW,
-  terra10llyp6v3j3her8u3ce66ragytu45kcmd9asj3u: TokenKeyEnum.MIR,
-}
 
 const testnetTokenList: TokenType[] = [
   {
@@ -1041,12 +963,14 @@ const testnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.Luna,
         pair: 'terra1e49fv4xm3c2znzpxmxs0z2z6y74xlwxspxt38s' as ContractAddr,
         lp: 'terra1dqjpcqej9nxej80u0p56rhkrzlr6w8tp7txkmj' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.Luna,
         pair: 'terra156v8s539wtz0sjpn8y8a8lfg8fhmwa7fy22aff' as ContractAddr,
         lp: 'terra1srf30cs8ax73y59gm64lkztnx0zexl8fpv3kx2' as ContractAddr,
       },
@@ -1058,25 +982,16 @@ const testnetTokenList: TokenType[] = [
       {
         dex: DexEnum.astroport,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.bLuna,
         pair: 'terra1esle9h9cjeavul53dqqws047fpwdhj6tynj5u4' as ContractAddr,
         lp: 'terra14e7z2ll6eweq6cxe6qkvl28hatapmw2uflxcyt' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.Luna,
+        otherToken: TokenKeyEnum.bLuna,
         pair: 'terra13e4jmcjnwrauvl2fnjdwex0exuzd8zrh5xk29v' as ContractAddr,
         lp: 'terra1tj4pavqjqjfm0wh73sh7yy9m4uq3m2cpmgva6n' as ContractAddr,
-      },
-    ],
-  },
-  {
-    ...testnetTokenInfo[TokenKeyEnum.MIAW],
-    pairList: [
-      {
-        dex: DexEnum.terraswap,
-        base: TokenKeyEnum.UST,
-        pair: 'terra1834ku9y7s2swyp2r090pc29c4s06hy9n9drwvy' as ContractAddr,
-        lp: 'terra18e4mudt7kdml6lma5fhsydszxpexmxf2ez9hpn' as ContractAddr,
       },
     ],
   },
@@ -1086,6 +1001,7 @@ const testnetTokenList: TokenType[] = [
       {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.MIR,
         pair: 'terra1cz6qp8lfwht83fh9xm9n94kj04qc35ulga5dl0' as ContractAddr,
         lp: 'terra1zrryfhlrpg49quz37u90ck6f396l4xdjs5s08j' as ContractAddr,
       },
@@ -1166,6 +1082,4 @@ export default {
   testnetLimitOrder,
   tokenInfo,
   testnetTokenInfo,
-  addressTokenMap,
-  testnetAddressTokenMap,
 }

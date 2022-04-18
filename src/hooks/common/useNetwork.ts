@@ -10,6 +10,8 @@ import {
   LpStakingType,
   TokenDenomEnum,
   TokenInfoType,
+  TokenKeyEnum,
+  PairType,
 } from 'types'
 
 const useNetwork = (): {
@@ -20,6 +22,9 @@ const useNetwork = (): {
   lpOfLpList: LpofLpType[]
   lpStakingList: LpStakingType[]
   limitOrder: ContractAddr
+  contractOrDenomMap: Record<string, TokenKeyEnum>
+  pairContractMap: Record<string, PairType>
+  tokenInfo: Record<TokenKeyEnum, TokenInfoType>
   getSymbolByContractOrDenom: (
     contractOrDenom: ContractAddr | TokenDenomEnum
   ) => string
@@ -86,6 +91,25 @@ const useNetwork = (): {
   // const feeToken = whitelist.find((x) => x.symbol === 'UST')! as TokenType
   const feeToken = tokenInfo.UST
 
+  const pairContractMap = useMemo(() => {
+    let pairContractMapTemp: Record<string, PairType> = {}
+    for (const k of whitelist) {
+      for (const pair of k.pairList) pairContractMapTemp[pair.pair] = pair
+    }
+
+    return pairContractMapTemp
+  }, [isMainnet])
+
+  const contractOrDenomMap = useMemo(() => {
+    let contractOrDenomMapTemp: Record<string, TokenKeyEnum> = {}
+    let k: keyof typeof tokenInfo
+    for (k in tokenInfo) {
+      contractOrDenomMapTemp[tokenInfo[k].contractOrDenom as string] = k
+    }
+
+    return contractOrDenomMapTemp
+  }, [isMainnet])
+
   return {
     isMainnet,
     whitelist,
@@ -94,6 +118,9 @@ const useNetwork = (): {
     limitOrder,
     chainId: network.chainID,
     lcd: network.lcd,
+    contractOrDenomMap,
+    pairContractMap,
+    tokenInfo,
     getSymbolByContractOrDenom,
     feeToken,
     mantleApi,
