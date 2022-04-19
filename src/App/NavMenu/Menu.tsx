@@ -57,6 +57,12 @@ const Menu = (): ReactElement => {
       to: RoutePath.aboutus,
       title: 'About Us',
     },
+    {
+      to: RoutePath.how_it_works,
+      title: 'How it works',
+      type: 'EXTERNAL_URL',
+      url: 'https://buttery-elderberry-89d.notion.site/How-it-works-db3352b233574f7b9433985223b04d36',
+    },
   ]
 
   const selectedMenu = menuList.find((x) =>
@@ -98,7 +104,7 @@ const Menu = (): ReactElement => {
                 lpType: LpProvideTypeEnum.provide,
                 // limitOrder: 1,
                 // dex: DexEnum.astroport,
-                symbol: TokenKeyEnum.LUNA,
+                symbol: TokenKeyEnum.LUNA + '_' + TokenKeyEnum.UST,
               })
               setIsOpenMobileMenu(false)
             }}
@@ -111,27 +117,55 @@ const Menu = (): ReactElement => {
           <View style={{ padding: '0 22px' }}>
             {_.map(menuList, (menu, index) => {
               const isActive = menu.to.includes(pathname.split('/')[1])
-
-              return (
-                <StyledMenuItem
-                  key={`menuList-${index}`}
-                  onClick={(): void => {
-                    push(menu.to)
-                    setIsOpenMobileMenu(false)
-                  }}
-                >
-                  <FormText
-                    fontType="B16"
-                    style={{
-                      borderBottom: isActive
-                        ? `1px solid ${COLOR.primary._600}`
-                        : '1px solid #eeeeee00',
+              if (menu.type !== 'EXTERNAL_URL') {
+                return (
+                  <StyledMenuItem
+                    key={`menuList-${index}`}
+                    onClick={(): void => {
+                      push(menu.to)
+                      setIsOpenMobileMenu(false)
                     }}
                   >
-                    {menu.title}
-                  </FormText>
-                </StyledMenuItem>
-              )
+                    <FormText
+                      fontType="B16"
+                      style={{
+                        borderBottom: isActive
+                          ? `1px solid ${COLOR.primary._600}`
+                          : '1px solid #eeeeee00',
+                      }}
+                    >
+                      {menu.title}
+                    </FormText>
+                  </StyledMenuItem>
+                )
+              } else {
+                return (
+                  <StyledMenuItem
+                    key={`menuList-${index}`}
+                    // onClick={(): void => {
+                    //   push(menu.to)
+                    //   setIsOpenMobileMenu(false)
+                    // }}
+                  >
+                    <a
+                      href={menu.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FormText
+                        fontType="B16"
+                        style={{
+                          borderBottom: isActive
+                            ? `1px solid ${COLOR.primary._600}`
+                            : '1px solid #eeeeee00',
+                        }}
+                      >
+                        {menu.title}
+                      </FormText>
+                    </a>
+                  </StyledMenuItem>
+                )
+              }
             })}
           </View>
         </View>
@@ -146,7 +180,7 @@ const Menu = (): ReactElement => {
             lpType: LpProvideTypeEnum.provide,
             // limitOrder: 1,
             // dex: DexEnum.astroport,
-            symbol: TokenKeyEnum.LUNA,
+            symbol: TokenKeyEnum.LUNA + '_' + TokenKeyEnum.UST,
           })
         }
       >
@@ -163,25 +197,44 @@ const Menu = (): ReactElement => {
         {_.map(menuList, (menu, index) => {
           const isActive = menu.to.includes(pathname.split('/')[1])
 
-          return (
-            <StyledMenuItem
-              key={`menuList-${index}`}
-              onClick={(): void => {
-                push(menu.to)
-              }}
-            >
-              <FormText
-                fontType="B16"
-                style={{
-                  borderBottom: isActive
-                    ? `1px solid ${COLOR.primary._600}`
-                    : '1px solid #eeeeee00',
+          if (menu.type !== 'EXTERNAL_URL') {
+            return (
+              <StyledMenuItem
+                key={`menuList-${index}`}
+                onClick={(): void => {
+                  push(menu.to)
                 }}
               >
-                {menu.title}
-              </FormText>
-            </StyledMenuItem>
-          )
+                <FormText
+                  fontType="B16"
+                  style={{
+                    borderBottom: isActive
+                      ? `1px solid ${COLOR.primary._600}`
+                      : '1px solid #eeeeee00',
+                  }}
+                >
+                  {menu.title}
+                </FormText>
+              </StyledMenuItem>
+            )
+          } else {
+            return (
+              <StyledMenuItem key={`menuList-${index}`}>
+                <a href={menu.url} target="_blank" rel="noopener noreferrer">
+                  <FormText
+                    fontType="B16"
+                    style={{
+                      borderBottom: isActive
+                        ? `1px solid ${COLOR.primary._600}`
+                        : '1px solid #eeeeee00',
+                    }}
+                  >
+                    {menu.title}
+                  </FormText>
+                </a>
+              </StyledMenuItem>
+            )
+          }
         })}
       </StyledMenu>
     </StyledContainer>

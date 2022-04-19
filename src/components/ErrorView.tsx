@@ -52,7 +52,7 @@ const ErrorView = ({ error }: { error?: any }): ReactElement => {
                   lpType: LpProvideTypeEnum.provide,
                   // limitOrder: 1,
                   // dex: DexEnum.astroport,
-                  symbol: TokenKeyEnum.LUNA,
+                  symbol: TokenKeyEnum.LUNA + '_' + TokenKeyEnum.UST,
                 })
               }}
             >

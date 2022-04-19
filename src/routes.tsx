@@ -11,7 +11,7 @@ import { RoutePath } from 'types'
 const SwitchPages = (): ReactElement => {
   return (
     <Switch>
-      <Redirect exact from="/" to={RoutePath.home + '?symbol=Luna'} />
+      <Redirect exact from="/" to={RoutePath.home + '?symbol=LUNA_UST'} />
       <Route path={RoutePath.home} component={HomePage} />
       <Route path={RoutePath.lpTower} component={LpTowerPage} />
       <Route path={RoutePath.aboutus} component={DexaPaperPage} />

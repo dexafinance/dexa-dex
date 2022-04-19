@@ -19,6 +19,8 @@ import useRoute from 'hooks/common/useRoute'
 import useLayout from 'hooks/common/useLayout'
 import useTokenList from 'hooks/common/home/useTokenList'
 
+import Announcement from './Announcement'
+
 import TokenInfo from './TokenInfo'
 import Trade from './Trade'
 import OrderList from './OrderList'
@@ -30,11 +32,10 @@ import TxInfoSplitView from './TxInfoSplitView'
 import AnalyticsCandle from './AnalyticsCandle'
 
 import useNetwork from 'hooks/common/useNetwork'
-
+    // padding: 0 20px;
 const StyledContainer = styled(View)`
   max-width: 100%;
   @media ${STYLE.media.tablet} {
-    padding: 0 20px;
   }
 `
 
@@ -130,6 +131,7 @@ const Main = (): ReactElement => {
 
   return (
     <StyledContainer>
+      <Announcement url="https://buttery-elderberry-89d.notion.site/Beta-launching-announcement-d9eab80fbe054e6481b5d7583dbefee6"></Announcement>
       {isTabletWidth && (
         <Row
           onClick={(): void => {

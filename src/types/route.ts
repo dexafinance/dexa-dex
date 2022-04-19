@@ -9,6 +9,8 @@ export enum RoutePath {
 
   aboutus = '/about-us',
 
+  how_it_works = '/how-it-works',
+
   send = '/send',
 }
 
@@ -43,5 +45,6 @@ export type RouteParams = {
   }
   [RoutePath.dexa_paper]: undefined
   [RoutePath.aboutus]: undefined
+  [RoutePath.how_it_works]: undefined
   [RoutePath.send]: undefined
 }
