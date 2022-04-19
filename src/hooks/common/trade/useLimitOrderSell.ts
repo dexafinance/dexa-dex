@@ -116,7 +116,7 @@ const useLimitOrderSell = ({
   }, [offerAmount, askPrice])
 
   const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
-  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('1' as Token)
+  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.25' as Token)
   const feeTokenAmountErrMsg = useMemo(() => {
     return validateFormInputAmount({
       input: feeTokenAmount,

@@ -184,12 +184,13 @@ const useMyOrder = ({
     if (postTxResult.status === PostTxStatus.DONE) {
       initForm()
     }
-    const interval = setInterval(() => {
-      refetch()
-    }, 3000)
-
-    return (): void => clearInterval(interval)
-  }, [postTxResult.status])
+    if (!!walletAddress) {
+      const interval = setInterval(() => {
+        refetch()
+      }, 3000)
+      return (): void => clearInterval(interval)
+    }
+  }, [walletAddress, postTxResult.status])
 
   return {
     askTokenPrice,
