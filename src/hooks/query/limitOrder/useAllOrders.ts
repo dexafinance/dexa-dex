@@ -12,6 +12,8 @@ import {
 } from 'types'
 import useReactQuery from 'hooks/common/useReactQuery'
 
+import { UTIL } from 'consts'
+
 export type ExtractLimitOrdersType = {
   orderId: number
   feeAmount: uToken
@@ -65,10 +67,9 @@ const useAllOrders = ({
       enabled: !!limitOrderContract && !!pairContract,
     }
   )
-
   let { sellOrders, buyOrders, precision } = useMemo(() => {
     // sort price in descending order similar to trading list
-
+    // console.log('refetched', data)
     const orders = _.map(
       data?.orders.filter((x) => x.pair_addr === pairContract),
       (item) => {
@@ -101,12 +102,10 @@ const useAllOrders = ({
       }
     ).sort((a, b) => b.unitPrice - a.unitPrice)
 
-    let precision = 2
-    const minPrice = orders && orders.length > 0 ? orders[0].unitPrice : 10
-    if (minPrice >= 20) precision = 2
-    else if (minPrice >= 10) precision = 3
-    else if (minPrice >= 0.1) precision = 4
-    else precision = 6
+    // console.log('refetched', orders)
+
+    const precision = UTIL.getFixed(orders[0]?.unitPrice)
+    // console.log('precision', precision)
 
     // aggregate orders with same price
     // price step and precision
@@ -132,6 +131,9 @@ const useAllOrders = ({
             sellOrders[sellIndex].askAmount = (
               +sellOrders[sellIndex].askAmount + +o.askAmount
             ).toString() as uToken
+          } else {
+            sellOrders.push(o)
+            sellIndex++
           }
         }
       } else if (o.action === TradeTypeEnum.buy) {
@@ -156,6 +158,8 @@ const useAllOrders = ({
         }
       }
     })
+
+    console.log('refetched', sellOrders, buyOrders)
 
     return {
       sellOrders: sellOrders,

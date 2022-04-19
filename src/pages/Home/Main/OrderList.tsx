@@ -223,6 +223,12 @@ const OrderList = ({
     if (postTxResult.status === PostTxStatus.DONE) {
       refetch()
     }
+    const interval = setInterval(() => {
+      refetch()
+    }, 3000)
+
+    return (): void => clearInterval(interval)
+
   }, [postTxResult.status])
 
   // get latest BUY / SELL order to show on the order list so that user have good reference price

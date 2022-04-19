@@ -184,6 +184,11 @@ const useMyOrder = ({
     if (postTxResult.status === PostTxStatus.DONE) {
       initForm()
     }
+    const interval = setInterval(() => {
+      refetch()
+    }, 3000)
+
+    return (): void => clearInterval(interval)
   }, [postTxResult.status])
 
   return {
