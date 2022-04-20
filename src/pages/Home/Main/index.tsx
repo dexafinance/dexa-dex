@@ -23,7 +23,7 @@ import Announcement from './Announcement'
 
 import TokenInfo from './TokenInfo'
 import Trade from './Trade'
-import OrderList from './OrderList'
+// import OrderList from './OrderList'
 // import LpProvide from './LpProvide'
 import TokenList from './TokenList'
 import NoTokenSelected from './NoTokenSelected'
@@ -154,13 +154,11 @@ const Main = (): ReactElement => {
       <StyledLayout>
         {selectedPairToken && (
           <StyledTokenListBox>
-            <OrderList
-              // token={selectedPairToken.token}
+            {/* <OrderList
               tradeBase={selectedPairToken.pairType.base}
               pairContract={selectedPairToken.pairType.pair}
               {...selectedPairToken}
-              // dex={selectedPairToken.pairType.dex}
-            />
+            /> */}
             <TxInfoSplitView
               title="Recent selling transaction"
               tradeType={TradeTypeEnum.sell}
