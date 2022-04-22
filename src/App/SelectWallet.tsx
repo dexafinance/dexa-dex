@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { useRecoilState } from 'recoil'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import {
   ConnectType,
   useWallet,
@@ -104,6 +104,7 @@ const ErrorMessage = ({
 }
 
 const SelectWallet = (): ReactElement => {
+  const theme = useTheme()
   const [isOpen, setIsOpen] = useRecoilState(appStore.isOpenSelectWallet)
   const { connect, availableInstallTypes, install, status } = useWallet()
   const { openLink } = useLink()
@@ -166,7 +167,7 @@ const SelectWallet = (): ReactElement => {
               <View>
                 <FormText
                   fontType={'R16'}
-                  color={COLOR.brandColor.primary._400}
+                  color={theme.colors.primaryText}
                   style={{
                     flexDirection: 'row',
                     opacity: availableExt ? 1 : 0.3,
@@ -190,7 +191,7 @@ const SelectWallet = (): ReactElement => {
           >
             <FormText
               fontType={'R16'}
-              color={COLOR.brandColor.primary._400}
+              color={theme.colors.primaryText}
               style={{ flexDirection: 'row' }}
             >
               Terra Station<b>&nbsp;Mobile</b>
