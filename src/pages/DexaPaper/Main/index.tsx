@@ -1,11 +1,11 @@
 import { ReactElement } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 // import catFootprintPng from 'images/cat_footprint.png'
 import QrCode from 'qrcode.react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { toast } from 'react-toastify'
 
-import { STYLE, WHITELIST, COLOR } from 'consts'
+import { STYLE, WHITELIST } from 'consts'
 
 import { View, Card, FormText, LinkA } from 'components'
 //IconSquareCheck
@@ -35,12 +35,14 @@ const StyledDesc = styled(FormText)`
   align-items: center;
   white-space: pre-wrap;
   word-break: normal;
-  background-color: ${COLOR.white};
+  background-color: ${({ theme }): string => theme.colors.background};
+  color: ${({ theme }): string => theme.colors.primaryText};
   width: fit-content;
   padding: 0 5px;
 `
 
 const Main = (): ReactElement => {
+  const theme = useTheme()
   return (
     <StyledContainer>
       <StyledMainTitle fontType="B32">About us</StyledMainTitle>
@@ -97,16 +99,23 @@ const Main = (): ReactElement => {
           <StyledDesc>We're all ears from you. </StyledDesc>
           <StyledDesc>
             <LinkA link="https://docs.google.com/forms/d/e/1FAIpQLScRnfOUbe2lSAWnmUDSMaezg_42WXVLM9CU8iUW28GxKFiBKg/viewform">
-              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
+              <FormText
+                fontType={'R18'}
+                color={theme.colors.orderList.buyColor}
+              >
                 Click here to join our waiting list and give early feedback so
                 we can serve you better
               </FormText>
             </LinkA>
           </StyledDesc>
+          <StyledDesc>Or</StyledDesc>
           <StyledDesc>
             <LinkA link="https://discord.gg/ngQ3fVJD">
-              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
-                Or you can join our Discord for further discussion.
+              <FormText
+                fontType={'R18'}
+                color={theme.colors.orderList.buyColor}
+              >
+                Join our Discord for further discussion.
               </FormText>
             </LinkA>
           </StyledDesc>
@@ -139,37 +148,40 @@ const Main = (): ReactElement => {
           <br />
           <StyledDesc>Following are what on our roadmap:</StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.brandColor.primary._600} /> Support
-            limit order on astroport pool
+            <IconSquareCheck color={theme.colors.secondaryText} /> Support limit
+            order on astroport pool with many new pairs (PRISM, xASTRO, MARS,
+            LOCAL, KUJI, ...)
           </StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.brandColor.primary._600} /> Fee
-            payment in UST
+            <IconSquareCheck color={theme.colors.secondaryText} /> Fee payment
+            in UST, orders with higher fee will be prioritized to get executed
+            first
           </StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.brandColor.primary._600} /> Improve
-            UX, includes
+            <IconSquareCheck color={theme.colors.secondaryText} /> Improve UX,
+            includes
           </StyledDesc>
           <StyledDesc>
             - Candlestick chart for price movement visualization
           </StyledDesc>
           <StyledDesc>- Show all limit orders on selected pair</StyledDesc>
           <StyledDesc>- Easy fee payment option</StyledDesc>
+          <StyledDesc>- Dark mode 🙌</StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.brandColor.primary._600} /> Smart contract
+            <IconSquare color={theme.colors.secondaryText} /> Smart contract
             executor for small delay time
           </StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.brandColor.primary._600} /> Adding
-            testcases and security audit
+            <IconSquare color={theme.colors.secondaryText} /> Adding testcases
+            and security audit
           </StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.gray._900} /> More to be defined and
-            collection from community feedbacks
+            <IconSquare color={theme.colors.secondaryText} /> More to be defined
+            and collection from community feedbacks
           </StyledDesc>
           <StyledDesc>
             <LinkA link="https://docs.google.com/forms/d/e/1FAIpQLScRnfOUbe2lSAWnmUDSMaezg_42WXVLM9CU8iUW28GxKFiBKg/viewform">
-              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
+              <FormText fontType={'R18'}>
                 Again, click here to join our waiting list and give your
                 brilliant ideas so we can serve you better
               </FormText>
@@ -196,30 +208,22 @@ const Main = (): ReactElement => {
           <br />
           <StyledDesc>Related source codes can be found at:</StyledDesc>
           <LinkA link="https://github.com/dexafinance/dexa-limit-order">
-            <FormText color={COLOR.brandColor.primary._600}>
-              - dexa-limit-order smart contract source code
-            </FormText>
+            <FormText>- dexa-limit-order smart contract source code</FormText>
           </LinkA>
           <LinkA link="https://github.com/dexafinance/dexa-dex">
-            <FormText color={COLOR.brandColor.primary._600}>
-              - dexa-dex web frontend source code
-            </FormText>
+            <FormText>- dexa-dex web frontend source code</FormText>
           </LinkA>
         </StyledSection>
         <StyledSection>
           <StyledSubTitle fontType="B24">Need support?</StyledSubTitle>
           <StyledDesc>
             <LinkA link="https://discord.gg/ngQ3fVJD">
-              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
-                - Discord
-              </FormText>
+              <FormText fontType={'R18'}>- Discord</FormText>
             </LinkA>
           </StyledDesc>
           <StyledDesc>
             <LinkA link="https://github.com/dexafinance/dexa-dex/issues">
-              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
-                - Github issues
-              </FormText>
+              <FormText fontType={'R18'}>- Github issues</FormText>
             </LinkA>
           </StyledDesc>
         </StyledSection>
@@ -239,7 +243,7 @@ const Main = (): ReactElement => {
               })
             }}
           >
-            <StyledDesc color={COLOR.brandColor.primary._400}>
+            <StyledDesc>
               {`- ${WHITELIST.address.dexaDeveloper} (click to copy)`}
             </StyledDesc>
           </CopyToClipboard>
