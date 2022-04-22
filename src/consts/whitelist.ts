@@ -653,6 +653,13 @@ const mainnetTokenList: TokenType[] = [
     ...tokenInfo[TokenKeyEnum.bETH],
     pairList: [
       {
+        dex: DexEnum.astroport,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.bETH,
+        pair: 'terra1myl709y74vrdcyuxy6g9wv5l2sgah4e9lstnwe' as ContractAddr,
+        lp: 'terra1dy8mq25x79jrdzz30j230suka37xt39lcgdcl4' as ContractAddr,
+      },
+      {
         dex: DexEnum.terraswap,
         base: TokenKeyEnum.UST,
         otherToken: TokenKeyEnum.bETH,
@@ -804,6 +811,18 @@ const mainnetTokenList: TokenType[] = [
         otherToken: TokenKeyEnum.mETH,
         pair: 'terra14fyt2g3umeatsr4j4g2rs8ca0jceu3k0mcs7ry' as ContractAddr,
         lp: 'terra16auz7uhnuxrj2dzrynz2elthx5zpps5gs6tyln' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.mETH],
+    pairList: [
+      {
+        dex: DexEnum.terraswap,
+        base: TokenKeyEnum.bETH,
+        otherToken: TokenKeyEnum.mETH,
+        pair: 'terra1c5swgtnuunpf75klq5uztynurazuwqf0mmmcyy' as ContractAddr,
+        lp: 'terra1l8jgxd9uv430rdt2u58h4h7kdfxsle4w6w2ecq' as ContractAddr,
       },
     ],
   },

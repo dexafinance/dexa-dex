@@ -45,7 +45,11 @@ const useTokenList = (): UseTokenListReturn => {
         const lowerFilter = filter.toLowerCase()
         return (
           x.symbol.toLowerCase().includes(lowerFilter) ||
-          x.name.toLowerCase().includes(lowerFilter)
+          x.name.toLowerCase().includes(lowerFilter) ||
+          tokenInfo[x.pairList[0].base].symbol
+            .toLowerCase()
+            .includes(lowerFilter) ||
+          tokenInfo[x.pairList[0].base].name.toLowerCase().includes(lowerFilter)
         )
       })
     }
