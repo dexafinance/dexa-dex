@@ -146,7 +146,10 @@ const Wallet = (): ReactElement => {
                             justifyContent: 'space-between',
                           }}
                         >
-                          <FormText fontType="R16" color={COLOR.gray._800}>
+                          <FormText
+                            fontType="R16"
+                            color={theme.colors.secondaryText}
+                          >
                             {UTIL.truncate(connectedWallet.walletAddress)}
                           </FormText>
                           <IconCopy size={16} />
@@ -168,7 +171,10 @@ const Wallet = (): ReactElement => {
                               border: `1px solid ${COLOR.brandColor.primary._600}`,
                             }}
                           />
-                          <FormText fontType="R12" color={COLOR.gray._800}>
+                          <FormText
+                            fontType="R12"
+                            color={theme.colors.secondaryText}
+                          >
                             View on Terra Finder
                           </FormText>
                         </StyledLinkToFinder>
