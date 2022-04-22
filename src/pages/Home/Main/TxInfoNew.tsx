@@ -186,7 +186,7 @@ const TxInfoNew = ({
                   color={
                     item.action === TradeTypeEnum.buy
                       ? COLOR.success
-                      : COLOR.primary._400
+                      : COLOR.brandColor.primary._400
                   }
                 >
                   {`${UTIL.formatAmount(

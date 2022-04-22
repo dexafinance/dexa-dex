@@ -11,10 +11,11 @@ import {
 } from '@tabler/icons'
 // import ANCLogo from 'images/whitelist/ANC.png'
 // import MIRLogo from 'images/whitelist/MIR.svg'
+import { useTheme } from 'styled-components'
 
 import { COLOR, STYLE, UTIL } from 'consts'
 
-//FormImage, 
+//FormImage,
 import { FormText, Card, Row, View, FormInput } from 'components'
 
 import { RoutePath, TokenInfoGoupEnum, TokenType, uToken } from 'types'
@@ -95,6 +96,7 @@ const TokenItem = ({
   const { getSymbolByContractOrDenom, tokenInfo } = useNetwork()
   const { addFavoriteList, removeFavoriteList, favoriteList } =
     useFavoriteToken()
+  const theme = useTheme()
 
   const isFavorite = favoriteList.includes(token.symbol)
 
@@ -129,12 +131,12 @@ const TokenItem = ({
     return bn.gte(10 * 1000 * 1000 * 1e6)
       ? COLOR.gray._600
       : bn.gte(1000 * 1000 * 1e6)
-      ? COLOR.primary._600
+      ? COLOR.brandColor.primary._600
       : bn.lt(1000 * 1e6)
       ? COLOR.error
       : bn.lt(100 * 1000 * 1e6)
       ? COLOR.warning
-      : COLOR.primary._400
+      : COLOR.brandColor.primary._400
   }, [token_1_PoolSize])
 
   return (
@@ -180,15 +182,16 @@ const TokenItem = ({
             </View>
           )}
         </View> */}
-          <FormText fontType="R14" color={COLOR.primary._400}>
-            {token.symbol}/{getSymbolByContractOrDenom(token_1_ContractOrDenom)}
+          <FormText fontType="R14" color={theme.colors.primaryText}>
+            {token.symbol}
+          </FormText>
+          <FormText fontType="R14" color={theme.colors.tertiary}>
+            /{getSymbolByContractOrDenom(token_1_ContractOrDenom)}
           </FormText>
         </Row>
       </View>
       <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-        <FormText fontType="R14" color={COLOR.gray._600}>
-          {displayPrice}
-        </FormText>
+        <FormText fontType="R14">{displayPrice}</FormText>
       </View>
 
       <View style={{ alignItems: 'flex-end' }}>
@@ -227,9 +230,7 @@ const SortTitle = ({
         }}
       >
         {typeof title === 'string' ? (
-          <FormText fontType="R14" color={COLOR.gray._600}>
-            {title}
-          </FormText>
+          <FormText fontType="R14">{title}</FormText>
         ) : (
           title
         )}
@@ -262,6 +263,7 @@ const GroupFilter = ({
   group: TokenInfoGoupEnum
   setGroupFilter: React.Dispatch<React.SetStateAction<TokenInfoGoupEnum[]>>
 }): ReactElement => {
+  const theme = useTheme()
   return (
     <StyledGroupFilter
       onClick={(): void => {
@@ -274,8 +276,14 @@ const GroupFilter = ({
         })
       }}
     >
-      {selected ? <IconCheckbox color={COLOR.primary._400} /> : <IconSquare />}
-      <FormText color={selected ? COLOR.primary._400 : COLOR.text}>
+      {selected ? (
+        <IconCheckbox color={theme.colors.secondary} />
+      ) : (
+        <IconSquare />
+      )}
+      <FormText
+        color={selected ? theme.colors.primaryText : theme.colors.secondary}
+      >
         {title}
       </FormText>
     </StyledGroupFilter>
@@ -346,11 +354,7 @@ const TokenList = ({
           onClickSort={onClickSort}
         />
         <SortTitle
-          title={
-            <FormText fontType="R14" color={COLOR.gray._600}>
-              Price
-            </FormText>
-          }
+          title={<FormText fontType="R14">Price</FormText>}
           sortBy={SortTypeEnum.price}
           selectedSortBy={sortBy}
           sortDesc={sortDesc}

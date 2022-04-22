@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { IconSquare, IconCheckbox } from '@tabler/icons'
 
 import { COLOR, STYLE, WHITELIST } from 'consts'
@@ -72,6 +72,7 @@ const Buy = ({
   useLimitOrderBuyReturn: UseLimitOrderBuyReturn
   dex: DexEnum
 }): ReactElement => {
+  const theme = useTheme()
   const {
     onClickBuy,
     invalidForm: invalidBuyForm,
@@ -99,7 +100,11 @@ const Buy = ({
           <StyledLimitOrderButton
             // disabled={selectedPairToken.pairType.dex === DexEnum.terraswap}
             fontType="R16"
-            color={buyLimitOrder ? COLOR.primary._400 : COLOR.text}
+            color={
+              buyLimitOrder
+                ? theme.colors.primaryText
+                : theme.colors.secondaryText
+            }
             onClick={(): void => {
               setBuyLimitOrder(!buyLimitOrder)
             }}
@@ -118,6 +123,9 @@ const Buy = ({
             </FormText>
           )}
           <AuthButton
+            kind="primary"
+            backgroundColor={theme.colors.orderList.buyColor}
+            color={theme.colors.onPrimary}
             onClick={onClickLimitOrderBuy}
             disabled={invalidLoBuyForm || !loFee || !!loBuySubmitErrMsg}
           >
@@ -133,6 +141,9 @@ const Buy = ({
             </FormText>
           )}
           <AuthButton
+            backgroundColor={theme.colors.orderList.buyColor}
+            color={theme.colors.onPrimary}
+            kind="primary"
             onClick={onClickBuy}
             disabled={invalidBuyForm || !fee || !!buySubmitErrMsg}
           >
@@ -153,6 +164,8 @@ const Sell = ({
   useLimitOrderSellReturn: UseLimitOrderSellReturn
   dex: DexEnum
 }): ReactElement => {
+  const theme = useTheme()
+
   const {
     onClickSell,
     invalidForm: invalidSellForm,
@@ -179,7 +192,11 @@ const Sell = ({
         <View style={{ alignItems: 'flex-end' }}>
           <StyledLimitOrderButton
             fontType="R16"
-            color={sellLimitOrder ? COLOR.primary._400 : COLOR.text}
+            color={
+              sellLimitOrder
+                ? theme.colors.primaryText
+                : theme.colors.secondaryText
+            }
             onClick={(): void => {
               setSellLimitOrder(!sellLimitOrder)
             }}
@@ -202,6 +219,9 @@ const Sell = ({
           )}
           <AuthButton
             onClick={onClickLimitOrderSell}
+            kind="primary"
+            backgroundColor={theme.colors.orderList.sellColor}
+            color={theme.colors.onPrimary}
             disabled={invalidLoSellForm || !loFee || !!loSellSubmitErrMsg}
           >
             SELL
@@ -216,6 +236,9 @@ const Sell = ({
             </FormText>
           )}
           <AuthButton
+            kind="primary"
+            backgroundColor={theme.colors.orderList.sellColor}
+            color={theme.colors.onPrimary}
             onClick={onClickSell}
             disabled={invalidSellForm || !sellFee || !!sellSubmitErrMsg}
           >

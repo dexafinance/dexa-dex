@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { COLOR } from 'consts'
 
 const StyledSolidHr = styled.div`
-  background-color: ${COLOR.gray._800};
+  background-color: ${({ theme }): string => theme.colors.surface}};
   height: 1px;
 `
 const StyledDashedHr = styled.div`

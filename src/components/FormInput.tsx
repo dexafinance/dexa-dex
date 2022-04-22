@@ -7,6 +7,7 @@ import Row from './Row'
 import View from './View'
 import Text from './Text'
 import FormText from './FormText'
+import { useTheme } from 'styled-components'
 
 const StyledContainer = styled(View)`
   margin: 0 -2px;
@@ -15,7 +16,11 @@ const StyledContainer = styled(View)`
 const StyledInputContainer = styled(Row)`
   flex: 1;
   border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  border: 2px solid ${({ theme }): string => theme.colors.background};
+  &:hover {
+    border: 2px solid ${({ theme }): string => theme.colors.borderFocused};
+  }
 `
 
 const StyledInput = styled.input`
@@ -27,9 +32,9 @@ const StyledInput = styled.input`
   font-weight: 400;
   width: 100%;
   min-width: 120px;
-  color: ${COLOR.text};
-  background-color: ${COLOR.gray._50};
-  border: 1px solid #00000050;
+  color: ${({ theme }): string => theme.colors.primaryText};
+  background-color: ${({ theme }): string => theme.colors.inputBackground};
+  border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
   :read-only {
     background-color: ${COLOR.gray._100};
     cursor: not-allowed;
@@ -47,7 +52,7 @@ const StyledInput = styled.input`
 const StyledSuffixBox = styled(View)`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  border: 1px solid #00000050;
+  border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
   min-width: 80px;
   align-items: center;
   justify-content: center;
@@ -55,7 +60,7 @@ const StyledSuffixBox = styled(View)`
 
 const StyledSuffixText = styled(Text)`
   padding: 0 16px;
-  color: ${COLOR.text};
+  color: ${({ theme }): string => theme.colors.primaryText};
   font-weight: 400;
   font-size: 16px;
 `
@@ -82,6 +87,7 @@ const FormInput = <T extends string>({
   helperText?: string
 }): ReactElement => {
   const readOnly = inputProps?.readOnly
+  const theme = useTheme()
 
   const containerStyle: CSSProperties = {}
   let helperTextStyle
@@ -90,8 +96,8 @@ const FormInput = <T extends string>({
     containerStyle.border = `2px solid ${COLOR.error}`
     helperTextStyle = COLOR.error
   } else if (onFocus) {
-    containerStyle.border = `2px solid ${COLOR.primary._400}`
-    helperTextStyle = COLOR.primary._400
+    containerStyle.border = `2px solid ${theme.colors.borderFocused}`
+    helperTextStyle = COLOR.brandColor.primary._400
   }
 
   return (
@@ -106,7 +112,9 @@ const FormInput = <T extends string>({
           onWheel={({ currentTarget }): void => {
             currentTarget.blur()
           }}
-          style={{ borderRadius: suffix ? '4px 0 0 4px' : 4 }}
+          style={{
+            borderRadius: suffix ? '4px 0 0 4px' : 4,
+          }}
           onFocus={(): void => {
             !readOnly && setOnFocus(true)
           }}

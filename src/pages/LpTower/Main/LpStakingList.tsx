@@ -38,7 +38,7 @@ const StyledItem = styled(Card)<{ selected: boolean }>`
   position:relative;
   border: 1px solid
     ${({ selected }): string =>
-      selected ? COLOR.primary._400 : COLOR.gray._300};
+      selected ? COLOR.brandColor.primary._400 : COLOR.gray._300};
 `
 
 const StyledLpBox = styled(View)`

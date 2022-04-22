@@ -38,7 +38,7 @@ const StyledItem = styled(Card)<{ selected: boolean }>`
   position:relative;
   border: 1px solid
     ${({ selected }): string =>
-      selected ? COLOR.primary._400 : COLOR.gray._300};
+      selected ? COLOR.brandColor.primary._400 : COLOR.gray._300};
 `
 
 const StyledItemTiker = styled(Row)`
@@ -48,7 +48,7 @@ const StyledItemTiker = styled(Row)`
   left: 20px;
   background-color: ${COLOR.white};
   padding: 5px 10px;
-  border: 1px solid ${COLOR.primary._400};
+  border: 1px solid ${COLOR.brandColor.primary._400};
   border-radius: 8px;
 `
 
@@ -205,7 +205,7 @@ const LpOfLpItem = ({
         <FormImage src={terraswap} size={20} style={{ marginRight: 4 }} />
         <FormText
           fontType="B16"
-          color={COLOR.primary._400}
+          color={COLOR.brandColor.primary._400}
           style={{ lineHeight: 1 }}
         >
           {item.lpOfLp_LpTicker}

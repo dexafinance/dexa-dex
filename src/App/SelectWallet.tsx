@@ -67,7 +67,7 @@ const StyledConnectBtn = styled(Row)<{ disabled?: boolean }>`
   :hover {
     opacity: 1;
     border-color: ${({ disabled }): string =>
-      disabled ? '#363A3D' : COLOR.primary._400};
+      disabled ? '#363A3D' : COLOR.brandColor.primary._400};
   }
 `
 
@@ -166,7 +166,7 @@ const SelectWallet = (): ReactElement => {
               <View>
                 <FormText
                   fontType={'R16'}
-                  color={COLOR.primary._400}
+                  color={COLOR.brandColor.primary._400}
                   style={{
                     flexDirection: 'row',
                     opacity: availableExt ? 1 : 0.3,
@@ -190,7 +190,7 @@ const SelectWallet = (): ReactElement => {
           >
             <FormText
               fontType={'R16'}
-              color={COLOR.primary._400}
+              color={COLOR.brandColor.primary._400}
               style={{ flexDirection: 'row' }}
             >
               Terra Station<b>&nbsp;Mobile</b>

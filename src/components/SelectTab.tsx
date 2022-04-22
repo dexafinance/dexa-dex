@@ -2,7 +2,7 @@ import { CSSProperties, ReactElement } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 
-import { COLOR, STYLE } from 'consts'
+import { STYLE } from 'consts'
 
 import Row from 'components/Row'
 import FormText from 'components/FormText'
@@ -23,10 +23,10 @@ const StyledTabItem = styled(FormText)<{ selected: boolean }>`
   padding: 0 13px;
   width: 104px;
   height: 28px;
-  border-bottom: ${({ selected }): string =>
-    selected ? `2px solid ${COLOR.primary._600} ` : ''};
-  color: ${({ selected }): string =>
-    selected ? COLOR.gray._900 : COLOR.gray._400};
+  border-bottom: ${({ selected, theme }): string =>
+    selected ? `2px solid ${theme.colors.borderFocused}` : ''};
+  color: ${({ selected, theme }): string =>
+    selected ? theme.colors.primaryText : theme.colors.secondaryText};
   margin-bottom: 12px;
 `
 

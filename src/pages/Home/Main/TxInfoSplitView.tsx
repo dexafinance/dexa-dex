@@ -4,6 +4,7 @@ import { IconExternalLink } from '@tabler/icons'
 import _ from 'lodash'
 
 import { SortTypeEnum } from 'hooks/common/home/useTokenList'
+import { useTheme } from 'styled-components'
 
 import { STYLE, UTIL, COLOR, WHITELIST } from 'consts'
 // import { COLOR } from 'consts'
@@ -54,6 +55,7 @@ const StyledTokenItem = styled(View)`
   align-items: center;
   display: grid;
   grid-template-columns: 24px 8fr 8fr 8fr;
+  color: ${({ theme }): string => theme.colors.secondaryText};
 `
 
 const StyledTokenItemBox = styled(View)`
@@ -86,9 +88,7 @@ const Title = ({
         }}
       >
         {typeof title === 'string' ? (
-          <FormText fontType="R14" color={COLOR.gray._600}>
-            {title}
-          </FormText>
+          <FormText fontType="R14">{title}</FormText>
         ) : (
           title
         )}
@@ -117,6 +117,8 @@ const TxInfoSplitView = ({
     offset: 0,
     limit: 100,
   })
+  const theme = useTheme()
+
   // const { isTabletWidth } = useLayout()
 
   if (txList == null || txList.length < 1) {
@@ -194,7 +196,14 @@ const TxInfoSplitView = ({
                     alignItems: 'flex-start',
                   }}
                 >
-                  <FormText fontType="R14" color={COLOR.primary._400}>
+                  <FormText
+                    fontType="R14"
+                    color={
+                      item.action === TradeTypeEnum.buy
+                        ? theme.colors.orderList.buyColor
+                        : theme.colors.orderList.sellColor
+                    }
+                  >
                     {`${UTIL.formatAmount(
                       UTIL.microfy(
                         item.unitPrice.toString() as Token

@@ -1405,6 +1405,18 @@ const testnetTokenList: TokenType[] = [
       },
     ],
   },
+  // {
+  //   ...testnetTokenInfo[TokenKeyEnum.MIAW],
+  //   pairList: [
+  //     {
+  //       dex: DexEnum.terraswap,
+  //       base: TokenKeyEnum.UST,
+  //       otherToken: TokenKeyEnum.MIAW,
+  //       pair: 'terra1834ku9y7s2swyp2r090pc29c4s06hy9n9drwvy' as ContractAddr,
+  //       lp: 'terra17cvsfp5kn2kucvl44vp4r3cwy4aekvrdnmsy5x' as ContractAddr,
+  //     },
+  //   ],
+  // },
 ]
 
 const mainnetLpOfLpList: LpofLpType[] = [

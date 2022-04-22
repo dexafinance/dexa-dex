@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import _ from 'lodash'
 
-import { UTIL, COLOR } from 'consts'
+import { UTIL } from 'consts'
 
 import FormText, { FontType } from './FormText'
 import View from './View'
@@ -31,10 +31,11 @@ const BalanceFormat = ({
 }: BalanceFormatProps): ReactElement => {
   const formatAmount = UTIL.formatAmount(value)
   const splits = formatAmount.split('.')
+  const theme = useTheme()
   let integer = splits[0]
   let decimal = splits[1]
 
-  const fontColor = COLOR.gray._800
+  const fontColor = theme.colors.primaryText
   const fontType: FontType =
     size === 'lg' ? 'R20' : size === 'md' ? 'R16' : 'R14'
   const integerFontType: FontType =

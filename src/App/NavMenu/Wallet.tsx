@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { IconCopy, IconWallet } from '@tabler/icons'
 import { useConnectedWallet, useWallet } from '@terra-money/wallet-provider'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -60,7 +60,7 @@ const StyledLinkToFinder = styled(View)`
   padding: 10px;
   flex-direction: row;
   align-items: center;
-  border: 1px solid ${COLOR.primary._600};
+  border: 1px solid ${COLOR.brandColor.primary._600};
   margin-bottom: 15px;
   @media ${STYLE.media.tablet} {
   }
@@ -83,6 +83,7 @@ const StyledIconWallet = styled(IconWallet)`
 `
 
 const Wallet = (): ReactElement => {
+  const theme = useTheme()
   const [showWalletInfo, setShowWalletInfo] = useState(false)
 
   const { disconnect } = useWallet()
@@ -121,11 +122,11 @@ const Wallet = (): ReactElement => {
               setShowWalletInfo(true)
             }}
           >
-            <FormText fontType="R16" color={COLOR.gray._800}>
+            <FormText fontType="R16" color={theme.colors.primaryText}>
               {UTIL.truncate(connectedWallet.walletAddress)}
             </FormText>
-            <StyledIconWallet size={16} color={COLOR.gray._600} />
-            <FormText fontType="R16" color={COLOR.gray._600}>
+            <StyledIconWallet size={16} color={theme.colors.secondaryText} />
+            <FormText fontType="R16" color={theme.colors.secondaryText}>
               {UTIL.formatAmount(uusdBal)} UST
             </FormText>
           </StyledUserWalletBtn>
@@ -162,9 +163,9 @@ const Wallet = (): ReactElement => {
                             size={16}
                             style={{
                               marginRight: 5,
-                              backgroundColor: COLOR.primary._600,
+                              backgroundColor: COLOR.brandColor.primary._600,
                               borderRadius: '50%',
-                              border: `1px solid ${COLOR.primary._600}`,
+                              border: `1px solid ${COLOR.brandColor.primary._600}`,
                             }}
                           />
                           <FormText fontType="R12" color={COLOR.gray._800}>

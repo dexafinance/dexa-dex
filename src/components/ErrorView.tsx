@@ -44,7 +44,7 @@ const ErrorView = ({ error }: { error?: any }): ReactElement => {
               This page does not exist.
             </FormText>
             <Button
-              theme="outline"
+              kind="outline"
               style={{ width: 250 }}
               onClick={(): void => {
                 push(RoutePath.home, {

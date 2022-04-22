@@ -59,7 +59,7 @@ export const getMemoStyle = ({
     }
   } else if (isValid(SayOptionEnum.init_name, type)) {
     return {
-      color: COLOR.primary._200,
+      color: COLOR.brandColor.primary._200,
       backgroundColor: COLOR.gray._100,
       fontSize: 20,
     }

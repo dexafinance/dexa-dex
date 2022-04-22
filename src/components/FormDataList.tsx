@@ -2,7 +2,6 @@ import { CSSProperties, ReactElement, ReactNode } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 
-import { COLOR } from 'consts'
 import { Text, Row, View } from 'components'
 
 type FormDataListProps = {
@@ -18,12 +17,12 @@ const StyledItemBox = styled(Row)`
 
 const StyledTitle = styled(Text)<{ size: 'lg' | 'sm' }>`
   font-size: ${({ size }): string => (size === 'sm' ? '14px' : '16px')};
-  color: ${COLOR.gray._300};
+  color: ${({ theme }): string => theme.colors.secondaryText};
 `
 
 const StyledValue = styled(Text)<{ size: 'lg' | 'sm' }>`
   font-size: ${({ size }): string => (size === 'sm' ? '14px' : '16px')};
-  color: ${COLOR.gray._50};
+  color: ${({ theme }): string => theme.colors.primaryText};
 `
 
 const FormDataList = (props: FormDataListProps): ReactElement => {

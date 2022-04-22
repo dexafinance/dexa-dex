@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 // import { COLOR, UTIL } from 'consts'
 import { WHITELIST } from 'consts'
-import { COLOR } from 'consts'
+// import { COLOR } from 'consts'
 
 import { View } from 'components'
 // import { Card, FormText, View, DatePicker, FormInput, Row } from 'components'
@@ -15,15 +15,14 @@ import useAnalyticsCandle from 'hooks/common/home/useAnalyticsCandle'
 
 // import { createChart } from 'lightweight-charts'
 import Chart from 'kaktana-react-lightweight-charts'
+import { useTheme } from 'styled-components'
 
 const StyledChart = styled(View)`
   display: flex;
-  border: 1px solid ${COLOR.gray._300};
-  border-radius: 8px;
   min-height: 250px;
   overflow: hidden;
   box-shadow: 0 3px 10px 0 rgb(66 66 66 / 5%);
-  background-color: ${COLOR.white};
+  background-color: ${({ theme }): string => theme.colors.background};
   z-index: 0;
 `
 
@@ -38,6 +37,7 @@ const AnalyticsCandle = ({
 }): ReactElement => {
   const baseContractOrDenom: ContractAddr = WHITELIST.tokenInfo[tradeBase]
     .contractOrDenom as ContractAddr
+  const theme = useTheme()
 
   const [options] = useState({
     alignLabels: true,
@@ -54,6 +54,7 @@ const AnalyticsCandle = ({
       timeVisible: true,
       secondsVisible: false,
     },
+    priceScale: {},
     autoscaleInfoProvider: () => ({
       // priceRange: {
       //   minValue: 0,
@@ -176,6 +177,7 @@ const AnalyticsCandle = ({
         candlestickSeries={[{ data: analyticsList }]}
         autoWidth
         height={320}
+        darkTheme={theme.name === 'dark'}
       />
     </StyledChart>
     // </StyledContainer>

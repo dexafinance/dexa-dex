@@ -170,7 +170,7 @@ const OrderItem = ({
       <View style={{ alignItems: 'flex-start' }}>
         <FormText
           fontType={hasOwnBidding ? 'B14' : 'R14'}
-          color={COLOR.primary._600}
+          color={COLOR.brandColor.primary._600}
         >
           $
           {UTIL.formatAmount(UTIL.microfy(unitPrice.toString() as Token), {
@@ -179,12 +179,12 @@ const OrderItem = ({
         </FormText>
       </View>
       <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-        <FormText fontType="R14" color={COLOR.primary._400}>
+        <FormText fontType="R14" color={COLOR.brandColor.primary._400}>
           {`${UTIL.formatAmount(offerAmount, { toFix: 3 })}`}
         </FormText>
       </View>
       <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-        <FormText fontType="R14" color={COLOR.primary._400}>
+        <FormText fontType="R14" color={COLOR.brandColor.primary._400}>
           {`${UTIL.formatAmount(askAmount, { toFix: 3 })}`}
         </FormText>
       </View>

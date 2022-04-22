@@ -16,7 +16,7 @@ const StyledContainer = styled(View)`
 `
 
 const StyledOrderList = styled(View)`
-  border: 1px solid ${COLOR.primary._400};
+  border: 1px solid ${COLOR.brandColor.primary._400};
   height: 100%;
   padding: 15px;
   border-radius: 8px;

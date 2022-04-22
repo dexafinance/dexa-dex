@@ -24,9 +24,9 @@ const StyledOptionItem = styled(Row)<{ selected?: boolean }>`
   margin: 0 3px;
   border-bottom: 2px solid ${COLOR.gray._800};
   background-color: ${({ selected }): string =>
-    selected ? COLOR.primary._400 : 'transparent'};
+    selected ? COLOR.brandColor.primary._400 : 'transparent'};
   :hover {
-    border-bottom: 2px solid ${COLOR.primary._400};
+    border-bottom: 2px solid ${COLOR.brandColor.primary._400};
   }
 `
 
@@ -82,7 +82,7 @@ const SlippageToleranceButton = ({
       case 'warning':
         return `2px solid ${COLOR.warning}`
       default:
-        return `2px solid ${COLOR.primary._400}`
+        return `2px solid ${COLOR.brandColor.primary._400}`
     }
   }, [validation])
 

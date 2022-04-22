@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, createContext } from 'react'
 import styled from 'styled-components'
 import routes from 'routes'
 
@@ -16,9 +16,14 @@ import useNetwork from '../hooks/common/useNetwork'
 
 import useApp from './useApp'
 
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyles } from 'components/GlobalStyles'
+import { lightTheme, darkTheme } from 'consts/color'
+import { useDarkMode } from 'components/useDarkMode'
+
+//background: linear-gradient(${COLOR.gray._950}, #f8e5d0);
 const StyledContainer = styled(View)`
   min-height: 100%;
-  background: linear-gradient(${COLOR.gray._50}, #f8e5d0);
 `
 const Banner = styled(View)`
   min-height: 100%;
@@ -33,6 +38,7 @@ const StyledBody = styled(View)`
 const InitializeApp = (): ReactElement => {
   const { initComplete } = useApp()
   const { isMainnet } = useNetwork()
+
   return (
     <>
       {initComplete && (
@@ -49,10 +55,33 @@ const InitializeApp = (): ReactElement => {
   )
 }
 
+interface ThemeContextInterface {
+  theme: string
+  toggleTheme: (forceTheme: string) => void
+}
+
+export const ThemeContext = createContext<ThemeContextInterface | null>(null)
+
 const App = (): ReactElement => {
+  // const [theme, setTheme] = useState('light')
+  // const themeToggler = () => {
+  //   theme === 'light' ? setTheme('dark') : setTheme('light')
+  // }
+  const [theme, toggleTheme, mountedComponent] = useDarkMode()
+  const themeMode = theme === 'light' ? lightTheme : darkTheme
+
+  console.log('themeToggler from AppProvider', theme)
+
+  if (!mountedComponent) return <div />
+
   return (
     <AppProvider>
-      <InitializeApp />
+      <ThemeProvider theme={themeMode}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+          <GlobalStyles />
+          <InitializeApp />
+        </ThemeContext.Provider>
+      </ThemeProvider>
     </AppProvider>
   )
 }

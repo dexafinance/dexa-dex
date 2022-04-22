@@ -25,6 +25,7 @@ const StyledSection = styled(View)`
 const StyledMaxBalance = styled(Row)`
   justify-content: flex-end;
   padding-top: 8px;
+  color: ${({ theme }): string => theme.colors.secondaryText};
 `
 
 const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {

@@ -32,7 +32,10 @@ const LinkFinder = ({
   )
   return (
     <StyledA href={link} target="_blank" rel="noopener noreferrer">
-      <FormText fontType={fontType || 'R14'} color={COLOR.primary._200}>
+      <FormText
+        fontType={fontType || 'R14'}
+        color={COLOR.brandColor.primary._200}
+      >
         {title || UTIL.truncate(address, [10, 10])}
       </FormText>
     </StyledA>

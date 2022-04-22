@@ -25,6 +25,7 @@ const StyledSection = styled(View)`
 const StyledMaxBalance = styled(Row)`
   justify-content: flex-end;
   padding-top: 8px;
+  color: ${({ theme }): string => theme.colors.primaryText};
 `
 
 const LimitOrderBuyForm = ({
@@ -72,7 +73,12 @@ const LimitOrderBuyForm = ({
               />
             ),
           }))
-        : [],
+        : [
+            {
+              title: 'Tx Fee',
+              value: <BalanceFormat value={'0' as uToken} suffix={'UST'} />,
+            },
+          ],
     [fee]
   )
 
@@ -161,11 +167,11 @@ const LimitOrderBuyForm = ({
         <Hr type="dashed" />
       </StyledSection>
 
-      {fee && (
+      {
         <StyledSection>
           <FormDataList data={feeData} />
         </StyledSection>
-      )}
+      }
     </>
   )
 }

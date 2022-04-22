@@ -97,7 +97,7 @@ const Main = (): ReactElement => {
           <StyledDesc>We're all ears from you. </StyledDesc>
           <StyledDesc>
             <LinkA link="https://docs.google.com/forms/d/e/1FAIpQLScRnfOUbe2lSAWnmUDSMaezg_42WXVLM9CU8iUW28GxKFiBKg/viewform">
-              <FormText fontType={'R18'} color={COLOR.primary._600}>
+              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
                 Click here to join our waiting list and give early feedback so
                 we can serve you better
               </FormText>
@@ -105,7 +105,7 @@ const Main = (): ReactElement => {
           </StyledDesc>
           <StyledDesc>
             <LinkA link="https://discord.gg/ngQ3fVJD">
-              <FormText fontType={'R18'} color={COLOR.primary._600}>
+              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
                 Or you can join our Discord for further discussion.
               </FormText>
             </LinkA>
@@ -139,14 +139,16 @@ const Main = (): ReactElement => {
           <br />
           <StyledDesc>Following are what on our roadmap:</StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> Support limit order
-            on astroport pool
+            <IconSquareCheck color={COLOR.brandColor.primary._600} /> Support
+            limit order on astroport pool
           </StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> Fee payment in UST
+            <IconSquareCheck color={COLOR.brandColor.primary._600} /> Fee
+            payment in UST
           </StyledDesc>
           <StyledDesc>
-            <IconSquareCheck color={COLOR.primary._600} /> Improve UX, includes
+            <IconSquareCheck color={COLOR.brandColor.primary._600} /> Improve
+            UX, includes
           </StyledDesc>
           <StyledDesc>
             - Candlestick chart for price movement visualization
@@ -154,12 +156,12 @@ const Main = (): ReactElement => {
           <StyledDesc>- Show all limit orders on selected pair</StyledDesc>
           <StyledDesc>- Easy fee payment option</StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.primary._600} /> Smart contract executor
-            for small delay time
+            <IconSquare color={COLOR.brandColor.primary._600} /> Smart contract
+            executor for small delay time
           </StyledDesc>
           <StyledDesc>
-            <IconSquare color={COLOR.primary._600} /> Adding testcases and
-            security audit
+            <IconSquare color={COLOR.brandColor.primary._600} /> Adding
+            testcases and security audit
           </StyledDesc>
           <StyledDesc>
             <IconSquare color={COLOR.gray._900} /> More to be defined and
@@ -167,7 +169,7 @@ const Main = (): ReactElement => {
           </StyledDesc>
           <StyledDesc>
             <LinkA link="https://docs.google.com/forms/d/e/1FAIpQLScRnfOUbe2lSAWnmUDSMaezg_42WXVLM9CU8iUW28GxKFiBKg/viewform">
-              <FormText fontType={'R18'} color={COLOR.primary._600}>
+              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
                 Again, click here to join our waiting list and give your
                 brilliant ideas so we can serve you better
               </FormText>
@@ -194,12 +196,12 @@ const Main = (): ReactElement => {
           <br />
           <StyledDesc>Related source codes can be found at:</StyledDesc>
           <LinkA link="https://github.com/dexafinance/dexa-limit-order">
-            <FormText color={COLOR.primary._600}>
+            <FormText color={COLOR.brandColor.primary._600}>
               - dexa-limit-order smart contract source code
             </FormText>
           </LinkA>
           <LinkA link="https://github.com/dexafinance/dexa-dex">
-            <FormText color={COLOR.primary._600}>
+            <FormText color={COLOR.brandColor.primary._600}>
               - dexa-dex web frontend source code
             </FormText>
           </LinkA>
@@ -208,14 +210,14 @@ const Main = (): ReactElement => {
           <StyledSubTitle fontType="B24">Need support?</StyledSubTitle>
           <StyledDesc>
             <LinkA link="https://discord.gg/ngQ3fVJD">
-              <FormText fontType={'R18'} color={COLOR.primary._600}>
+              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
                 - Discord
               </FormText>
             </LinkA>
           </StyledDesc>
           <StyledDesc>
             <LinkA link="https://github.com/dexafinance/dexa-dex/issues">
-              <FormText fontType={'R18'} color={COLOR.primary._600}>
+              <FormText fontType={'R18'} color={COLOR.brandColor.primary._600}>
                 - Github issues
               </FormText>
             </LinkA>
@@ -237,7 +239,7 @@ const Main = (): ReactElement => {
               })
             }}
           >
-            <StyledDesc color={COLOR.primary._400}>
+            <StyledDesc color={COLOR.brandColor.primary._400}>
               {`- ${WHITELIST.address.dexaDeveloper} (click to copy)`}
             </StyledDesc>
           </CopyToClipboard>

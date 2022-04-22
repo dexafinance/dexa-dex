@@ -15,6 +15,7 @@ import useLayout from 'hooks/common/useLayout'
 import { IconChevronDown } from '@tabler/icons'
 
 import { TradeTypeEnum, LpProvideTypeEnum } from 'types'
+import { useTheme } from 'styled-components'
 
 const StyledContainer = styled(Row)`
   align-items: center;
@@ -47,6 +48,7 @@ const Menu = (): ReactElement => {
   const { pathname } = location
   const { isTabletWidth } = useLayout()
   const [isOpenMobileMenu, setIsOpenMobileMenu] = useState(false)
+  const theme = useTheme()
 
   let menuList = [
     // {
@@ -79,7 +81,7 @@ const Menu = (): ReactElement => {
           }}
           style={{ alignItems: 'center' }}
         >
-          <FormText fontType="B14" color={COLOR.primary._400}>
+          <FormText fontType="B14" color={theme.colors.onBackground}>
             {selectedMenu?.title || 'Menu'}
           </FormText>
 
@@ -130,7 +132,7 @@ const Menu = (): ReactElement => {
                       fontType="B16"
                       style={{
                         borderBottom: isActive
-                          ? `1px solid ${COLOR.primary._600}`
+                          ? `1px solid ${COLOR.brandColor.primary._600}`
                           : '1px solid #eeeeee00',
                       }}
                     >
@@ -156,7 +158,7 @@ const Menu = (): ReactElement => {
                         fontType="B16"
                         style={{
                           borderBottom: isActive
-                            ? `1px solid ${COLOR.primary._600}`
+                            ? `1px solid ${COLOR.brandColor.primary._600}`
                             : '1px solid #eeeeee00',
                         }}
                       >
@@ -187,7 +189,7 @@ const Menu = (): ReactElement => {
         <FormImage src={logo} size={30} style={{ marginRight: 6 }} />
         <FormText
           fontType={{ default: 'B24', mobile: 'B20' }}
-          color={COLOR.primary._400}
+          color={theme.colors.onBackground}
         >
           Dexa Finance
         </FormText>
@@ -207,9 +209,10 @@ const Menu = (): ReactElement => {
               >
                 <FormText
                   fontType="B16"
+                  color={theme.colors.primary}
                   style={{
                     borderBottom: isActive
-                      ? `1px solid ${COLOR.primary._600}`
+                      ? `1px solid ${theme.colors.onBackground}`
                       : '1px solid #eeeeee00',
                   }}
                 >
@@ -223,9 +226,10 @@ const Menu = (): ReactElement => {
                 <a href={menu.url} target="_blank" rel="noopener noreferrer">
                   <FormText
                     fontType="B16"
+                    color={theme.colors.primary}
                     style={{
                       borderBottom: isActive
-                        ? `1px solid ${COLOR.primary._600}`
+                        ? `1px solid ${COLOR.brandColor.primary._600}`
                         : '1px solid #eeeeee00',
                     }}
                   >

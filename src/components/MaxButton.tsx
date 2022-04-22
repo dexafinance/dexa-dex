@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import styled from 'styled-components'
 
-import { COLOR, STYLE, UTIL } from 'consts'
+import { STYLE, UTIL } from 'consts'
 import Row from 'components/Row'
 import FormText from 'components/FormText'
 
@@ -24,9 +24,9 @@ const StyledMaxButton = styled(Row)`
 
 const MaxButton = ({ value, onClick }: MaxButtonProps): ReactElement => (
   <StyledMaxButton onClick={(): void => onClick(value)}>
-    <FormText fontType="R14" color={COLOR.primary._400}>
-      {`MAX ${UTIL.formatAmount(value)}`}
-    </FormText>
+    <FormText fontType="R14">{`MAX ${UTIL.formatAmount(value, {
+      toFix: UTIL.getFixed(+(UTIL.demicrofy(value) as string)),
+    })}`}</FormText>
   </StyledMaxButton>
 )
 

@@ -87,7 +87,7 @@ const LpWithdrawForm = ({
               <IconPlus
                 size={14}
                 style={{ padding: '0 4px' }}
-                color={COLOR.primary._400}
+                color={COLOR.brandColor.primary._400}
               />
               <BalanceFormat
                 value={UTIL.microfy(

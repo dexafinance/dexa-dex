@@ -7,6 +7,8 @@ import { Row } from 'components'
 import Menu from './Menu'
 import Wallet from './Wallet'
 
+import ThemeToggler from 'components/ThemeToggler'
+
 const StyledContainer = styled(Row)`
   position: relative;
   min-width: 140px;
@@ -26,7 +28,10 @@ const NavMenu = (): ReactElement => {
   return (
     <StyledContainer>
       <Menu />
-      <Wallet />
+      <Row>
+        <Wallet />
+        <ThemeToggler />
+      </Row>
     </StyledContainer>
   )
 }

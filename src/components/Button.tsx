@@ -25,16 +25,25 @@ const StyledDefaultButton = styled.button<ButtonProps>`
 `
 
 const StyledPrimaryButton = styled(StyledDefaultButton)<ButtonProps>`
-  color: ${COLOR.gray._50};
-  background: ${COLOR.primary._400};
-
+  color: ${({ color }): string => (color ? color : COLOR.gray._50)};
+  background: ${({ backgroundColor }): string =>
+    backgroundColor ? backgroundColor : COLOR.brandColor.primary._400};
+  -webkit-filter: brightness(100%);
   :hover {
-    color: ${COLOR.gray._50};
-    background: ${COLOR.primary._600};
+    -webkit-filter: brightness(130%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
   }
   :active {
-    color: ${COLOR.gray._50};
-    background-color: ${COLOR.primary._600};
+    -webkit-filter: brightness(110%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
   }
   :disabled {
     opacity: 0.6;
@@ -49,7 +58,7 @@ const StyledOutlineButton = styled(StyledDefaultButton)<ButtonProps>`
 
   :hover {
     color: ${COLOR.gray._950};
-    border: 1px solid ${COLOR.primary._400};
+    border: 1px solid ${COLOR.brandColor.primary._400};
   }
   :active {
     color: ${COLOR.gray._600};
@@ -58,15 +67,17 @@ const StyledOutlineButton = styled(StyledDefaultButton)<ButtonProps>`
 `
 
 export type ButtonProps = {
-  theme?: 'primary' | 'outline'
+  kind?: 'primary' | 'outline'
+  color?: string
+  backgroundColor?: string
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-const Button = ({ theme = 'primary', ...rest }: ButtonProps): ReactElement => {
-  switch (theme) {
+const Button = ({ kind = 'primary', ...rest }: ButtonProps): ReactElement => {
+  switch (kind) {
     case 'outline':
-      return <StyledOutlineButton type="button" theme={theme} {...rest} />
+      return <StyledOutlineButton type="button" {...rest} />
     default:
-      return <StyledPrimaryButton type="button" theme={theme} {...rest} />
+      return <StyledPrimaryButton type="button" {...rest} />
   }
 }
 

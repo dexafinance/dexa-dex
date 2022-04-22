@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import _ from 'lodash'
 
 import { COLOR, UTIL, STYLE } from 'consts'
@@ -19,7 +19,7 @@ const StyledContainer = styled(View)`
 `
 
 const StyledOrderList = styled(View)`
-  border: 1px solid ${COLOR.primary._400};
+  border: 1px solid ${COLOR.brandColor.primary._400};
   height: 100%;
   padding: 15px;
   border-radius: 8px;
@@ -43,6 +43,7 @@ const MyOrder = ({
   const { limitOrderList, setOrderId } = myOrderReturn
   const { contractOrDenomMap } = useNetwork()
   // const addrTokenMap = isMainnet ? addressTokenMap : testnetAddressTokenMap
+  const theme = useTheme()
 
   return (
     <StyledContainer>
@@ -86,8 +87,8 @@ const MyOrder = ({
                 <FormText
                   color={
                     item.type === TradeTypeEnum.buy
-                      ? COLOR.success
-                      : COLOR.error
+                      ? theme.colors.orderList.buyColor
+                      : theme.colors.orderList.sellColor
                   }
                 >
                   {item.type}

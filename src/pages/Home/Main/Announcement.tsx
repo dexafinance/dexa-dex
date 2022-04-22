@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import styled from 'styled-components'
 
-import { COLOR, STYLE } from 'consts'
+import { STYLE } from 'consts'
 import { View } from 'components'
 // const StyledSolidVr = styled.div`
 //   background-color: ${COLOR.gray._900};
@@ -15,7 +15,8 @@ import { View } from 'components'
 const Banner = styled(View)`
   min-height: 100%;
   width: 100%;
-  background: ${COLOR.warning};
+  background: ${({ theme }): string => theme.colors.banner};
+  color: ${({ theme }): string => theme.colors.onBanner};
   text-align: center;
   padding: 4px 20px;
   display: inline-block;
@@ -30,18 +31,20 @@ const Banner = styled(View)`
 
 const InlineLink = styled.a`
   display: inline-block;
+  color: ${({ theme }): string => theme.colors.onBanner};
+  &:hover {
+    color: ${({ theme }): string => theme.colors.onBackground};
+    -webkit-filter: brightness(150%);
+  }
 `
 
 const Announcement = ({ url = '' }: { url?: string }): ReactElement => {
   return (
     <Banner>
-      Dexa Finance beta launch just went live from 2022 April 17th, see
-      more&nbsp;
-      <span>
-        <InlineLink href={url} target="_blank" rel="noopener noreferrer">
-          here
-        </InlineLink>
-      </span>
+      <InlineLink href={url} target="_blank" rel="noopener noreferrer">
+        Dexa Finance beta launch just went live from 2022 April 17th, see more
+        here
+      </InlineLink>
     </Banner>
   )
 }

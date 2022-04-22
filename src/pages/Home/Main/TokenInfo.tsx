@@ -1,5 +1,5 @@
 import { ReactElement, useMemo } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   IconChartBar,
@@ -66,8 +66,8 @@ const StyledDexDenomItem = styled(Row)<{ selected: boolean }>`
   padding: 3px 10px;
   align-items: center;
   border: 2px solid
-    ${({ selected }): string =>
-      selected ? COLOR.primary._400 : COLOR.gray._300};
+    ${({ selected, theme }): string =>
+      selected ? theme.colors.primary : COLOR.gray._300};
   opacity: ${({ selected }): number => (selected ? 1 : 0.8)};
   margin-right: 10px;
 `
@@ -92,6 +92,7 @@ const SwapBase = ({
     >
   >
 }): ReactElement => {
+  const theme = useTheme()
   return (
     <View style={{ borderTop: `1px solid gray`, paddingTop: 6, marginTop: 6 }}>
       <StyledFormText fontType="B14">Select Dex / Denom</StyledFormText>
@@ -115,7 +116,7 @@ const SwapBase = ({
             >
               <View style={{ paddingRight: 6 }}>
                 {selected ? (
-                  <IconCircleCheck color={COLOR.primary._400} />
+                  <IconCircleCheck color={theme.colors.primary} />
                 ) : (
                   <IconCircle color={COLOR.gray._300} />
                 )}
@@ -258,13 +259,9 @@ const TokenInfo = ({
       <StyledLinkBox>
         {chartLink && (
           <Row style={{ alignItems: 'center', paddingRight: 10 }}>
-            <IconChartBar
-              size={14}
-              color={COLOR.primary._400}
-              style={{ paddingRight: 4 }}
-            />
+            <IconChartBar size={14} style={{ paddingRight: 4 }} />
             <LinkA link={chartLink}>
-              <FormText fontType={'R16'} color={COLOR.primary._400}>
+              <FormText fontType={'R16'}>
                 {isMobileWidth ? 'Chart' : 'Coinhall Chart'}
               </FormText>
             </LinkA>
@@ -272,13 +269,9 @@ const TokenInfo = ({
         )}
         {dashboardLink && (
           <Row style={{ alignItems: 'center' }}>
-            <IconLayout
-              size={14}
-              color={COLOR.primary._400}
-              style={{ paddingRight: 4 }}
-            />
+            <IconLayout size={14} style={{ paddingRight: 4 }} />
             <LinkA link={dashboardLink}>
-              <FormText fontType={'R16'} color={COLOR.primary._400}>
+              <FormText fontType={'R16'}>
                 {isMobileWidth ? 'Dashboard' : 'Terra Swap Dashboard'}
               </FormText>
             </LinkA>

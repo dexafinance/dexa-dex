@@ -14,14 +14,14 @@ import FormText from './FormText'
 const StyledContainer = styled(Row)`
   margin-top: 10px;
   border-radius: 3px;
-  border: 1px solid ${COLOR.primary._600};
+  border: 1px solid ${COLOR.brandColor.primary._600};
   justify-content: space-between;
   padding: 5px 10px;
   background-color: #27a9e11a;
 `
 
 const StyledTitle = styled(FormText)`
-  color: ${COLOR.primary._600};
+  color: ${COLOR.brandColor.primary._600};
 `
 
 const FeeInfo = ({ fee }: { fee?: Fee }): ReactElement => {
