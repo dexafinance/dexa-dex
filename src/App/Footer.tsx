@@ -26,7 +26,7 @@ const community = [
     alt: 'Github',
   },
   {
-    href: 'https://discord.gg/ngQ3fVJD',
+    href: 'https://discord.gg/eAZw9wgzTJ',
     src: discord,
     alt: 'Discord',
   },

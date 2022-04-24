@@ -110,7 +110,7 @@ const Main = (): ReactElement => {
           </StyledDesc>
           <StyledDesc>Or</StyledDesc>
           <StyledDesc>
-            <LinkA link="https://discord.gg/ngQ3fVJD">
+            <LinkA link="https://discord.gg/eAZw9wgzTJ">
               <FormText
                 fontType={'R18'}
                 color={theme.colors.orderList.buyColor}
@@ -217,7 +217,7 @@ const Main = (): ReactElement => {
         <StyledSection>
           <StyledSubTitle fontType="B24">Need support?</StyledSubTitle>
           <StyledDesc>
-            <LinkA link="https://discord.gg/ngQ3fVJD">
+            <LinkA link="https://discord.gg/eAZw9wgzTJ">
               <FormText fontType={'R18'}>- Discord</FormText>
             </LinkA>
           </StyledDesc>
