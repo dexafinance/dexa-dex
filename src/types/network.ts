@@ -48,6 +48,7 @@ export enum TokenKeyEnum {
   VKR = 'VKR',
   PSI = 'PSI',
   KUJI = 'KUJI',
+  sKUJI = 'sKUJI',
   ALTE = 'ALTE',
   ASTRO = 'ASTRO',
   xASTRO = 'xASTRO',

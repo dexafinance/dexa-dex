@@ -43,6 +43,7 @@ import STTLogo from 'images/whitelist/STT.png'
 import VKRLogo from 'images/whitelist/VKR.png'
 import PSILogo from 'images/whitelist/PSI.png'
 import KUJILogo from 'images/whitelist/KUJI.png'
+import sKUJILogo from 'images/whitelist/sKUJI.png'
 import WHALELogo from 'images/whitelist/WHALE.svg'
 import APOLLOLogo from 'images/whitelist/APOLLO.png'
 import LUNILogo from 'images/whitelist/LUNI.png'
@@ -421,6 +422,13 @@ const tokenInfo: Record<TokenKeyEnum, TokenInfoType> = {
     logo: KUJILogo,
     contractOrDenom:
       'terra1xfsdgcemqwxp4hhnyk4rle6wr22sseq7j07dnn' as ContractAddr,
+  },
+  [TokenKeyEnum.sKUJI]: {
+    symbol: 'sKUJI',
+    name: 'Staked Kujira KUJI Token',
+    logo: sKUJILogo,
+    contractOrDenom:
+      'terra188w26t95tf4dz77raftme8p75rggatxjxfeknw' as ContractAddr,
   },
   [TokenKeyEnum.ALTE]: {
     symbol: 'ALTE',
@@ -1084,6 +1092,25 @@ const mainnetTokenList: TokenType[] = [
         otherToken: TokenKeyEnum.KUJI,
         pair: 'terra1zkyrfyq7x9v5vqnnrznn3kvj35az4f6jxftrl2' as ContractAddr,
         lp: 'terra1cmqv3sjew8kcm3j907x2026e4n0ejl2jackxlx' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.sKUJI],
+    pairList: [
+      {
+        dex: DexEnum.astroport,
+        base: TokenKeyEnum.KUJI,
+        otherToken: TokenKeyEnum.sKUJI,
+        pair: 'terra1hlq6ye6km5sq2pcnmrvlf784gs9zygt0akwvsu' as ContractAddr,
+        lp: 'terra1kp4n4tms5w4tvvypya7589zswssqqahtjxy6da' as ContractAddr,
+      },
+      {
+        dex: DexEnum.terraswap,
+        base: TokenKeyEnum.KUJI,
+        otherToken: TokenKeyEnum.sKUJI,
+        pair: 'terra1g8kjs70d5r68j9507s3gwymzc30yaur5j2ccfr' as ContractAddr,
+        lp: 'terra1qf5xuhns225e6xr3mnjv3z8qwlpzyzf2c8we82' as ContractAddr,
       },
     ],
   },
