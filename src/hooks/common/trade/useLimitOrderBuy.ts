@@ -102,6 +102,16 @@ const useLimitOrderBuy = ({
 
   const walletAddress = connectedWallet?.walletAddress as string
 
+  const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
+  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.25' as Token)
+  const feeTokenAmountErrMsg = useMemo(() => {
+    return validateFormInputAmount({
+      input: feeTokenAmount,
+      max: myFeeTokenAmount,
+      min: '0.25' as Token,
+    })
+  }, [feeTokenAmount, myFeeTokenAmount])
+
   const [askAmount, setAskAmount] = useState('' as Token)
   const askAmountErrMsg = useMemo(() => {
     return validateFormInputAmountDecimal({
@@ -118,14 +128,21 @@ const useLimitOrderBuy = ({
   }, [askPrice])
 
   const offerAmount = useMemo(() => {
+    let dexFee = '0' as Token
+    if (feeToken.contractOrDenom === offerDenom) {
+      dexFee = feeTokenAmount
+    }
+
     if (askAmount && askPrice) {
       return UTIL.toBn(askAmount)
         .multipliedBy(askPrice)
+        .plus(dexFee)
         .dp(6)
         .toString(10) as Token
     }
     return '0' as Token
-  }, [askAmount, askPrice])
+  }, [askAmount, askPrice, feeTokenAmount])
+
   const offerAmountErrMsg = useMemo(() => {
     const myOfferToken = UTIL.demicrofy(offerDenomBal)
     return validateFormInputAmount({
@@ -133,16 +150,6 @@ const useLimitOrderBuy = ({
       max: myOfferToken,
     })
   }, [offerAmount])
-
-  const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
-  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.25' as Token)
-  const feeTokenAmountErrMsg = useMemo(() => {
-    return validateFormInputAmount({
-      input: feeTokenAmount,
-      max: myFeeTokenAmount,
-      min: '0.25' as Token,
-    })
-  }, [feeTokenAmount, myFeeTokenAmount])
 
   const invalidForm =
     postTxResult.status === PostTxStatus.BROADCAST ||
@@ -191,7 +198,11 @@ const useLimitOrderBuy = ({
       let availableUusd = UTIL.toBn(uusdBal)
 
       if (offerDenom === TokenDenomEnum.uusd) {
-        availableUusd = availableUusd.minus(UTIL.microfy(askAmount))
+        availableUusd = availableUusd.minus(UTIL.microfy(offerAmount))
+      }
+
+      if (feeToken.contractOrDenom === TokenDenomEnum.uusd) {
+        availableUusd = availableUusd.minus(UTIL.microfy(feeTokenAmount))
       }
 
       msg = validateFee({
@@ -201,7 +212,7 @@ const useLimitOrderBuy = ({
     }
 
     return msg
-  }, [fee, askAmount])
+  }, [fee, offerAmount, feeTokenAmount])
 
   const onClickLimitOrderBuy = (): void => {
     postTx({ txOptions: { ...txOptions, fee } })
