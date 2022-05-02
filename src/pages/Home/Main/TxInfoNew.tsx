@@ -4,8 +4,9 @@ import { IconExternalLink } from '@tabler/icons'
 import _ from 'lodash'
 
 import { SortTypeEnum } from 'hooks/common/home/useTokenList'
+import useNetwork from 'hooks/common/useNetwork'
 
-import { STYLE, UTIL, COLOR, WHITELIST } from 'consts'
+import { STYLE, UTIL, COLOR } from 'consts'
 // import { COLOR } from 'consts'
 
 import { FormText, Row, LinkFinder, View, Card } from 'components'
@@ -103,7 +104,8 @@ const TxInfoNew = ({
   token: TokenType
   pairType: PairType
 }): ReactElement => {
-  const tradeBaseContract = WHITELIST.tokenInfo[pairType.base].contractOrDenom
+  const { tokenInfo } = useNetwork()
+  const tradeBaseContract = tokenInfo[pairType.base].contractOrDenom
   const pairContract = pairType.pair
   const { txList } = useTokenPairHistory({
     tokenPairContract: pairContract,

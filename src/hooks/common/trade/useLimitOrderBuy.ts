@@ -128,15 +128,9 @@ const useLimitOrderBuy = ({
   }, [askPrice])
 
   const offerAmount = useMemo(() => {
-    let dexFee = '0' as Token
-    if (feeToken.contractOrDenom === offerDenom) {
-      dexFee = feeTokenAmount
-    }
-
     if (askAmount && askPrice) {
       return UTIL.toBn(askAmount)
         .multipliedBy(askPrice)
-        .plus(dexFee)
         .dp(6)
         .toString(10) as Token
     }
@@ -145,8 +139,13 @@ const useLimitOrderBuy = ({
 
   const offerAmountErrMsg = useMemo(() => {
     const myOfferToken = UTIL.demicrofy(offerDenomBal)
+    let dexFee = '0' as Token
+    if (feeToken.contractOrDenom === offerDenom) {
+      dexFee = feeTokenAmount
+    }
+
     return validateFormInputAmount({
-      input: offerAmount,
+      input: UTIL.toBn(offerAmount).plus(dexFee).dp(6).toString(10) as Token,
       max: myOfferToken,
     })
   }, [offerAmount])

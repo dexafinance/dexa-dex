@@ -10,7 +10,6 @@ import {
   PairType,
   RoutePath,
   TokenType,
-  DexEnum,
   TradeTypeEnum,
   TokenKeyEnum,
 } from 'types'
@@ -32,7 +31,7 @@ import TxInfoSplitView from './TxInfoSplitView'
 import AnalyticsCandle from './AnalyticsCandle'
 
 import useNetwork from 'hooks/common/useNetwork'
-    // padding: 0 20px;
+// padding: 0 20px;
 const StyledContainer = styled(View)`
   max-width: 100%;
   @media ${STYLE.media.tablet} {
@@ -114,13 +113,10 @@ const Main = (): ReactElement => {
     if (selectedToken?.token) {
       const list = selectedToken.token.pairList
 
-      // temporarily default to terraswap as only limit order is supported in terraswap
+      // default to first pool as it is sorted as the biggest liquidity pool
       setSelectedPairToken({
         ...selectedToken,
-        pairType:
-          list.length > 1 && list[1].dex === DexEnum.astroport
-            ? list[1]
-            : list[0],
+        pairType: list[0],
       })
     }
   }, [selectedToken?.token])

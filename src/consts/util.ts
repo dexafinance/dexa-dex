@@ -85,6 +85,8 @@ const abbreviateNumber = (value: string): { value: string; unit: string } => {
     return { value: bn.div(1e9).toFixed(2), unit: 'B' }
   } else if (bn.isGreaterThan(1e6)) {
     return { value: bn.div(1e6).toFixed(2), unit: 'M' }
+  } else if (bn.isGreaterThan(1e3)) {
+    return { value: bn.div(1e3).toFixed(2), unit: 'K' }
   }
   return { value, unit: '' }
 }

@@ -1,10 +1,11 @@
 import { ReactElement } from 'react'
 import styled from 'styled-components'
 
-import { COLOR, WHITELIST } from 'consts'
+import { COLOR } from 'consts'
 
 import { AuthButton, Card, FormText, SelectTab } from 'components'
 import useRoute from 'hooks/common/useRoute'
+import useNetwork from 'hooks/common/useNetwork'
 
 import {
   LpProvideTypeEnum,
@@ -37,8 +38,9 @@ const LpProvide = ({
 }): ReactElement => {
   const { insertRouteParam, routeParams } = useRoute<RoutePath.home>()
   const type = routeParams?.lpType || LpProvideTypeEnum.provide
-  const tradeBaseContract = WHITELIST.tokenInfo[tradeBase].contractOrDenom
-  const tradeBaseSymbol = WHITELIST.tokenInfo[tradeBase].symbol
+  const { tokenInfo } = useNetwork()
+  const tradeBaseContract = tokenInfo[tradeBase].contractOrDenom
+  const tradeBaseSymbol = tokenInfo[tradeBase].symbol
   const lpProvideReturn = useLpProvide({
     pairContract,
     token_0_ContractOrDenom: token.contractOrDenom,

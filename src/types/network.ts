@@ -64,6 +64,10 @@ export enum TokenKeyEnum {
   LUNAX = 'LUNAX',
   PRISM = 'PRISM',
   xPRISM = 'xPRISM',
+  cLUNA = 'cLUNA',
+  pLUNA = 'pLUNA',
+  yLUNA = 'yLUNA',
+  stLUNA = 'stLUNA',
 }
 
 export type AddressMap = {
@@ -72,10 +76,12 @@ export type AddressMap = {
   lotaUstLPToken: ContractAddr
 }
 
+// this value will be used to store in smart contract so do not modify unless has been carefully considered
 export enum DexEnum {
   terraswap = 'Terraswap',
   astroport = 'Astroport',
   loop = 'Loop',
+  prism = 'Prism',
 }
 
 export type PairType = {

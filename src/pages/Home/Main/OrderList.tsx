@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import _ from 'lodash'
 
 import { SortTypeEnum } from 'hooks/common/home/useTokenList'
-import { WHITELIST } from 'consts'
 
 // import { UseMyOrderReturn } from 'hooks/common/trade/useMyOrder'
 import useAllOrders from 'hooks/query/limitOrder/useAllOrders'
@@ -125,8 +124,8 @@ const TokenPrice = ({
   pairType: PairType
 }): ReactElement => {
   const pairContract = pairType.pair
-  const tradeBaseContract = WHITELIST.tokenInfo[pairType.base].contractOrDenom
-  const { getSymbolByContractOrDenom } = useNetwork()
+  const { getSymbolByContractOrDenom, tokenInfo } = useNetwork()
+  const tradeBaseContract = tokenInfo[pairType.base].contractOrDenom
   const { poolInfo } = usePool({
     pairContract,
     token_0_ContractOrDenom: token.contractOrDenom,
@@ -205,8 +204,8 @@ const OrderList = ({
   // dex: DexEnum
   pairContract: ContractAddr
 }): ReactElement => {
-  const tradeBaseContract = WHITELIST.tokenInfo[tradeBase].contractOrDenom
-  const { limitOrder } = useNetwork()
+  const { limitOrder, tokenInfo } = useNetwork()
+  const tradeBaseContract = tokenInfo[tradeBase].contractOrDenom
   const connectedWallet = useConnectedWallet()
   const walletAddress = connectedWallet?.walletAddress as string
   // buyOrders, precision, refetch
@@ -228,7 +227,6 @@ const OrderList = ({
     }, 3000)
 
     return (): void => clearInterval(interval)
-
   }, [postTxResult.status])
 
   // get latest BUY / SELL order to show on the order list so that user have good reference price

@@ -129,14 +129,14 @@ const TokenItem = ({
   const getPoolSizeSafty = useMemo(() => {
     const bn = UTIL.toBn(token_1_PoolSize as string)
     return bn.gte(10 * 1000 * 1000 * 1e6)
-      ? COLOR.gray._600
+      ? COLOR.gray._300
       : bn.gte(1000 * 1000 * 1e6)
-      ? COLOR.brandColor.primary._600
+      ? COLOR.gray._300
       : bn.lt(1000 * 1e6)
-      ? COLOR.error
+      ? COLOR.rainbow.yellow
       : bn.lt(100 * 1000 * 1e6)
-      ? COLOR.warning
-      : COLOR.brandColor.primary._400
+      ? COLOR.rainbow.yellow
+      : COLOR.gray._300
   }, [token_1_PoolSize])
 
   return (

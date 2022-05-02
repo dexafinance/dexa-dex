@@ -13,8 +13,10 @@ import _ from 'lodash'
 
 import terraswapLogo from 'images/terraswap.svg'
 import astroportLogo from 'images/astroport.svg'
+import prismLogo from 'images/prism.svg'
+import loopLogo from 'images/loop.png'
 
-import { UTIL, STYLE, COLOR, APIURL, WHITELIST } from 'consts'
+import { UTIL, STYLE, COLOR, APIURL } from 'consts'
 
 import { FormText, Card, FormImage, Row, LinkA, View } from 'components'
 import { DexEnum, PairType, TokenType, Token } from 'types'
@@ -22,6 +24,23 @@ import useLayout from 'hooks/common/useLayout'
 
 import usePool from 'hooks/query/pair/usePool'
 import useNetwork from 'hooks/common/useNetwork'
+import useTokenPairsList, {
+  SortedTokenPairType,
+} from 'hooks/common/home/useTokenPairsList'
+
+const factoryLogos: Record<DexEnum, string> = {
+  [DexEnum.terraswap]: terraswapLogo,
+  [DexEnum.astroport]: astroportLogo,
+  [DexEnum.prism]: prismLogo,
+  [DexEnum.loop]: loopLogo,
+}
+
+const factoryNames: Record<DexEnum, string> = {
+  [DexEnum.terraswap]: 'Terraswap',
+  [DexEnum.astroport]: 'Astroport',
+  [DexEnum.prism]: 'Prism',
+  [DexEnum.loop]: 'Loop',
+}
 
 const StyledContainer = styled(Card)``
 
@@ -80,7 +99,7 @@ const SwapBase = ({
   pairType,
   setSelectedPairToken,
 }: {
-  pairList: PairType[]
+  pairList: SortedTokenPairType[]
   pairType: PairType
   setSelectedPairToken: React.Dispatch<
     React.SetStateAction<
@@ -98,17 +117,15 @@ const SwapBase = ({
       <StyledFormText fontType="B14">Select Dex / Denom</StyledFormText>
       <Row>
         {_.map(pairList, (x, i) => {
-          const dexSrc =
-            x.dex === DexEnum.terraswap ? terraswapLogo : astroportLogo
-          const denomSrc = WHITELIST.tokenInfo[x.base].logo
-          const selected = pairType.pair === x.pair
+          const dexSrc = factoryLogos[x.token.dex]
+          const selected = pairType.pair === x.token.pair
           return (
             <StyledDexDenomItem
               key={`pairList-${i}`}
               onClick={(): void => {
                 setSelectedPairToken((ori) => {
                   if (ori) {
-                    return { ...ori, pairType: x }
+                    return { ...ori, pairType: x.token }
                   }
                 })
               }}
@@ -124,19 +141,24 @@ const SwapBase = ({
               <View>
                 <Row style={{ alignItems: 'center' }}>
                   <FormImage src={dexSrc} size={26} />
-                  <FormText style={{ padding: '0 4px' }}>/</FormText>
-                  <FormImage src={denomSrc} size={30} />
+                  <FormText style={{ padding: '0 4px' }}>
+                    {factoryNames[x.token.dex]}
+                  </FormText>
+                  {x.poolInfo && (
+                    <FormText fontType="R14">
+                      {UTIL.formatAmount(x.poolInfo.total_PoolSize!, {
+                        abbreviate: true,
+                        toFix: 0,
+                      })}
+                    </FormText>
+                  )}
                 </Row>
                 {/* {supportLimitOrder(x.dex) && (
                   <View>
                     <FormText fontType="R14">Limit order</FormText>
                   </View>
                 )} */}
-                <View>
-                  <FormText fontType="R14">
-                    {x.dex === DexEnum.terraswap ? 'Terraswap' : 'Astroport'}
-                  </FormText>
-                </View>
+                {/* <View></View> */}
               </View>
             </StyledDexDenomItem>
           )
@@ -154,8 +176,8 @@ const TokenPrice = ({
   pairType: PairType
 }): ReactElement => {
   const pairContract = pairType.pair
-  const tradeBaseContract = WHITELIST.tokenInfo[pairType.base].contractOrDenom
-  const { getSymbolByContractOrDenom } = useNetwork()
+  const { getSymbolByContractOrDenom, tokenInfo } = useNetwork()
+  const tradeBaseContract = tokenInfo[pairType.base].contractOrDenom
   const { poolInfo } = usePool({
     pairContract,
     token_0_ContractOrDenom: token.contractOrDenom,
@@ -201,6 +223,9 @@ const TokenInfo = ({
 
   const chartLink = APIURL.getCoinhallLink({ pairContract })
   const dashboardLink = APIURL.getDashboardLink({ pairContract })
+
+  const tokenListReturn = useTokenPairsList(token)
+  const { sortedList } = tokenListReturn
 
   return (
     <StyledContainer>
@@ -279,7 +304,7 @@ const TokenInfo = ({
         )}
       </StyledLinkBox>
       <SwapBase
-        pairList={token.pairList}
+        pairList={sortedList}
         pairType={pairType}
         setSelectedPairToken={setSelectedPairToken}
       />

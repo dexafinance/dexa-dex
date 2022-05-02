@@ -1,6 +1,8 @@
 import useLCD from '../useLCD'
 import { ContractAddr, TokenDenomEnum, terraswap, uToken, uUST } from 'types'
 import { UTIL } from 'consts'
+import useNetwork from 'hooks/common/useNetwork'
+import { DexEnum } from 'types'
 
 const useSimulate = (): {
   simulate: (props: {
@@ -15,6 +17,7 @@ const useSimulate = (): {
   }) => Promise<terraswap.ReverseSimulationResponse<T, RT>>
 } => {
   const { wasmFetch } = useLCD()
+  const { pairContractMap } = useNetwork()
 
   const simulate = ({
     amount,
@@ -25,6 +28,7 @@ const useSimulate = (): {
     pairContract: ContractAddr
     tokenContract: ContractAddr | TokenDenomEnum
   }): Promise<terraswap.SimulationResponse<uUST>> => {
+    const isPrismProtocol = pairContractMap[pairContract].dex === DexEnum.prism
     const info = UTIL.isNativeDenom(tokenContract)
       ? {
           native_token: {
@@ -33,6 +37,14 @@ const useSimulate = (): {
         }
       : {
           token: { contract_addr: tokenContract as ContractAddr },
+        }
+
+    const prismInfo = UTIL.isNativeDenom(tokenContract)
+      ? {
+          native: tokenContract as TokenDenomEnum,
+        }
+      : {
+          cw20: tokenContract as ContractAddr,
         }
 
     return wasmFetch<
@@ -44,7 +56,7 @@ const useSimulate = (): {
         simulation: {
           offer_asset: {
             amount,
-            info,
+            info: isPrismProtocol ? prismInfo : info,
           },
         },
       },
@@ -60,6 +72,7 @@ const useSimulate = (): {
     pairContract: ContractAddr
     tokenContract: ContractAddr | TokenDenomEnum
   }): Promise<terraswap.ReverseSimulationResponse<T, RT>> => {
+    const isPrismProtocol = pairContractMap[pairContract].dex === DexEnum.prism
     const info = UTIL.isNativeDenom(tokenContract)
       ? {
           native_token: {
@@ -69,6 +82,15 @@ const useSimulate = (): {
       : {
           token: { contract_addr: tokenContract as ContractAddr },
         }
+
+    const prismInfo = UTIL.isNativeDenom(tokenContract)
+      ? {
+          native: tokenContract as TokenDenomEnum,
+        }
+      : {
+          cw20: tokenContract as ContractAddr,
+        }
+
     return wasmFetch<
       terraswap.ReverseSimulation<uToken>,
       terraswap.ReverseSimulationResponse<T, RT>
@@ -78,7 +100,7 @@ const useSimulate = (): {
         reverse_simulation: {
           ask_asset: {
             amount,
-            info,
+            info: isPrismProtocol ? prismInfo : info,
           },
         },
       },

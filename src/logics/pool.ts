@@ -18,6 +18,7 @@ export type ExtractPoolResponseType = {
   totalShare: string
   token_0_PoolSize: uToken
   token_1_PoolSize: uToken
+  total_PoolSize: uToken
 }
 
 export const poolResponseParser = async ({
@@ -55,22 +56,32 @@ export const poolResponseParser = async ({
   const token_0_index = poolResponse.assets.findIndex(
     (x) =>
       _.get(x.info, 'native_token.denom') === token_0_ContractOrDenom ||
-      _.get(x.info, 'token.contract_addr') === token_0_ContractOrDenom
+      _.get(x.info, 'token.contract_addr') === token_0_ContractOrDenom ||
+      // prism protocol
+      _.get(x.info, 'cw20') === token_0_ContractOrDenom ||
+      _.get(x.info, 'native') === token_0_ContractOrDenom
   )
 
   const token_1 = poolResponse.assets[token_0_index === 0 ? 1 : 0]
   const token_0_PoolSize = poolResponse.assets[token_0_index].amount
   const token_1_PoolSize = token_1.amount
+  const total_PoolSize = UTIL.toBn(token_0_PoolSize as string)
+    .multipliedBy(2)
+    .toString() as uToken
+
   return {
     token_0_ContractOrDenom,
     token_1_ContractOrDenom:
       _.get(token_1.info, 'native_token.denom') ||
-      _.get(token_1.info, 'token.contract_addr'),
+      _.get(token_1.info, 'token.contract_addr') ||
+      _.get(token_1.info, 'cw20') ||
+      _.get(token_1.info, 'native'),
     pairContract,
     token_0_Price,
     token_1_Price,
     totalShare: poolResponse.total_share,
     token_0_PoolSize,
     token_1_PoolSize,
+    total_PoolSize,
   }
 }

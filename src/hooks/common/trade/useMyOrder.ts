@@ -99,9 +99,8 @@ const useMyOrder = ({
       //   'debug',
       //   item,
       //   item.offerContractOrDenom,
-      //   pairContractMap[item.pairContract].base,
-      //   tokenInfo[pairContractMap[item.pairContract].base].contractOrDenom,
-      //   item.askContractOrDenom
+      //   item.pairContract,
+      //   pairContractMap[item.pairContract]
       // )
       const type =
         item.offerContractOrDenom ===

@@ -3,10 +3,13 @@ import { AssetInfo } from '.'
 import { uToken } from '../currencies'
 import { ContractAddr } from './common'
 
-export namespace terraswap {
-  export type Asset = {
-    info: AssetInfo
-    amount: uToken
+export namespace prism {
+  export interface Config {
+    config: {}
+  }
+
+  export interface ConfigResponse {
+    amp: number
   }
 
   export interface Pair {
@@ -34,27 +37,19 @@ export namespace terraswap {
     assets: [
       {
         amount: T
-        info:
-          | {
-              token: {
-                contract_addr: ContractAddr
-              }
-            }
-          | {
-              cw20: ContractAddr
-            }
+        info: {
+          token: {
+            contract_addr: ContractAddr
+          }
+        }
       },
       {
         amount: T
-        info:
-          | {
-              native_token: {
-                denom: TokenDenomEnum
-              }
-            }
-          | {
-              native: TokenDenomEnum
-            }
+        info: {
+          native_token: {
+            denom: TokenDenomEnum
+          }
+        }
       }
     ]
   }
@@ -69,12 +64,6 @@ export namespace terraswap {
         native_token: {
           denom: TokenDenomEnum
         }
-      }
-    | {
-        cw20: ContractAddr
-      }
-    | {
-        native: TokenDenomEnum
       }
 
   export interface Simulation<T extends uToken> {
@@ -102,12 +91,6 @@ export namespace terraswap {
         native_token: {
           denom: TokenDenomEnum
         }
-      }
-    | {
-        cw20: ContractAddr
-      }
-    | {
-        native: TokenDenomEnum
       }
 
   export interface ReverseSimulation<T extends uToken> {

@@ -70,8 +70,6 @@ const App = (): ReactElement => {
   const [theme, toggleTheme, mountedComponent] = useDarkMode()
   const themeMode = theme === 'light' ? lightTheme : darkTheme
 
-  console.log('themeToggler from AppProvider', theme)
-
   if (!mountedComponent) return <div />
 
   return (

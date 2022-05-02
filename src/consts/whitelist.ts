@@ -60,8 +60,12 @@ import LUNAXLogo from 'images/whitelist/LUNAX.png'
 import MARSLogo from 'images/whitelist/MARS.svg'
 import PRISMLogo from 'images/whitelist/PRISM.png'
 import xPRISMLogo from 'images/whitelist/xPRISM.png'
+import cLUNALogo from 'images/whitelist/cLUNA.svg'
+import pLUNALogo from 'images/whitelist/pLUNA.svg'
+import yLUNALogo from 'images/whitelist/yLUNA.svg'
 import ASTROLogo from 'images/whitelist/ASTRO.png'
 import xASTROLogo from 'images/whitelist/xASTROLogo.png'
+import stLUNALogo from 'images/whitelist/stLUNA.png'
 
 import {
   TokenKeyEnum,
@@ -514,6 +518,13 @@ const tokenInfo: Record<TokenKeyEnum, TokenInfoType> = {
     contractOrDenom:
       'terra17y9qkl8dfkeg4py7n0g5407emqnemc3yqk5rup' as ContractAddr,
   },
+  [TokenKeyEnum.stLUNA]: {
+    symbol: 'stLUNA',
+    name: 'Lido Staked Luna',
+    logo: stLUNALogo,
+    contractOrDenom:
+      'terra1yg3j2s986nyp5z7r2lvt0hx3r0lnd7kwvwwtsc' as ContractAddr,
+  },
   [TokenKeyEnum.PRISM]: {
     symbol: 'PRISM',
     name: 'Prism Protocol Token',
@@ -527,6 +538,27 @@ const tokenInfo: Record<TokenKeyEnum, TokenInfoType> = {
     logo: xPRISMLogo,
     contractOrDenom:
       'terra1042wzrwg2uk6jqxjm34ysqquyr9esdgm5qyswz' as ContractAddr,
+  },
+  [TokenKeyEnum.cLUNA]: {
+    symbol: 'cLUNA',
+    name: 'Prism cLUNA Token',
+    logo: cLUNALogo,
+    contractOrDenom:
+      'terra13zaagrrrxj47qjwczsczujlvnnntde7fdt0mau' as ContractAddr,
+  },
+  [TokenKeyEnum.pLUNA]: {
+    symbol: 'pLUNA',
+    name: 'Prism pLUNA Token',
+    logo: pLUNALogo,
+    contractOrDenom:
+      'terra1tlgelulz9pdkhls6uglfn5lmxarx7f2gxtdzh2' as ContractAddr,
+  },
+  [TokenKeyEnum.yLUNA]: {
+    symbol: 'yLUNA',
+    name: 'Prism yLUNA Token',
+    logo: yLUNALogo,
+    contractOrDenom:
+      'terra17wkadg0tah554r35x6wvff0y5s7ve8npcjfuhz' as ContractAddr,
   },
   [TokenKeyEnum.xASTRO]: {
     symbol: 'xASTRO',
@@ -553,6 +585,16 @@ const testnetTokenInfo: Record<TokenKeyEnum, TokenInfoType> = {
     ...tokenInfo[TokenKeyEnum.MIR],
     contractOrDenom:
       'terra10llyp6v3j3her8u3ce66ragytu45kcmd9asj3u' as ContractAddr,
+  },
+  [TokenKeyEnum.PRISM]: {
+    ...tokenInfo[TokenKeyEnum.PRISM],
+    contractOrDenom:
+      'terra1cwle4remlf03mucutzhxfayvmdqsulx8xaahvy' as ContractAddr,
+  },
+  [TokenKeyEnum.xPRISM]: {
+    ...tokenInfo[TokenKeyEnum.xPRISM],
+    contractOrDenom:
+      'terra1tz4lxls6gp05m20tgx4t9ljhtvqnmcpujaadc2' as ContractAddr,
   },
 }
 
@@ -592,6 +634,13 @@ const mainnetTokenList: TokenType[] = [
         otherToken: TokenKeyEnum.LUNA,
         pair: 'terra1tndcaqxkpc5ce9qee5ggqf430mr2z3pefe5wj6' as ContractAddr,
         lp: 'terra17dkr9rnmtmu7x4azrpupukvur2crnptyfvsrvr' as ContractAddr,
+      },
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.LUNA,
+        pair: 'terra1sgu6yca6yjk0a34l86u6ju4apjcd6refwuhgzv' as ContractAddr,
+        lp: '' as ContractAddr,
       },
     ],
   },
@@ -1330,8 +1379,62 @@ const mainnetTokenList: TokenType[] = [
     ],
   },
   {
+    ...tokenInfo[TokenKeyEnum.stLUNA],
+    pairList: [
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.stLUNA,
+        pair: 'terra10jzrptpsx9y6uam6vfrxpmppyelevdkm39yxay' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.stLUNA],
+    pairList: [
+      {
+        dex: DexEnum.astroport,
+        base: TokenKeyEnum.LUNA,
+        otherToken: TokenKeyEnum.stLUNA,
+        pair: 'terra1gxjjrer8mywt4020xdl5e5x7n6ncn6w38gjzae' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.LUNA,
+        otherToken: TokenKeyEnum.stLUNA,
+        pair: 'terra1utds4jwyg2x0ajpuvxu358ry3v5zx98e345cat' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+      {
+        dex: DexEnum.terraswap,
+        base: TokenKeyEnum.LUNA,
+        otherToken: TokenKeyEnum.stLUNA,
+        pair: 'terra1de8xa55xm83s3ke0s20fc5pxy7p3cpndmmm7zk' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
     ...tokenInfo[TokenKeyEnum.PRISM],
     pairList: [
+      {
+        dex: DexEnum.prism,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.PRISM,
+        pair: 'terra19d2alknajcngdezrdhq40h6362k92kz23sz62u' as ContractAddr,
+        lp: 'terra1wkv9htanake4yerrrjz8p5n40lyrjg9md28tg3' as ContractAddr,
+      },
+      // disable as of 2022/04/25 due to very low liquidity (less than 54k$ compare to 19mil$ of prism)
+      // to avoid user mistakenly place order
+      // {
+      //   dex: DexEnum.astroport,
+      //   base: TokenKeyEnum.UST,
+      //   otherToken: TokenKeyEnum.PRISM,
+      //   pair: 'terra10nfk6fcz5nc5uru964qmpels9ctg6j0vczjgl7' as ContractAddr,
+      //   lp: '' as ContractAddr,
+      // },
       // warning not verified yet
       // {
       //   dex: DexEnum.terraswap,
@@ -1339,12 +1442,17 @@ const mainnetTokenList: TokenType[] = [
       //   pair: 'terra1ag6fqvxz33nqg78830k5c27n32mmqlcrcgqejl' as ContractAddr,
       //   lp: '' as ContractAddr,
       // },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.PRISM],
+    pairList: [
       {
-        dex: DexEnum.astroport,
-        base: TokenKeyEnum.UST,
+        dex: DexEnum.prism,
+        base: TokenKeyEnum.LUNA,
         otherToken: TokenKeyEnum.PRISM,
-        pair: 'terra10nfk6fcz5nc5uru964qmpels9ctg6j0vczjgl7' as ContractAddr,
-        lp: '' as ContractAddr,
+        pair: 'terra1r38qlqt69lez4nja5h56qwf4drzjpnu8gz04jd' as ContractAddr,
+        lp: 'terra1af7hyx4ek8vqr8asmtujsyv7s3z6py3jgtsgh8' as ContractAddr,
       },
     ],
   },
@@ -1352,17 +1460,143 @@ const mainnetTokenList: TokenType[] = [
     ...tokenInfo[TokenKeyEnum.xPRISM],
     pairList: [
       {
-        dex: DexEnum.astroport,
+        dex: DexEnum.prism,
         base: TokenKeyEnum.PRISM,
         otherToken: TokenKeyEnum.xPRISM,
-        pair: 'terra1c868juk7lk9vuvetf0644qgxscsu4xwag6yaxs' as ContractAddr,
-        lp: '' as ContractAddr,
+        pair: 'terra1czynvm64nslq2xxavzyrrhau09smvana003nrf' as ContractAddr,
+        lp: 'terra1zuv05w52xvtn3td2lpfl3q9jj807533ew54f0x' as ContractAddr,
+      },
+      // disable as of 2022/04/25 due to very low liquidity (less than 1k$)
+      // to avoid user mistakenly place order
+      // {
+      //   dex: DexEnum.astroport,
+      //   base: TokenKeyEnum.PRISM,
+      //   otherToken: TokenKeyEnum.xPRISM,
+      //   pair: 'terra1c868juk7lk9vuvetf0644qgxscsu4xwag6yaxs' as ContractAddr,
+      //   lp: '' as ContractAddr,
+      // },
+      // {
+      //   dex: DexEnum.terraswap,
+      //   base: TokenKeyEnum.PRISM,
+      //   otherToken: TokenKeyEnum.xPRISM,
+      //   pair: 'terra1urt608par6rkcancsjzm76472phptfwq397gpm' as ContractAddr,
+      //   lp: '' as ContractAddr,
+      // },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.cLUNA],
+    pairList: [
+      {
+        dex: DexEnum.prism,
+        base: TokenKeyEnum.PRISM,
+        otherToken: TokenKeyEnum.cLUNA,
+        pair: 'terra1yxgq5y6mw30xy9mmvz9mllneddy9jaxndrphvk' as ContractAddr,
+        lp: 'terra1vn5c4yf70aasrq50k2xdy3vn2s8vm40wmngljh' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.cLUNA],
+    pairList: [
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.LUNA,
+        otherToken: TokenKeyEnum.cLUNA,
+        pair: 'terra1ur6yyha884t5rhpf6was9xlr7xpcq40aw2r5jx' as ContractAddr,
+        lp: 'terra1n0y2ve7j28l65z3kdf5h0xljfmmpc75z2xpzeq' as ContractAddr,
       },
       {
         dex: DexEnum.terraswap,
+        base: TokenKeyEnum.LUNA,
+        otherToken: TokenKeyEnum.cLUNA,
+        pair: 'terra1ejyqwcemr5kda5pxwz27t2ja784j3d0nj0v6lh' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+      {
+        dex: DexEnum.astroport,
+        base: TokenKeyEnum.LUNA,
+        otherToken: TokenKeyEnum.cLUNA,
+        pair: 'terra102t6psqa45ahfd7wjskk3gcnfev32wdngkcjzd' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.cLUNA],
+    pairList: [
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.yLUNA,
+        otherToken: TokenKeyEnum.cLUNA,
+        pair: 'terra18zh29lwx36uxh4a4ff5at9ysm6n0da4puz7z62' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.cLUNA],
+    pairList: [
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.pLUNA,
+        otherToken: TokenKeyEnum.cLUNA,
+        pair: 'terra1um8zappwu8csxv6c7zmadjvnf5rs7xgnc573fx' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.pLUNA],
+    pairList: [
+      {
+        dex: DexEnum.prism,
         base: TokenKeyEnum.PRISM,
-        otherToken: TokenKeyEnum.xPRISM,
-        pair: 'terra1urt608par6rkcancsjzm76472phptfwq397gpm' as ContractAddr,
+        otherToken: TokenKeyEnum.pLUNA,
+        pair: 'terra1persuahr6f8fm6nyup0xjc7aveaur89nwgs5vs' as ContractAddr,
+        lp: 'terra1rjm3ca2xh2cfm6l6nsnvs6dqzed0lgzdydy7wf' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.pLUNA],
+    pairList: [
+      {
+        dex: DexEnum.terraswap,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.pLUNA,
+        pair: 'terra1hngzkju6egu78eyzzw2fn8el9dnjk3rr704z2f' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.pLUNA,
+        pair: 'terra13qkgx03lu38p49yefnw7sr7xyy0k0ngamr8p2u' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.yLUNA],
+    pairList: [
+      {
+        dex: DexEnum.prism,
+        base: TokenKeyEnum.PRISM,
+        otherToken: TokenKeyEnum.yLUNA,
+        pair: 'terra1kqc65n5060rtvcgcktsxycdt2a4r67q2zlvhce' as ContractAddr,
+        lp: 'terra1argcazqn3ukpyp0vmldxnf9qymnm6vfjaar94g' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.yLUNA],
+    pairList: [
+      {
+        dex: DexEnum.loop,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.yLUNA,
+        pair: 'terra1wznq6n5rw2jlyh274l0pmkq6chqfx5qqaduwwn' as ContractAddr,
         lp: '' as ContractAddr,
       },
     ],
@@ -1451,7 +1685,31 @@ const testnetTokenList: TokenType[] = [
       },
     ],
   },
-  // {
+  {
+    ...testnetTokenInfo[TokenKeyEnum.PRISM],
+    pairList: [
+      {
+        dex: DexEnum.prism,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.PRISM,
+        pair: 'terra1lveas7a5k3ghxmn9gjn584pfpv7644fyuhhdv3' as ContractAddr,
+        lp: 'terra1st953sgnrtew0w3zfatwfhn06u6lgs0udkx3df' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...testnetTokenInfo[TokenKeyEnum.xPRISM],
+    pairList: [
+      {
+        dex: DexEnum.prism,
+        base: TokenKeyEnum.PRISM,
+        otherToken: TokenKeyEnum.xPRISM,
+        pair: 'terra1ez9ad3ms373pv7j373qc2clsp7x5y9lws8lwln' as ContractAddr,
+        lp: 'terra18278cwhq4k4kz09t9ghg9jmfarrpeqcupdalm4' as ContractAddr,
+      },
+    ],
+  },
+  // {,
   //   ...testnetTokenInfo[TokenKeyEnum.MIAW],
   //   pairList: [
   //     {
@@ -1524,8 +1782,12 @@ const address = {
 
 const mainnetLimitOrder =
   'terra1qd2vhcjq7zva7ftuggdxn2ctrm34umgjcccqux' as ContractAddr
+// official testnet
 const testnetLimitOrder =
   'terra155qarpe3ftgfjsc4396plnhvn6m8tjcugg7x83' as ContractAddr
+// private test
+// const testnetLimitOrder =
+//   'terra1g9cqdsg42jv0hggukv65xarzyfs06un36xyrar' as ContractAddr
 
 export default {
   mainnetTokenList,

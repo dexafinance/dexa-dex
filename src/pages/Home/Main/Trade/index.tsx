@@ -2,7 +2,7 @@ import { ReactElement, useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { IconSquare, IconCheckbox } from '@tabler/icons'
 
-import { COLOR, STYLE, WHITELIST } from 'consts'
+import { COLOR, STYLE } from 'consts'
 
 import { FormText, Card, SelectTab, AuthButton, View } from 'components'
 import useRoute from 'hooks/common/useRoute'
@@ -15,6 +15,7 @@ import useLimitOrderSell, {
   UseLimitOrderSellReturn,
 } from 'hooks/common/trade/useLimitOrderSell'
 import useMyOrder from 'hooks/common/trade/useMyOrder'
+import useNetwork from 'hooks/common/useNetwork'
 
 import {
   TradeTypeEnum,
@@ -262,9 +263,10 @@ const Trade = ({
   dex: DexEnum
 }): ReactElement => {
   const { insertRouteParam, routeParams } = useRoute<RoutePath.home>()
+  const { tokenInfo } = useNetwork()
   const tradeType = routeParams?.tradeType || TradeTypeEnum.buy
-  const tradeBaseContract = WHITELIST.tokenInfo[tradeBase].contractOrDenom
-  const tradeBaseSymbol = WHITELIST.tokenInfo[tradeBase].symbol
+  const tradeBaseContract = tokenInfo[tradeBase].contractOrDenom
+  const tradeBaseSymbol = tokenInfo[tradeBase].symbol
   const buyReturn = useBuy({
     fromTokenContractOrDenom: tradeBaseContract,
     toTokenContractOrDenom: token.contractOrDenom,

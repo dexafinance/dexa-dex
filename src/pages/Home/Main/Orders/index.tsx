@@ -1,11 +1,7 @@
 import ListOrders from './ListOrders'
 import { ReactElement } from 'react'
 
-// import styled from 'styled-components'
-// import useRoute from 'hooks/common/useRoute'
-import { WHITELIST } from 'consts'
-
-// import { Card } from 'components'
+import useNetwork from 'hooks/common/useNetwork'
 
 import {
   // LpProvideTypeEnum,
@@ -15,8 +11,6 @@ import {
   TokenKeyEnum,
 } from 'types'
 
-// import useLpProvide from 'hooks/common/lpProvide/useLpProvide'
-// import useLpWithdraw from 'hooks/common/lpProvide/useLpWithdraw'
 import useMyOrder from 'hooks/common/trade/useMyOrder'
 
 // const StyledCard = styled(Card)`
@@ -37,8 +31,9 @@ const Orders = ({
   // const { insertRouteParam, routeParams } = useRoute<RoutePath.home>()
   // const { routeParams } = useRoute<RoutePath.home>()
   // const type = routeParams?.lpType || LpProvideTypeEnum.provide
-  const tradeBaseContract = WHITELIST.tokenInfo[tradeBase].contractOrDenom
-  const tradeBaseSymbol = WHITELIST.tokenInfo[tradeBase].symbol
+  const { tokenInfo } = useNetwork()
+  const tradeBaseContract = tokenInfo[tradeBase].contractOrDenom
+  const tradeBaseSymbol = tokenInfo[tradeBase].symbol
   // const lpProvideReturn = useLpProvide({
   //   pairContract,
   //   token_0_ContractOrDenom: token.contractOrDenom,

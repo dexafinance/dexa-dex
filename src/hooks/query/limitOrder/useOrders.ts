@@ -66,13 +66,12 @@ const useOrders = ({
       data?.orders,
       (item) => {
         const offerContractOrDenom =
-          'token' in item.offer_asset.info
-            ? item.offer_asset.info.token.contract_addr
-            : item.offer_asset.info.native_token.denom
+          _.get(item.offer_asset.info, 'token.contract_addr') ||
+          _.get(item.offer_asset.info, 'native_token.denom')
+
         const askContractOrDenom =
-          'token' in item.ask_asset.info
-            ? item.ask_asset.info.token.contract_addr
-            : item.ask_asset.info.native_token.denom
+          _.get(item.ask_asset.info, 'token.contract_addr') ||
+          _.get(item.ask_asset.info, 'native_token.denom')
 
         return {
           orderId: item.order_id,

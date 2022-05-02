@@ -3,7 +3,7 @@ import { ReactElement, useState } from 'react'
 import styled from 'styled-components'
 
 // import { COLOR, UTIL } from 'consts'
-import { WHITELIST } from 'consts'
+// import { WHITELIST } from 'consts'
 // import { COLOR } from 'consts'
 
 import { View } from 'components'
@@ -12,6 +12,7 @@ import { View } from 'components'
 import { ContractAddr, TokenKeyEnum, TokenType } from 'types'
 // import { ContractAddr, Token, uLP } from 'types'
 import useAnalyticsCandle from 'hooks/common/home/useAnalyticsCandle'
+import useNetwork from 'hooks/common/useNetwork'
 
 // import { createChart } from 'lightweight-charts'
 import Chart from 'kaktana-react-lightweight-charts'
@@ -35,7 +36,8 @@ const AnalyticsCandle = ({
   pairContract: ContractAddr
   tradeBase: TokenKeyEnum
 }): ReactElement => {
-  const baseContractOrDenom: ContractAddr = WHITELIST.tokenInfo[tradeBase]
+  const { tokenInfo } = useNetwork()
+  const baseContractOrDenom: ContractAddr = tokenInfo[tradeBase]
     .contractOrDenom as ContractAddr
   const theme = useTheme()
 
