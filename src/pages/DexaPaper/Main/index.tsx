@@ -95,6 +95,20 @@ const Main = (): ReactElement => {
           </StyledDesc>
         </StyledSection>
         <StyledSection>
+          <StyledSubTitle fontType="B24">How it works</StyledSubTitle>
+          <StyledDesc>
+            To see how it works checkout&nbsp;
+            <LinkA link="https://buttery-elderberry-89d.notion.site/How-it-works-db3352b233574f7b9433985223b04d36">
+              <FormText
+                fontType={'R18'}
+                color={theme.colors.orderList.buyColor}
+              >
+                this blog post
+              </FormText>
+            </LinkA>
+          </StyledDesc>
+        </StyledSection>
+        <StyledSection>
           <StyledSubTitle fontType="B24">Join our waiting list</StyledSubTitle>
           <StyledDesc>We're all ears from you. </StyledDesc>
           <StyledDesc>

@@ -66,6 +66,7 @@ import yLUNALogo from 'images/whitelist/yLUNA.svg'
 import ASTROLogo from 'images/whitelist/ASTRO.png'
 import xASTROLogo from 'images/whitelist/xASTROLogo.png'
 import stLUNALogo from 'images/whitelist/stLUNA.png'
+import kUSTLogo from 'images/whitelist/kUST.svg'
 
 import {
   TokenKeyEnum,
@@ -566,6 +567,13 @@ const tokenInfo: Record<TokenKeyEnum, TokenInfoType> = {
     logo: xASTROLogo,
     contractOrDenom:
       'terra14lpnyzc9z4g3ugr4lhm8s4nle0tq8vcltkhzh7' as ContractAddr,
+  },
+  [TokenKeyEnum.kUST]: {
+    symbol: 'kUST',
+    name: 'Kinetic kUST Token',
+    logo: kUSTLogo,
+    contractOrDenom:
+      'terra1g53pyke8jtmt4lwvk4yl0xaqc4u0qlsl8dz3ex' as ContractAddr,
   },
 }
 
@@ -1628,6 +1636,18 @@ const mainnetTokenList: TokenType[] = [
         base: TokenKeyEnum.ASTRO,
         otherToken: TokenKeyEnum.xASTRO,
         pair: 'terra14q2h9nce4spj8n74g6kppj3yf86qx8hsrqngfh' as ContractAddr,
+        lp: '' as ContractAddr,
+      },
+    ],
+  },
+  {
+    ...tokenInfo[TokenKeyEnum.kUST],
+    pairList: [
+      {
+        dex: DexEnum.astroport,
+        base: TokenKeyEnum.UST,
+        otherToken: TokenKeyEnum.kUST,
+        pair: 'terra15rx5ghq4nxrv62fqvdvm78kuasfkl95c6mcmqs' as ContractAddr,
         lp: '' as ContractAddr,
       },
     ],

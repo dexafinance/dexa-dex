@@ -68,6 +68,7 @@ export enum TokenKeyEnum {
   pLUNA = 'pLUNA',
   yLUNA = 'yLUNA',
   stLUNA = 'stLUNA',
+  kUST = 'kUST',
 }
 
 export type AddressMap = {
