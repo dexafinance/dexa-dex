@@ -32,7 +32,6 @@ const useBurn = ({ token }: { token: TokenType }): UseBurnReturn => {
   const [amount, setAmount] = useState<CW20>('' as CW20)
   const amountErrMsg = useMemo(() => {
     const myTokenAmount = UTIL.demicrofy(tokenBal)
-
     return validateFormInputAmount({
       input: amount,
       max: myTokenAmount,

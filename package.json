@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/slider": "^0.17.0",
     "@tabler/icons": "^1.41.2",
     "@terra-money/log-finder-ruleset": "1.0.5",
     "@terra-money/terra.js": "^3.0.7",

@@ -24,8 +24,10 @@ import {
   validateFee,
   validateFormInputAmount,
   validateFormInputMinAmount,
+  validateFormInputAmountDecimal,
 } from 'logics/validator'
 import useNetwork from '../useNetwork'
+import usePool from 'hooks/query/pair/usePool'
 
 export type UseLimitOrderSellReturn = {
   offerContractOrDenom: ContractAddr | TokenDenomEnum
@@ -36,6 +38,9 @@ export type UseLimitOrderSellReturn = {
   offerAmount: Token
 
   askAmount: Token
+  updateAskAmount: (value: Token) => void
+  askAmountErrMsg: string
+
   updateOfferAmount: (value: Token) => void
   offerAmountErrMsg: string
   askPrice: Token
@@ -83,6 +88,16 @@ const useLimitOrderSell = ({
   const { getSubmitOrderMsgs } = useFabricator()
   const connectedWallet = useConnectedWallet()
 
+  const { poolInfo } = usePool({
+    pairContract,
+    token_0_ContractOrDenom: offerContractOrDenom,
+  })
+
+  // allow input price to be larger 1% of simulated price
+  const askTokenPrice = UTIL.toBn(poolInfo?.token_0_Price)
+    .dp(6)
+    .toString(10) as Token
+
   const postTxResult = useRecoilValue(postTxStore.postTxResult)
   const { postTx } = usePostTx()
 
@@ -97,31 +112,40 @@ const useLimitOrderSell = ({
     })
   }, [offerAmount])
 
-  const [askPrice, setAskPrice] = useState('' as Token)
+  const [askPrice, setAskPrice] = useState(askTokenPrice)
   const askPriceErrMsg = useMemo(() => {
     return validateFormInputMinAmount({
       input: askPrice,
-      min: '0.000001' as Token,
-    })
-  }, [askPrice])
-
-  const askAmount = useMemo(() => {
-    if (offerAmount && askPrice) {
-      return UTIL.toBn(offerAmount)
-        .multipliedBy(askPrice)
+      min: UTIL.toBn(askTokenPrice)
+        .multipliedBy(0.99)
         .dp(6)
-        .toString(10) as Token
-    }
-    return '0' as Token
-  }, [offerAmount, askPrice])
+        .toString(10) as Token,
+    })
+  }, [askPrice, askTokenPrice])
+
+  const [askAmount, setAskAmount] = useState('' as Token)
+  const askAmountErrMsg = useMemo(() => {
+    return validateFormInputAmountDecimal({
+      input: askAmount,
+    })
+  }, [askAmount])
+  // const askAmount = useMemo(() => {
+  //   if (offerAmount && askPrice) {
+  //     return UTIL.toBn(offerAmount)
+  //       .multipliedBy(askPrice)
+  //       .dp(6)
+  //       .toString(10) as Token
+  //   }
+  //   return '0' as Token
+  // }, [offerAmount, askPrice])
 
   const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
-  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.25' as Token)
+  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.0' as Token)
   const feeTokenAmountErrMsg = useMemo(() => {
     return validateFormInputAmount({
       input: feeTokenAmount,
       max: myFeeTokenAmount,
-      min: '0.25' as Token,
+      min: '0.0' as Token,
     })
   }, [feeTokenAmount, myFeeTokenAmount])
 
@@ -146,6 +170,7 @@ const useLimitOrderSell = ({
         feeAmount: feeTokenAmount,
       })
     }
+
     return {
       msgs,
       feeDenoms: ['uusd'],
@@ -159,10 +184,36 @@ const useLimitOrderSell = ({
 
   const updateOfferAmount = async (nextOfferAmount: Token): Promise<void> => {
     setOfferAmount(nextOfferAmount.trim() as Token)
+    if (nextOfferAmount && askPrice) {
+      setAskAmount(
+        UTIL.toBn(nextOfferAmount)
+          .multipliedBy(askPrice)
+          .dp(6)
+          .toString(10) as Token
+      )
+    } else {
+      setAskAmount('' as Token)
+    }
+  }
+
+  const updateAskAmount = async (nextAskAmount: Token): Promise<void> => {
+    setAskAmount(nextAskAmount.trim() as Token)
+    if (nextAskAmount && askPrice) {
+      setOfferAmount(
+        UTIL.toBn(nextAskAmount).dividedBy(askPrice).dp(6).toString(10) as Token
+      )
+    } else {
+      setOfferAmount('' as Token)
+    }
   }
 
   const updateAskPrice = async (nextAskPrice: Token): Promise<void> => {
     setAskPrice(nextAskPrice.trim() as Token)
+    if (askAmount && nextAskPrice) {
+      setOfferAmount(
+        UTIL.toBn(askAmount).dividedBy(nextAskPrice).dp(6).toString(10) as Token
+      )
+    }
   }
 
   const submitErrMsg = useMemo(() => {
@@ -190,12 +241,12 @@ const useLimitOrderSell = ({
 
   const initForm = (): void => {
     updateOfferAmount('' as Token)
-    setAskPrice('' as Token)
+    setAskPrice(askTokenPrice as Token)
   }
 
   useEffect(() => {
     initForm()
-  }, [pairContract])
+  }, [pairContract, askTokenPrice])
 
   useEffect(() => {
     if (postTxResult.status === PostTxStatus.DONE) {
@@ -210,6 +261,8 @@ const useLimitOrderSell = ({
     askTokenSymbol,
 
     askAmount,
+    updateAskAmount,
+    askAmountErrMsg,
 
     offerAmount,
     updateOfferAmount,

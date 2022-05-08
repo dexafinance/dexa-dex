@@ -62,7 +62,7 @@ export const validateFormInputAmount = ({
   min?: Token
 }): string => {
   if (input) {
-    if (toBn(max).isZero()) {
+    if (toBn(max).isZero() && !toBn(input).isZero()) {
       return 'Insufficient balance'
     }
     if (toBn(input).isNaN() || toBn(input).lt(min) || toBn(input).gt(max)) {

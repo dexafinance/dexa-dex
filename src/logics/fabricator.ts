@@ -325,18 +325,20 @@ export const fabricateSubmitOrder = ({
       .plus(UTIL.toBn(feeAmount))
       .toString() as Token
   } else {
-    if (UTIL.isNativeDenom(feeContractOrDenom)) {
-      coinList.push(new Coin(feeContractOrDenom, UTIL.microfy(feeAmount)))
-    } else {
-      tokenAllowanceMsg.push(
-        new MsgExecuteContract(sender, feeContractOrDenom, {
-          increase_allowance: {
-            spender: limitOrderContract,
-            amount: UTIL.microfy(feeAmount),
-            expires: { never: {} },
-          },
-        })
-      )
+    if (!UTIL.toBn(feeAmount).isZero()) {
+      if (UTIL.isNativeDenom(feeContractOrDenom)) {
+        coinList.push(new Coin(feeContractOrDenom, UTIL.microfy(feeAmount)))
+      } else {
+        tokenAllowanceMsg.push(
+          new MsgExecuteContract(sender, feeContractOrDenom, {
+            increase_allowance: {
+              spender: limitOrderContract,
+              amount: UTIL.microfy(feeAmount),
+              expires: { never: {} },
+            },
+          })
+        )
+      }
     }
   }
 

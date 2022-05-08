@@ -25,6 +25,7 @@ const StyledInputContainer = styled(Row)`
 
 const StyledInput = styled.input`
   flex: 1;
+  text-align: right;
   padding: 0 12px;
   height: 30px;
   border: none;
@@ -36,8 +37,8 @@ const StyledInput = styled.input`
   background-color: ${({ theme }): string => theme.colors.inputBackground};
   border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
   :read-only {
-    background-color: ${COLOR.gray._100};
     cursor: not-allowed;
+    color: ${({ theme }): string => theme.colors.secondaryText};
   }
   :focus {
     outline: none;
@@ -49,10 +50,28 @@ const StyledInput = styled.input`
     font-size: 16px;
   }
 `
+const StyledPrefixBox = styled(View)`
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
+  background-color: ${({ theme }): string => theme.colors.inputBackground};
+  min-width: 80px;
+  align-items: center;
+  justify-content: center;
+`
+
+const StyledPrefixText = styled(Text)`
+  padding: 0 16px;
+  color: ${({ theme }): string => theme.colors.secondaryText};
+  font-weight: 400;
+  font-size: 16px;
+`
+
 const StyledSuffixBox = styled(View)`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
+  background-color: ${({ theme }): string => theme.colors.inputBackground};
   min-width: 80px;
   align-items: center;
   justify-content: center;
@@ -61,6 +80,7 @@ const StyledSuffixBox = styled(View)`
 const StyledSuffixText = styled(Text)`
   padding: 0 16px;
   color: ${({ theme }): string => theme.colors.primaryText};
+  text-align: right;
   font-weight: 400;
   font-size: 16px;
 `
@@ -69,6 +89,7 @@ const FormInput = <T extends string>({
   number,
   inputProps,
   onChangeValue,
+  prefix,
   suffix,
   isError,
   helperText,
@@ -82,6 +103,7 @@ const FormInput = <T extends string>({
     maxLength?: number
   }
   onChangeValue?: (value: T) => void
+  prefix?: ReactNode
   suffix?: ReactNode
   isError?: boolean
   helperText?: string
@@ -103,6 +125,15 @@ const FormInput = <T extends string>({
   return (
     <StyledContainer>
       <StyledInputContainer style={containerStyle}>
+        {prefix && (
+          <StyledPrefixBox>
+            {typeof prefix === 'string' ? (
+              <StyledPrefixText>{prefix}</StyledPrefixText>
+            ) : (
+              prefix
+            )}
+          </StyledPrefixBox>
+        )}
         <StyledInput
           {...inputProps}
           type={number ? 'number' : 'text'}
@@ -113,7 +144,9 @@ const FormInput = <T extends string>({
             currentTarget.blur()
           }}
           style={{
-            borderRadius: suffix ? '4px 0 0 4px' : 4,
+            borderRadius: `${prefix ? '0' : '4px'} ${suffix ? '0' : '4px'} ${
+              suffix ? '0' : '4px'
+            }${prefix ? '0' : '4px'}`,
           }}
           onFocus={(): void => {
             !readOnly && setOnFocus(true)

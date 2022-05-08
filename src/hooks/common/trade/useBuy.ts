@@ -41,15 +41,15 @@ export type UseBuyReturn = {
 
   slippage: string
   updateSlippage: (value: string) => void
-  fromAmount: Native
-  updateFromAmount: (value: Native) => void
+  fromAmount: Token
+  updateFromAmount: (value: Token) => void
   fromAmountErrMsg: string
   toAmount: Token
   updateToAmount: (value: Token) => void
   toAmountErrMsg: string
 
   fee?: Fee
-  simulation?: TradeSimulation<uNative, uToken>
+  simulation?: TradeSimulation<uToken, uToken>
 
   onClickBuy: () => void
   invalidForm: boolean
@@ -81,7 +81,7 @@ const useBuy = ({
   const connectedWallet = useConnectedWallet()
 
   const [simulation, setSimulation] =
-    useState<TradeSimulation<uNative, uToken>>()
+    useState<TradeSimulation<uToken, uToken>>()
   const [simulationErrMsg, setSimulationErrMsg] = useState('')
   const { simulate, reverseSimulate } = useSimulate()
 
@@ -92,7 +92,7 @@ const useBuy = ({
 
   const walletAddress = connectedWallet?.walletAddress as string
 
-  const [fromAmount, setFromAmount] = useState('' as Native)
+  const [fromAmount, setFromAmount] = useState('' as Token)
   const fromAmountErrMsg = useMemo(() => {
     const myTokenAmount = UTIL.demicrofy(fromTokenBal)
     return validateFormInputAmount({
@@ -140,7 +140,7 @@ const useBuy = ({
   })
 
   const dbcSimulateFromAmount = useDebouncedCallback(
-    async (nextFromUAmount: uNative) => {
+    async (nextFromUAmount: uToken) => {
       try {
         const simulated = await simulate({
           amount: nextFromUAmount,
@@ -166,19 +166,19 @@ const useBuy = ({
     400
   )
 
-  const updateFromAmount = async (nextFromAmount: Native): Promise<void> => {
+  const updateFromAmount = async (nextFromAmount: Token): Promise<void> => {
     setSimulation(undefined)
     setSimulationErrMsg('')
     setFromAmount(nextFromAmount.trim() as Native)
     setToAmount('' as Token)
-    const nextFromUAmount = UTIL.microfy(nextFromAmount) as uNative
+    const nextFromUAmount = UTIL.microfy(nextFromAmount) as uToken
     dbcSimulateFromAmount(nextFromUAmount)
   }
 
   const dbcSimulateToAmount = useDebouncedCallback(
     async (nextToUAmount: uToken) => {
       try {
-        const simulated = await reverseSimulate<uToken, uNative>({
+        const simulated = await reverseSimulate<uToken, uToken>({
           amount: nextToUAmount,
           pairContract,
           tokenContract: toTokenContractOrDenom,
@@ -190,8 +190,8 @@ const useBuy = ({
             maxSpread: slippage,
           })
           setSimulation(simulation)
-          const _fromAmount = simulation?.fromAmount || ('0' as uNative)
-          setFromAmount(UTIL.demicrofy(_fromAmount) as Native)
+          const _fromAmount = simulation?.fromAmount || ('0' as uToken)
+          setFromAmount(UTIL.demicrofy(_fromAmount) as Token)
         }
       } catch (e) {
         setSimulationErrMsg(MESSAGE['Simulation failed'])

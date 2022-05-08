@@ -10,9 +10,9 @@ export const buyFromSimulator = ({
   maxSpread,
 }: {
   simulated: terraswap.SimulationResponse<uToken>
-  fromAmount: uNative
+  fromAmount: uToken
   maxSpread: string
-}): TradeSimulation<uNative, uToken> => {
+}): TradeSimulation<uToken, uToken> => {
   const beliefPrice = toBn(fromAmount).div(simulated.return_amount).dp(6)
   const toAmount = toBn(simulated.return_amount).toString() as uToken
   const expectedAmount = toBn(fromAmount).div(beliefPrice)
@@ -36,12 +36,12 @@ export const buyToSimulator = ({
   toAmount,
   maxSpread,
 }: {
-  simulated: terraswap.ReverseSimulationResponse<uToken, uNative>
+  simulated: terraswap.ReverseSimulationResponse<uToken, uToken>
   toAmount: uToken
   maxSpread: string
-}): TradeSimulation<uNative, uToken> => {
+}): TradeSimulation<uToken, uToken> => {
   const beliefPrice = toBn(simulated.offer_amount).div(toAmount).dp(6)
-  const fromAmount = toBn(simulated.offer_amount).toString() as uNative
+  const fromAmount = toBn(simulated.offer_amount).toString() as uToken
   const expectedAmount = toBn(simulated.offer_amount).div(beliefPrice)
 
   const rate = toBn(1).minus(maxSpread)

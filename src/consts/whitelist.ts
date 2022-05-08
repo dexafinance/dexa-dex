@@ -1803,11 +1803,11 @@ const address = {
 const mainnetLimitOrder =
   'terra1qd2vhcjq7zva7ftuggdxn2ctrm34umgjcccqux' as ContractAddr
 // official testnet
-const testnetLimitOrder =
-  'terra155qarpe3ftgfjsc4396plnhvn6m8tjcugg7x83' as ContractAddr
-// private test
 // const testnetLimitOrder =
-//   'terra1g9cqdsg42jv0hggukv65xarzyfs06un36xyrar' as ContractAddr
+//   'terra155qarpe3ftgfjsc4396plnhvn6m8tjcugg7x83' as ContractAddr
+// private test
+const testnetLimitOrder =
+  'terra1g9cqdsg42jv0hggukv65xarzyfs06un36xyrar' as ContractAddr
 
 export default {
   mainnetTokenList,

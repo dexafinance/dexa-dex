@@ -1,5 +1,5 @@
 import { ReactElement, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { COLOR, STYLE, UTIL } from 'consts'
 
@@ -58,6 +58,8 @@ const SlippageToleranceButton = ({
 }): ReactElement => {
   const [inputValue, setInputValue] = useState('')
 
+  const theme = useTheme()
+
   const onChangeSlippage = (value: string): void => {
     updateSlippage(value)
   }
@@ -104,7 +106,7 @@ const SlippageToleranceButton = ({
       >
         <FormText
           fontType={selected ? 'B14' : 'R14'}
-          color={selected ? COLOR.gray._50 : COLOR.gray._900}
+          color={selected ? COLOR.gray._50 : theme.colors.secondaryText}
         >
           {title}
         </FormText>
@@ -115,7 +117,7 @@ const SlippageToleranceButton = ({
   return (
     <StyledContainer>
       <Row style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-        <FormText fontType="R12" color={COLOR.gray._800}>
+        <FormText fontType="R12" color={theme.colors.secondaryText}>
           Slippage Tolerance
         </FormText>
 

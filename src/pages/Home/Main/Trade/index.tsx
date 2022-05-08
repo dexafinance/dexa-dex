@@ -124,6 +124,9 @@ const Buy = ({
             </FormText>
           )}
           <AuthButton
+            style={{
+              marginTop: 8,
+            }}
             kind="primary"
             backgroundColor={theme.colors.orderList.buyColor}
             color={theme.colors.onPrimary}
@@ -219,6 +222,9 @@ const Sell = ({
             </FormText>
           )}
           <AuthButton
+            style={{
+              marginTop: 8,
+            }}
             onClick={onClickLimitOrderSell}
             kind="primary"
             backgroundColor={theme.colors.orderList.sellColor}

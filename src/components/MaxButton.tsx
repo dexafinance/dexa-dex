@@ -9,6 +9,7 @@ import { uToken } from 'types'
 
 type MaxButtonProps = {
   value: uToken
+  symbol?: string
   onClick: (value: uToken) => void
 }
 
@@ -22,11 +23,15 @@ const StyledMaxButton = styled(Row)`
   }
 `
 
-const MaxButton = ({ value, onClick }: MaxButtonProps): ReactElement => (
+const MaxButton = ({
+  value,
+  symbol,
+  onClick,
+}: MaxButtonProps): ReactElement => (
   <StyledMaxButton onClick={(): void => onClick(value)}>
-    <FormText fontType="R14">{`MAX ${UTIL.formatAmount(value, {
+    <FormText fontType="R14">{`Avbl ${UTIL.formatAmount(value, {
       toFix: UTIL.getFixed(+(UTIL.demicrofy(value) as string)),
-    })}`}</FormText>
+    })}${symbol && symbol.length > 0 ? ' ' + symbol : ''}`}</FormText>
   </StyledMaxButton>
 )
 

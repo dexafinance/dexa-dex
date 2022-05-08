@@ -49,6 +49,7 @@ const isOdd = (value: number): boolean => !isEven(value)
 
 const getFixed = (value: number): number => (value > 2 ? 3 : 5)
 
+
 const microfy = (value: Token): uToken =>
   toBn(value).multipliedBy(asset.TERRA_DECIMAL).toString(10) as uToken
 
@@ -64,17 +65,39 @@ const formatAmount = (
 ): string => {
   const demicrofyValue = toBn(demicrofy(value))
   let strValue = '0'
-  if (option?.toFix !== undefined) {
-    strValue = demicrofyValue.toFixed(option?.toFix)
-  } else {
-    strValue = demicrofyValue.toString(10)
-  }
+  strValue = demicrofyValue.toFixed(
+    option?.toFix || getFixed(demicrofyValue.toNumber())
+  )
 
   if (option?.abbreviate) {
     const abbreviated = abbreviateNumber(strValue)
     return `${setComma(abbreviated.value)}${abbreviated.unit}`
   }
   return setComma(strValue)
+}
+
+const formatNumber = (
+  value: string,
+  option?: {
+    abbreviate?: boolean
+    toFix?: number
+    demicrofy?: boolean
+    separator?: boolean
+  }
+): string => {
+  const demicrofyValue = toBn(
+    option?.demicrofy ? demicrofy(value as uToken) : value
+  )
+  let strValue = '0'
+  strValue = demicrofyValue.toFixed(
+    option?.toFix || getFixed(demicrofyValue.toNumber())
+  )
+
+  if (option?.abbreviate) {
+    const abbreviated = abbreviateNumber(strValue)
+    return `${setComma(abbreviated.value)}${abbreviated.unit}`
+  }
+  return option?.separator ? setComma(strValue) : strValue
 }
 
 const abbreviateNumber = (value: string): { value: string; unit: string } => {
@@ -140,6 +163,7 @@ export default {
   microfy,
   demicrofy,
   formatAmount,
+  formatNumber,
   abbreviateNumber,
   getPriceChange,
   toBase64,

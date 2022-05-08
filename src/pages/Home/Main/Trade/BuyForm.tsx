@@ -1,8 +1,8 @@
 import { ReactElement, useMemo } from 'react'
 import styled from 'styled-components'
-import { IconArrowDownCircle } from '@tabler/icons'
 
-import { ASSET, COLOR, UTIL } from 'consts'
+import { ASSET, UTIL, COLOR } from 'consts'
+import BigNumber from 'bignumber.js'
 
 import {
   View,
@@ -17,21 +17,60 @@ import {
 import { TokenDenomEnum, uToken, Native, Token } from 'types'
 import { UseBuyReturn } from 'hooks/common/trade/useBuy'
 import useMyBalance from 'hooks/common/useMyBalance'
+import {
+  // Slider,
+  SliderInput,
+  SliderTrack,
+  SliderRange,
+  SliderHandle,
+  SliderMarker,
+} from '@reach/slider'
+import '@reach/slider/styles.css'
 
 const StyledSection = styled(View)`
   padding-bottom: 20px;
 `
 
+const StyledRow = styled(View)`
+  padding-bottom: 8px;
+`
+
+const StyledSlider = styled(View)`
+  padding: 4px 8px 12px 8px;
+  [data-reach-slider-track] {
+    background-color: ${({ theme }): string => theme.colors.inputBackground};
+  }
+  [data-reach-slider-range] {
+    background-color: ${COLOR.gray._300};
+  }
+  [data-reach-slider-marker] {
+    border-radius: 12px;
+    width: 12px;
+    background-color: ${({ theme }): string => theme.colors.inputBackground};
+    border: solid 2px ${({ theme }): string => theme.colors.background};
+  }
+  [data-reach-slider-marker][data-state='under-value'] {
+    background-color: ${COLOR.gray._300};
+  }
+  [data-reach-slider-marker][data-state='at-value'] {
+    background-color: ${({ theme }): string => theme.colors.inputBackground};
+    border: solid 4px;
+  }
+  [data-reach-slider-handle] {
+    background-color: ${COLOR.gray._300};
+  }
+`
+
 const StyledMaxBalance = styled(Row)`
-  justify-content: flex-end;
-  padding-top: 8px;
-  color: ${({ theme }): string => theme.colors.secondaryText};
+  justify-content: space-between;
+  padding-bottom: 8px;
+  color: ${({ theme }): string => theme.colors.primaryText};
 `
 
 const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
   const {
     fromTokenContractOrDenom,
-    toTokenContractOrDenom,
+    // toTokenContractOrDenom,
     fromTokenSymbol,
     toTokenSymbol,
 
@@ -51,9 +90,9 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
     contractOrDenom: fromTokenContractOrDenom,
   })
 
-  const { balance: toTokenBal } = useMyBalance({
-    contractOrDenom: toTokenContractOrDenom,
-  })
+  // const { balance: toTokenBal } = useMyBalance({
+  //   contractOrDenom: toTokenContractOrDenom,
+  // })
 
   const feeData = useMemo(
     () =>
@@ -101,11 +140,48 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
     <>
       <StyledSection>
         <View>
+          <StyledMaxBalance>
+            <div></div>
+            <MaxButton
+              value={fromTokenBal}
+              symbol={fromTokenSymbol}
+              onClick={(value): void => {
+                updateFromAmount(UTIL.demicrofy(value))
+              }}
+            />
+          </StyledMaxBalance>
+        </View>
+        <StyledRow>
           <FormInput
             number
+            prefix="Mrk. Price"
+            suffix={toTokenSymbol}
+            // onChangeValue={(value): void => {
+            //   updateAskPrice(value as Token)
+            // }}
+            inputProps={{
+              readOnly: true,
+              placeholder: '0',
+              value:
+                simulation && simulation.beliefPrice
+                  ? UTIL.formatNumber(
+                      new BigNumber(1)
+                        .dividedBy(
+                          UTIL.toBn(UTIL.demicrofy(simulation?.beliefPrice))
+                        )
+                        .toString()
+                    )
+                  : '',
+            }}
+          />
+        </StyledRow>
+        <StyledRow>
+          <FormInput
+            number
+            prefix="You give"
             suffix={fromTokenSymbol}
             onChangeValue={(value): void => {
-              updateFromAmount(value as Native)
+              updateFromAmount(value as Token)
             }}
             inputProps={{
               placeholder: '0',
@@ -114,24 +190,42 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
             isError={!!fromAmountErrMsg}
             helperText={fromAmountErrMsg}
           />
-          <StyledMaxBalance>
-            <MaxButton
-              value={fromTokenBal}
-              onClick={(value): void => {
-                updateFromAmount(UTIL.demicrofy(value) as Native)
-              }}
-            />
-          </StyledMaxBalance>
-        </View>
-        <View style={{ padding: '4px 0 34px', alignItems: 'center' }}>
-          <IconArrowDownCircle color={COLOR.gray._300} />
-        </View>
+        </StyledRow>
+        <StyledSlider>
+          <SliderInput
+            value={UTIL.toBn(fromAmount)
+              .dividedBy(UTIL.demicrofy(fromTokenBal))
+              .multipliedBy(100)
+              .integerValue()
+              .toNumber()}
+            onChange={(value): void => {
+              updateFromAmount(
+                UTIL.toBn(UTIL.demicrofy(fromTokenBal))
+                  .multipliedBy(value)
+                  .dividedBy(100)
+                  .dp(6)
+                  .toString(10) as Token
+              )
+            }}
+          >
+            <SliderTrack>
+              <SliderRange />
+              <SliderMarker value={0} />
+              <SliderMarker value={25} />
+              <SliderMarker value={50} />
+              <SliderMarker value={75} />
+              <SliderMarker value={100} />
+              <SliderHandle />
+            </SliderTrack>
+          </SliderInput>
+        </StyledSlider>
         <View>
           <FormInput
             number
+            prefix="You receive"
             suffix={toTokenSymbol}
             onChangeValue={(value): void => {
-              updateToAmount(value as Token)
+              updateToAmount(value as Native)
             }}
             inputProps={{
               placeholder: '0',
@@ -140,14 +234,6 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
             isError={!!toAmountErrMsg}
             helperText={toAmountErrMsg}
           />
-          <StyledMaxBalance>
-            <MaxButton
-              value={toTokenBal}
-              onClick={(value): void => {
-                updateToAmount(UTIL.demicrofy(value) as Token)
-              }}
-            />
-          </StyledMaxBalance>
         </View>
       </StyledSection>
 

@@ -36,6 +36,7 @@ export type UseLimitOrderBuyReturn = {
   askTokenSymbol: string
 
   offerAmount: Token
+  updateOfferAmount: (value: Token) => void
   offerAmountErrMsg: string
 
   askAmount: Token
@@ -93,7 +94,6 @@ const useLimitOrderBuy = ({
 
   // allow input price to be larger 1% of simulated price
   const askTokenPrice = UTIL.toBn(poolInfo?.token_0_Price)
-    .multipliedBy(1.01)
     .dp(6)
     .toString(10) as Token
 
@@ -103,12 +103,12 @@ const useLimitOrderBuy = ({
   const walletAddress = connectedWallet?.walletAddress as string
 
   const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
-  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.25' as Token)
+  const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.0' as Token)
   const feeTokenAmountErrMsg = useMemo(() => {
     return validateFormInputAmount({
       input: feeTokenAmount,
       max: myFeeTokenAmount,
-      min: '0.25' as Token,
+      min: '0.0' as Token,
     })
   }, [feeTokenAmount, myFeeTokenAmount])
 
@@ -119,23 +119,18 @@ const useLimitOrderBuy = ({
     })
   }, [askAmount])
 
-  const [askPrice, setAskPrice] = useState('' as Token)
+  const [askPrice, setAskPrice] = useState(askTokenPrice)
   const askPriceErrMsg = useMemo(() => {
     return validateFormInputAmount({
       input: askPrice,
-      max: askTokenPrice,
-    })
-  }, [askPrice])
-
-  const offerAmount = useMemo(() => {
-    if (askAmount && askPrice) {
-      return UTIL.toBn(askAmount)
-        .multipliedBy(askPrice)
+      max: UTIL.toBn(askTokenPrice)
+        .multipliedBy(1.01)
         .dp(6)
-        .toString(10) as Token
-    }
-    return '0' as Token
-  }, [askAmount, askPrice, feeTokenAmount])
+        .toString(10) as Token,
+    })
+  }, [askPrice, askTokenPrice])
+
+  const [offerAmount, setOfferAmount] = useState('' as Token)
 
   const offerAmountErrMsg = useMemo(() => {
     const myOfferToken = UTIL.demicrofy(offerDenomBal)
@@ -182,12 +177,66 @@ const useLimitOrderBuy = ({
     txOptions,
   })
 
+  // const toAskAmount = useMemo(() => {
+  //   return UTIL.toBn(offerAmount)
+  //     .dividedBy(askPrice)
+  //     .dp(6)
+  //     .toString(10) as Token
+  // }, [askAmount, askPrice])
+
+  // useEffect(() => {
+  //   setAskAmount(toAskAmount)
+  // }, [toAskAmount])
+
+  const updateOfferAmount = async (nextOfferAmount: Token): Promise<void> => {
+    setOfferAmount(nextOfferAmount.trim() as Token)
+    if (nextOfferAmount && askPrice) {
+      setAskAmount(
+        UTIL.toBn(nextOfferAmount)
+          .dividedBy(askPrice)
+          .dp(6)
+          .toString(10) as Token
+      )
+    } else {
+      setAskAmount('' as Token)
+    }
+  }
+
   const updateAskAmount = async (nextAskAmount: Token): Promise<void> => {
     setAskAmount(nextAskAmount.trim() as Token)
+    if (nextAskAmount && askPrice) {
+      setOfferAmount(
+        UTIL.toBn(askPrice)
+          .multipliedBy(nextAskAmount)
+          .dp(6)
+          .toString(10) as Token
+      )
+    } else {
+      setOfferAmount('' as Token)
+    }
   }
+
+  // const toOfferAmount = useMemo(() => {
+  //   return UTIL.toBn(askAmount)
+  //     .multipliedBy(askPrice)
+  //     .dp(6)
+  //     .toString(10) as Token
+  // }, [askAmount, askPrice])
+
+  // useEffect(() => {
+  //   setOfferAmount(toOfferAmount)
+  // }, [toOfferAmount])
 
   const updateAskPrice = async (nextAskPrice: Token): Promise<void> => {
     setAskPrice(nextAskPrice.trim() as Token)
+    if (askAmount && nextAskPrice) {
+      setOfferAmount(
+        UTIL.toBn(askAmount)
+          .multipliedBy(nextAskPrice)
+          .dp(6)
+          .toString(10) as Token
+      )
+    }
   }
 
   const submitErrMsg = useMemo(() => {
@@ -219,12 +268,12 @@ const useLimitOrderBuy = ({
 
   const initForm = (): void => {
     updateAskAmount('' as Token)
-    setAskPrice('' as Token)
+    setAskPrice(askTokenPrice)
   }
 
   useEffect(() => {
     initForm()
-  }, [pairContract])
+  }, [pairContract, askTokenPrice])
 
   useEffect(() => {
     if (postTxResult.status === PostTxStatus.DONE) {
@@ -240,6 +289,7 @@ const useLimitOrderBuy = ({
     askTokenSymbol,
 
     offerAmount,
+    updateOfferAmount,
     offerAmountErrMsg,
 
     askAmount,
