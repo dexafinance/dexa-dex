@@ -11,7 +11,7 @@ import { useTheme } from 'styled-components'
 import { STYLE, UTIL, COLOR } from 'consts'
 // import { COLOR } from 'consts'
 // LinkFinder,
-import { FormText, Row, View, Card, LinkFinder } from 'components'
+import { FormText, Row, View, LinkFinder } from 'components'
 import {
   ContractAddr,
   uToken,
@@ -38,7 +38,7 @@ import { Coin } from '@terra-money/terra.js'
 //@media ${STYLE.media.tablet} {
 //width: fit-content
 
-const StyledCard = styled(Card)`
+const StyledCard = styled.div`
   margin-bottom: 12px;
 `
 

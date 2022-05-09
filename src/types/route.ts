@@ -19,6 +19,12 @@ export enum TradeTypeEnum {
   sell = 'sell',
 }
 
+export enum TradeKindEnum {
+  instant = 'instant',
+  limitOrder = 'lo',
+  p2p = 'p2p',
+}
+
 export enum LpProvideTypeEnum {
   provide = 'provide',
   withdraw = 'withdraw',
@@ -32,6 +38,7 @@ export enum LpStakeTypeEnum {
 export type RouteParams = {
   [RoutePath.home]: {
     tradeType: TradeTypeEnum
+    tradeKind: TradeKindEnum
     lpType: LpProvideTypeEnum
     // limitOrder: number
     // dex: DexEnum

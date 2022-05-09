@@ -6,12 +6,19 @@ import LpTowerPage from 'pages/LpTower'
 import DexaPaperPage from 'pages/DexaPaper'
 import SendMiawPage from 'pages/SendMiaw'
 
-import { RoutePath } from 'types'
+import { RoutePath, TradeTypeEnum, TradeKindEnum } from 'types'
 
 const SwitchPages = (): ReactElement => {
   return (
     <Switch>
-      <Redirect exact from="/" to={RoutePath.home + '?symbol=LUNA_UST'} />
+      <Redirect
+        exact
+        from="/"
+        to={
+          RoutePath.home +
+          `?symbol=LUNA_UST&tradeType=${TradeTypeEnum.buy}&tradeKind=${TradeKindEnum.limitOrder}`
+        }
+      />
       <Route path={RoutePath.home} component={HomePage} />
       <Route path={RoutePath.lpTower} component={LpTowerPage} />
       <Route path={RoutePath.aboutus} component={DexaPaperPage} />

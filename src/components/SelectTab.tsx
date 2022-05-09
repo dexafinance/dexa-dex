@@ -21,7 +21,6 @@ const StyledTabItem = styled(FormText)<{ selected: boolean }>`
   align-items: center;
   justify-content: center;
   padding: 0 13px;
-  width: 104px;
   height: 28px;
   border-bottom: ${({ selected, theme }): string =>
     selected ? `2px solid ${theme.colors.borderFocused}` : ''};
@@ -30,15 +29,18 @@ const StyledTabItem = styled(FormText)<{ selected: boolean }>`
   margin-bottom: 12px;
 `
 
-const SelectTab = <T,>({
+const SelectTab = <T, T2>({
   options,
   selected,
   onSelect,
   containerStyle,
 }: {
-  options: { value: T; label: string }[]
-  selected: T
-  onSelect: (value: T) => void
+  options: { value: T; value2: T2; label: string }[]
+  selected: {
+    value: T
+    value2: T2
+  }
+  onSelect: (value: T, value2: T2) => void
   containerStyle?: CSSProperties
 }): ReactElement => {
   return (
@@ -47,9 +49,12 @@ const SelectTab = <T,>({
         return (
           <StyledTabItem
             key={`StyledTabItem-${index}`}
-            selected={option.value === selected}
+            selected={
+              option.value === selected.value &&
+              option.value2 === selected.value2
+            }
             onClick={(): void => {
-              onSelect(option.value)
+              onSelect(option.value, option.value2)
             }}
           >
             {option.label}

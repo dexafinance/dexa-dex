@@ -17,7 +17,7 @@ const StyledInputContainer = styled(Row)`
   flex: 1;
   border-radius: 8px;
   overflow: hidden;
-  border: 2px solid ${({ theme }): string => theme.colors.background};
+  border: 2px solid ${({ theme }): string => theme.colors.surfaceL2};
   &:hover {
     border: 2px solid ${({ theme }): string => theme.colors.borderFocused};
   }
@@ -34,17 +34,17 @@ const StyledInput = styled.input`
   width: 100%;
   min-width: 120px;
   color: ${({ theme }): string => theme.colors.primaryText};
-  background-color: ${({ theme }): string => theme.colors.inputBackground};
-  border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
+  border: 2px solid ${({ theme }): string => theme.colors.surfaceL2};
+  background-color: ${({ theme }): string => theme.colors.surfaceL2};
   :read-only {
-    cursor: not-allowed;
-    color: ${({ theme }): string => theme.colors.secondaryText};
+    color: ${({ theme }): string => theme.colors.onSurfaceL2Secondary};
   }
   :focus {
     outline: none;
   }
   ::placeholder {
     opacity: 0.6;
+    color: ${({ theme }): string => theme.colors.onSurfaceL2Secondary};
   }
   @media ${STYLE.media.tablet} {
     font-size: 16px;
@@ -53,8 +53,8 @@ const StyledInput = styled.input`
 const StyledPrefixBox = styled(View)`
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
-  border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
-  background-color: ${({ theme }): string => theme.colors.inputBackground};
+  border: 2px solid ${({ theme }): string => theme.colors.surfaceL2};
+  background-color: ${({ theme }): string => theme.colors.surfaceL2};
   min-width: 80px;
   align-items: center;
   justify-content: center;
@@ -70,8 +70,8 @@ const StyledPrefixText = styled(Text)`
 const StyledSuffixBox = styled(View)`
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  border: 2px solid ${({ theme }): string => theme.colors.inputBackground};
-  background-color: ${({ theme }): string => theme.colors.inputBackground};
+  border: 2px solid ${({ theme }): string => theme.colors.surfaceL2};
+  background-color: ${({ theme }): string => theme.colors.surfaceL2};
   min-width: 80px;
   align-items: center;
   justify-content: center;
@@ -88,7 +88,9 @@ const StyledSuffixText = styled(Text)`
 const FormInput = <T extends string>({
   number,
   inputProps,
+  onClick,
   onChangeValue,
+  autoFocus,
   prefix,
   suffix,
   isError,
@@ -101,8 +103,11 @@ const FormInput = <T extends string>({
     readOnly?: boolean
     type?: string
     maxLength?: number
+    ref?: any
   }
+  onClick?: () => void
   onChangeValue?: (value: T) => void
+  autoFocus?: boolean
   prefix?: ReactNode
   suffix?: ReactNode
   isError?: boolean
@@ -137,6 +142,10 @@ const FormInput = <T extends string>({
         <StyledInput
           {...inputProps}
           type={number ? 'number' : 'text'}
+          autoFocus={autoFocus ? true : false}
+          onClick={(): void => {
+            onClick?.()
+          }}
           onChange={({ target: { value } }): void => {
             onChangeValue?.(value as T)
           }}
@@ -146,7 +155,8 @@ const FormInput = <T extends string>({
           style={{
             borderRadius: `${prefix ? '0' : '4px'} ${suffix ? '0' : '4px'} ${
               suffix ? '0' : '4px'
-            }${prefix ? '0' : '4px'}`,
+              }${prefix ? '0' : '4px'}`,
+            textAlign: number? 'right' : 'left'
           }}
           onFocus={(): void => {
             !readOnly && setOnFocus(true)

@@ -73,13 +73,13 @@ const SelectedLpProvide = ({
     <StyledCard>
       <SelectTab
         options={[
-          { value: LpProvideTypeEnum.provide, label: 'PROVIDE' },
-          { value: LpProvideTypeEnum.withdraw, label: 'WITHDRAW' },
+          { value: LpProvideTypeEnum.provide, value2: '', label: 'PROVIDE' },
+          { value: LpProvideTypeEnum.withdraw, value2: '', label: 'WITHDRAW' },
         ]}
         onSelect={(value): void => {
           insertRouteParam('lpProvideType', value)
         }}
-        selected={type}
+        selected={{ value: type, value2: '' }}
       />
       {type === LpProvideTypeEnum.provide ? (
         <>

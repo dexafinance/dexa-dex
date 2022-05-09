@@ -29,9 +29,12 @@ import { ExtractPoolResponseType } from 'logics/pool'
 import useNetwork from 'hooks/common/useNetwork'
 
 const StyledCard = styled(Card)`
-  min-width: 200px;
+  min-width: 400px;
   margin-bottom: 12px;
+  max-width: 600px;
+  background: ${({ theme }): string => theme.colors.surface};
   @media ${STYLE.media.tablet} {
+    max-width: 600px;
     width: fit-content;
   }
 `
@@ -63,18 +66,21 @@ const StyledTokenItemBox = styled(View)`
   }
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #f1f1f1;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: ${({ theme }): string => theme.colors.surfaceL2};
     border-radius: 5px;
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  @media ${STYLE.media.mobile} {
+    height: 250px;
   }
 `
 
@@ -321,9 +327,13 @@ const TokenList = ({
   return (
     <StyledCard>
       <Row style={{ paddingBottom: 12, alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginRight: 4 }}>
           <FormInput
-            inputProps={{ value: filter, placeholder: 'Symbol, Name' }}
+            autoFocus
+            inputProps={{
+              value: filter,
+              placeholder: 'Symbol, Name',
+            }}
             onChangeValue={(value): void => setFilter(value)}
           />
         </View>

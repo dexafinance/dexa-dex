@@ -5,12 +5,19 @@ import _ from 'lodash'
 import { COLOR, UTIL, STYLE } from 'consts'
 
 import { FormText, View, Row } from 'components'
-import { UseMyOrderReturn } from 'hooks/common/trade/useMyOrder'
+// import { UseMyOrderReturn } from 'hooks/common/trade/useMyOrder'
 import { IconCircleX, IconMoodEmpty } from '@tabler/icons'
 // import { addressTokenMap, testnetAddressTokenMap } from 'consts/whitelist'
+import {
+  TradeTypeEnum,
+  TokenKeyEnum,
+  TokenType,
+  DexEnum,
+  ContractAddr,
+} from 'types'
 
 import useNetwork from 'hooks/common/useNetwork'
-import { TradeTypeEnum } from 'types'
+import useMyOrder from 'hooks/common/trade/useMyOrder'
 
 const StyledContainer = styled(View)`
   @media ${STYLE.media.mobile} {
@@ -19,10 +26,8 @@ const StyledContainer = styled(View)`
 `
 
 const StyledOrderList = styled(View)`
-  border: 1px solid ${COLOR.brandColor.primary._400};
   height: 100%;
   padding: 15px;
-  border-radius: 8px;
 `
 
 const StyledOrderItem = styled(Row)`
@@ -35,15 +40,32 @@ const StyledCancleButton = styled(View)`
 `
 
 const MyOrder = ({
-  myOrderReturn,
+  token,
+  tradeBase,
+  pairContract,
+  dex,
 }: {
-  myOrderReturn: UseMyOrderReturn
+  token: TokenType
+  tradeBase: TokenKeyEnum
+  pairContract: ContractAddr
+  dex: DexEnum
 }): ReactElement => {
   //tokenForBuySymbol, tokenToBuySymbol
-  const { limitOrderList, setOrderId } = myOrderReturn
-  const { contractOrDenomMap } = useNetwork()
+  // const { limitOrderList, setOrderId } = myOrderReturn
+  const { contractOrDenomMap, tokenInfo } = useNetwork()
   // const addrTokenMap = isMainnet ? addressTokenMap : testnetAddressTokenMap
   const theme = useTheme()
+
+  const tradeBaseContract = tokenInfo[tradeBase].contractOrDenom
+  const tradeBaseSymbol = tokenInfo[tradeBase].symbol
+
+  const { limitOrderList, setOrderId } = useMyOrder({
+    forBuyDenom: tradeBaseContract,
+    toBuyContractOrDenom: token.contractOrDenom,
+    tokenForBuySymbol: tradeBaseSymbol,
+    tokenToBuySymbol: token.symbol,
+    pairContract,
+  })
 
   return (
     <StyledContainer>

@@ -1,4 +1,3 @@
-import { TokenDenomEnum } from 'types'
 import { AssetInfo } from '.'
 import { uToken } from '../currencies'
 import { ContractAddr } from './common'
@@ -34,53 +33,37 @@ export namespace terraswap {
     assets: [
       {
         amount: T
-        info:
-          | {
-              token: {
-                contract_addr: ContractAddr
-              }
-            }
-          | {
-              cw20: ContractAddr
-            }
+        info: AssetInfo
       },
       {
         amount: T
-        info:
-          | {
-              native_token: {
-                denom: TokenDenomEnum
-              }
-            }
-          | {
-              native: TokenDenomEnum
-            }
+        info: AssetInfo
       }
     ]
   }
 
-  export type SimulationInfo =
-    | {
-        token: {
-          contract_addr: ContractAddr
-        }
-      }
-    | {
-        native_token: {
-          denom: TokenDenomEnum
-        }
-      }
-    | {
-        cw20: ContractAddr
-      }
-    | {
-        native: TokenDenomEnum
-      }
+  // export type SimulationInfo =
+  //   | {
+  //       token: {
+  //         contract_addr: ContractAddr
+  //       }
+  //     }
+  //   | {
+  //       native_token: {
+  //         denom: TokenDenomEnum
+  //       }
+  //     }
+  //   | {
+  //       cw20: ContractAddr
+  //     }
+  //   | {
+  //       native: TokenDenomEnum
+  //     }
 
   export interface Simulation<T extends uToken> {
     simulation: {
       offer_asset: {
-        info: SimulationInfo
+        info: AssetInfo
         amount: T
       }
     }
@@ -92,28 +75,10 @@ export namespace terraswap {
     spread_amount: T
   }
 
-  export type ReverseSimulationInfo =
-    | {
-        token: {
-          contract_addr: ContractAddr
-        }
-      }
-    | {
-        native_token: {
-          denom: TokenDenomEnum
-        }
-      }
-    | {
-        cw20: ContractAddr
-      }
-    | {
-        native: TokenDenomEnum
-      }
-
   export interface ReverseSimulation<T extends uToken> {
     reverse_simulation: {
       ask_asset: {
-        info: ReverseSimulationInfo
+        info: AssetInfo
         amount: T
       }
     }

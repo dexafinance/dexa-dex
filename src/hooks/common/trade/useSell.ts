@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react'
 import { CreateTxOptions, MsgExecuteContract, Fee } from '@terra-money/terra.js'
 import { useConnectedWallet } from '@terra-money/wallet-provider'
 import { useRecoilValue } from 'recoil'
+import useNetwork from '../useNetwork'
 
 import {
   uToken,
@@ -70,6 +71,8 @@ const useSell = ({
   toTokenSymbol: string
   pairContract: ContractAddr
 }): UseSellReturn => {
+  const { pairContractMap } = useNetwork()
+
   const { balance: uusdBal } = useMyBalance({
     contractOrDenom: TokenDenomEnum.uusd,
   })
@@ -78,11 +81,12 @@ const useSell = ({
     contractOrDenom: fromTokenContractOrDenom,
   })
 
-  const { getSwapMsgs } = useFabricator()
+  const { getSwapMsgs } = useFabricator(pairContractMap[pairContract]?.dex)
   const connectedWallet = useConnectedWallet()
 
   const [simulation, setSimulation] =
     useState<TradeSimulation<uToken, uNative>>()
+
   const [simulationErrMsg, setSimulationErrMsg] = useState('')
   const { simulate, reverseSimulate } = useSimulate()
 
@@ -200,6 +204,13 @@ const useSell = ({
     },
     400
   )
+
+  const [currentPairContract, setCurrentPairContract] = useState('')
+  if (currentPairContract !== pairContract) {
+    // reset
+    updateFromAmount('' as Token)
+    setCurrentPairContract(pairContract)
+  }
 
   const updateToAmount = async (nextToAmount: Native): Promise<void> => {
     setSimulation(undefined)

@@ -3,6 +3,8 @@ import { CreateTxOptions, MsgExecuteContract, Fee } from '@terra-money/terra.js'
 import { useConnectedWallet } from '@terra-money/wallet-provider'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import { useRecoilValue } from 'recoil'
+import useNetwork from '../useNetwork'
+import useRoute from 'hooks/common/useRoute'
 
 import { DEV, MESSAGE, UTIL } from 'consts'
 
@@ -15,6 +17,8 @@ import {
   PostTxStatus,
   TokenDenomEnum,
   ContractAddr,
+  RoutePath,
+  TokenKeyEnum,
 } from 'types'
 import { TradeSimulation } from 'types/tradeSimulation'
 
@@ -69,6 +73,7 @@ const useBuy = ({
   toTokenSymbol: string
   pairContract: ContractAddr
 }): UseBuyReturn => {
+  const { pairContractMap } = useNetwork()
   const { balance: uusdBal } = useMyBalance({
     contractOrDenom: TokenDenomEnum.uusd,
   })
@@ -77,7 +82,7 @@ const useBuy = ({
     contractOrDenom: fromTokenContractOrDenom,
   })
 
-  const { getSwapMsgs } = useFabricator()
+  const { getSwapMsgs } = useFabricator(pairContractMap[pairContract]?.dex)
   const connectedWallet = useConnectedWallet()
 
   const [simulation, setSimulation] =
@@ -173,6 +178,17 @@ const useBuy = ({
     setToAmount('' as Token)
     const nextFromUAmount = UTIL.microfy(nextFromAmount) as uToken
     dbcSimulateFromAmount(nextFromUAmount)
+  }
+
+  const { routeParams } = useRoute<RoutePath.home>()
+  const tokenSymbol =
+    routeParams?.symbol || TokenKeyEnum.LUNA + '_' + TokenKeyEnum.UST
+
+  const [currentPair, setCurrentPair] = useState('')
+  if (currentPair !== tokenSymbol) {
+    // reset
+    updateFromAmount('' as Token)
+    setCurrentPair(tokenSymbol)
   }
 
   const dbcSimulateToAmount = useDebouncedCallback(

@@ -1,19 +1,6 @@
 import { Coin, Coins, MsgExecuteContract } from '@terra-money/terra.js'
 import { UTIL } from 'consts'
-import { ContractAddr, LP, AssetInfo, Token, TokenDenomEnum } from 'types'
-
-const getAssetInfo = (
-  contractOrDenom: TokenDenomEnum | ContractAddr
-): AssetInfo =>
-  UTIL.isNativeDenom(contractOrDenom)
-    ? {
-        native_token: {
-          denom: contractOrDenom as TokenDenomEnum,
-        },
-      }
-    : {
-        token: { contract_addr: contractOrDenom as ContractAddr },
-      }
+import { ContractAddr, LP, Token, TokenDenomEnum, DexEnum } from 'types'
 
 export type FabricateSwapOption = {
   fromAmount: Token
@@ -22,6 +9,7 @@ export type FabricateSwapOption = {
   pairContract: ContractAddr
   beliefPrice?: Token
   maxSpread?: string
+  dex?: DexEnum
 }
 
 export const fabricateSwap = ({
@@ -31,6 +19,7 @@ export const fabricateSwap = ({
   pairContract,
   beliefPrice,
   maxSpread,
+  dex,
 }: FabricateSwapOption): MsgExecuteContract[] => {
   const belief_price = UTIL.toBn(beliefPrice).dp(16).toString(10)
   const fromUAmount = UTIL.microfy(fromAmount)
@@ -44,7 +33,7 @@ export const fabricateSwap = ({
             swap: {
               offer_asset: {
                 amount: fromUAmount,
-                info: { native_token: { denom: fromTokenContractOrDenom } },
+                info: UTIL.getAssetInfo(fromTokenContractOrDenom, dex),
               },
               belief_price,
               max_spread: maxSpread,
@@ -131,9 +120,9 @@ export const fabricateLpProvide = ({
     )
   }
 
-  const token_0_Info = getAssetInfo(token_0_ContractOrDenom)
+  const token_0_Info = UTIL.getAssetInfo(token_0_ContractOrDenom)
 
-  const token_1_Info = getAssetInfo(token_1_ContractOrDenom)
+  const token_1_Info = UTIL.getAssetInfo(token_1_ContractOrDenom)
 
   const coins = new Coins(coinList)
 
@@ -356,9 +345,9 @@ export const fabricateSubmitOrder = ({
     )
   }
 
-  const offerInfo = getAssetInfo(offerContractOrDenom)
+  const offerInfo = UTIL.getAssetInfo(offerContractOrDenom)
 
-  const askInfo = getAssetInfo(askContractOrDenom)
+  const askInfo = UTIL.getAssetInfo(askContractOrDenom)
 
   const coins = new Coins(coinList)
 

@@ -56,13 +56,13 @@ const SelectedLpStaking = ({
     <StyledCard>
       <SelectTab
         options={[
-          { value: LpStakeTypeEnum.stake, label: 'STAKE' },
-          { value: LpStakeTypeEnum.unstake, label: 'UNSTAKE' },
+          { value: LpStakeTypeEnum.stake, value2: '', label: 'STAKE' },
+          { value: LpStakeTypeEnum.unstake, value2: '', label: 'UNSTAKE' },
         ]}
         onSelect={(value): void => {
           insertRouteParam('lpStakeType', value)
         }}
-        selected={lpStakeType}
+        selected={{ value: lpStakeType, value2: '' }}
       />
       {lpStakeType === LpStakeTypeEnum.stake ? (
         <>

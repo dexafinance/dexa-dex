@@ -9,6 +9,7 @@ import {
   RoutePath,
   Token,
   TradeTypeEnum,
+  TradeKindEnum,
   uLP,
   uToken,
   // DexEnum,
@@ -143,6 +144,7 @@ const LpStakingItem = ({
             onClick={(e): void => {
               push(RoutePath.home, {
                 tradeType: TradeTypeEnum.buy,
+                tradeKind: TradeKindEnum.limitOrder,
                 lpType: LpProvideTypeEnum.provide,
                 // dex: DexEnum.astroport,
                 // limitOrder: 1,

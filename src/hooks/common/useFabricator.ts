@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 import { MsgExecuteContract } from '@terra-money/terra.js'
 import { useConnectedWallet } from '@terra-money/wallet-provider'
 
+import { DexEnum } from 'types'
+
 import {
   fabricateSwap,
   fabricateLpProvide,
@@ -22,7 +24,9 @@ import {
 } from 'logics/fabricator'
 import { ContractAddr } from 'types'
 
-const useFabricator = (): {
+const useFabricator = (
+  dex: DexEnum = DexEnum.terraswap
+): {
   getSwapMsgs: (
     props: Omit<FabricateSwapOption, 'sender'>
   ) => MsgExecuteContract[]
@@ -49,13 +53,14 @@ const useFabricator = (): {
   ) => MsgExecuteContract[]
 } => {
   const connectedWallet = useConnectedWallet()
+
   const sender = (connectedWallet?.walletAddress || '') as ContractAddr
 
   const getSwapMsgs = useCallback(
     (props: Omit<FabricateSwapOption, 'sender'>): MsgExecuteContract[] => {
-      return sender ? fabricateSwap({ ...props, sender }) : []
+      return sender ? fabricateSwap({ ...props, sender, dex }) : []
     },
-    [sender]
+    [sender, dex]
   )
 
   const getLpProvideMsgs = useCallback(

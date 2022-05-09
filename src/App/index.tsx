@@ -24,10 +24,13 @@ import { useDarkMode } from 'components/useDarkMode'
 //background: linear-gradient(${COLOR.gray._950}, #f8e5d0);
 const StyledContainer = styled(View)`
   min-height: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
 `
 const Banner = styled(View)`
   min-height: 100%;
   background: ${COLOR.warning};
+  color: ${COLOR.gray._950};
   text-align: center;
 `
 

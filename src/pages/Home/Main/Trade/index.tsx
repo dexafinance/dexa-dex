@@ -1,10 +1,19 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { IconSquare, IconCheckbox } from '@tabler/icons'
 
-import { COLOR, STYLE } from 'consts'
+import { UTIL, COLOR, STYLE } from 'consts'
 
-import { FormText, Card, SelectTab, AuthButton, View } from 'components'
+import _ from 'lodash'
+
+import {
+  FormText,
+  SelectTab,
+  AuthButton,
+  View,
+  Card,
+  Row,
+  FormImage,
+} from 'components'
 import useRoute from 'hooks/common/useRoute'
 import useBuy, { UseBuyReturn } from 'hooks/common/trade/useBuy'
 import useSell, { UseSellReturn } from 'hooks/common/trade/useSell'
@@ -14,50 +23,68 @@ import useLimitOrderBuy, {
 import useLimitOrderSell, {
   UseLimitOrderSellReturn,
 } from 'hooks/common/trade/useLimitOrderSell'
-import useMyOrder from 'hooks/common/trade/useMyOrder'
 import useNetwork from 'hooks/common/useNetwork'
+import useTokenPairsList, {
+  SortedTokenPairType,
+} from 'hooks/common/home/useTokenPairsList'
+
+import terraswapLogo from 'images/terraswap.svg'
+import astroportLogo from 'images/astroport.svg'
+import prismLogo from 'images/prism.svg'
+import loopLogo from 'images/loop.png'
 
 import {
   TradeTypeEnum,
+  TradeKindEnum,
   RoutePath,
   TokenType,
   ContractAddr,
   DexEnum,
   TokenKeyEnum,
+  PairType,
 } from 'types'
 
-import MyOrder from './MyOrder'
 import BuyForm from './BuyForm'
 import LimitOrderBuyForm from './LimitOrderBuyForm'
 import LimitOrderSellForm from './LimitOrderSellForm'
 import SellForm from './SellForm'
 
+const factoryLogos: Record<DexEnum, string> = {
+  [DexEnum.terraswap]: terraswapLogo,
+  [DexEnum.astroport]: astroportLogo,
+  [DexEnum.prism]: prismLogo,
+  [DexEnum.loop]: loopLogo,
+}
+
+const factoryNames: Record<DexEnum, string> = {
+  [DexEnum.terraswap]: 'Terraswap',
+  [DexEnum.astroport]: 'Astroport',
+  [DexEnum.prism]: 'Prism',
+  [DexEnum.loop]: 'Loop',
+}
+
 const StyledCard = styled(Card)`
+  background-color: ${({ theme }): string => theme.colors.surface};
+  border: 1px solid ${({ theme }): string => theme.colors.surface};
   flex: 1;
 `
 
 const StyledLayout = styled(View)<{ isLimitOrder: boolean }>`
-  display: grid;
-  grid-template-columns: ${({ isLimitOrder }): string =>
-    isLimitOrder ? '1fr 1fr' : '1fr'};
-  column-gap: 20px;
   height: 100%;
-
-  @media ${STYLE.media.mobile} {
-    display: flex;
-    flex-direction: column-reverse;
-  }
 `
 
-const StyledLimitOrderButton = styled(FormText)`
+const StyledDexDenomItem = styled(Row)<{ selected: boolean }>`
   ${STYLE.clickable}
-  flex-direction: row;
+  padding: 3px 10px;
+  margin-right: 10px;
+  margin-bottom: 4px;
   align-items: center;
-  border-radius: 5px;
-  border: 1px solid ${COLOR.gray._600};
-  width: fit-content;
-  padding: 5px 10px;
-  margin-bottom: 12px;
+  font-size: 12px;
+  border: 2px solid
+    ${({ selected, theme }): string =>
+      selected ? theme.colors.borderFocused : theme.colors.border};
+  opacity: ${({ selected }): number => (selected ? 1 : 0.8)};
+  border-radius: 8px;
 `
 
 // selectedPairToken.pairType.dex === DexEnum.terraswap
@@ -74,6 +101,9 @@ const Buy = ({
   dex: DexEnum
 }): ReactElement => {
   const theme = useTheme()
+  const { routeParams } = useRoute<RoutePath.home>()
+  const tradeKind = routeParams?.tradeKind || TradeKindEnum.limitOrder
+
   const {
     onClickBuy,
     invalidForm: invalidBuyForm,
@@ -88,33 +118,10 @@ const Buy = ({
     submitErrMsg: loBuySubmitErrMsg,
   } = useLimitOrderBuyReturn
 
-  const [buyLimitOrder, setBuyLimitOrder] = useState(true)
+  const buyLimitOrder = tradeKind === TradeKindEnum.limitOrder
 
-  useEffect(() => {
-    setBuyLimitOrder(true)
-  }, [dex])
-  //dex === DexEnum.terraswap
   return (
     <>
-      {supportLimitOrder(dex) && (
-        <View style={{ alignItems: 'flex-end' }}>
-          <StyledLimitOrderButton
-            // disabled={selectedPairToken.pairType.dex === DexEnum.terraswap}
-            fontType="R16"
-            color={
-              buyLimitOrder
-                ? theme.colors.primaryText
-                : theme.colors.secondaryText
-            }
-            onClick={(): void => {
-              setBuyLimitOrder(!buyLimitOrder)
-            }}
-          >
-            {buyLimitOrder ? <IconCheckbox /> : <IconSquare />}
-            Limit order
-          </StyledLimitOrderButton>
-        </View>
-      )}
       {buyLimitOrder ? (
         <>
           <LimitOrderBuyForm useLimitOrderBuyReturn={useLimitOrderBuyReturn} />
@@ -169,6 +176,8 @@ const Sell = ({
   dex: DexEnum
 }): ReactElement => {
   const theme = useTheme()
+  const { routeParams } = useRoute<RoutePath.home>()
+  const tradeKind = routeParams?.tradeKind || TradeKindEnum.limitOrder
 
   const {
     onClickSell,
@@ -184,33 +193,10 @@ const Sell = ({
     submitErrMsg: loSellSubmitErrMsg,
   } = useLimitOrderSellReturn
 
-  const [sellLimitOrder, setSellLimitOrder] = useState(true)
-
-  useEffect(() => {
-    setSellLimitOrder(true)
-  }, [dex])
+  const sellLimitOrder = tradeKind === TradeKindEnum.limitOrder
 
   return (
     <>
-      {supportLimitOrder(dex) && (
-        <View style={{ alignItems: 'flex-end' }}>
-          <StyledLimitOrderButton
-            fontType="R16"
-            color={
-              sellLimitOrder
-                ? theme.colors.primaryText
-                : theme.colors.secondaryText
-            }
-            onClick={(): void => {
-              setSellLimitOrder(!sellLimitOrder)
-            }}
-          >
-            {sellLimitOrder ? <IconCheckbox /> : <IconSquare />}
-            Limit order
-          </StyledLimitOrderButton>
-        </View>
-      )}
-
       {sellLimitOrder ? (
         <>
           <LimitOrderSellForm
@@ -257,20 +243,99 @@ const Sell = ({
   )
 }
 
+const SwapBase = ({
+  pairList,
+  pairType,
+  setSelectedPairToken,
+}: {
+  pairList: SortedTokenPairType[]
+  pairType: PairType
+  setSelectedPairToken: React.Dispatch<
+    React.SetStateAction<
+      | {
+          token: TokenType
+          pairType: PairType
+        }
+      | undefined
+    >
+  >
+}): ReactElement => {
+  return (
+    <View>
+      {/* <StyledFormText fontType="B14">Select Dex / Denom</StyledFormText> */}
+      <Row>
+        {_.map(pairList, (x, i) => {
+          const dexSrc = factoryLogos[x.token.dex]
+          const selected = pairType.pair === x.token.pair
+          return (
+            <StyledDexDenomItem
+              key={`pairList-${i}`}
+              onClick={(): void => {
+                setSelectedPairToken((ori) => {
+                  if (ori) {
+                    return { ...ori, pairType: x.token }
+                  }
+                })
+              }}
+              selected={selected}
+            >
+              <View>
+                <Row style={{ alignItems: 'center' }}>
+                  <FormImage src={dexSrc} size={18} />
+                  <FormText style={{ padding: '0 4px', fontSize: 12 }}>
+                    {factoryNames[x.token.dex]}
+                  </FormText>
+                  {x.poolInfo && (
+                    <FormText fontType="R10">
+                      {UTIL.formatAmount(x.poolInfo.total_PoolSize!, {
+                        abbreviate: true,
+                        toFix: 0,
+                      })}
+                    </FormText>
+                  )}
+                </Row>
+                {/* {supportLimitOrder(x.dex) && (
+                  <View>
+                    <FormText fontType="R14">Limit order</FormText>
+                  </View>
+                )} */}
+                {/* <View></View> */}
+              </View>
+            </StyledDexDenomItem>
+          )
+        })}
+      </Row>
+    </View>
+  )
+}
+
 const Trade = ({
   token,
   tradeBase,
   pairContract,
   dex,
+  pairType,
+  setSelectedPairToken,
 }: {
   token: TokenType
   tradeBase: TokenKeyEnum
   pairContract: ContractAddr
   dex: DexEnum
+  pairType: PairType
+  setSelectedPairToken: React.Dispatch<
+    React.SetStateAction<
+      | {
+          token: TokenType
+          pairType: PairType
+        }
+      | undefined
+    >
+  >
 }): ReactElement => {
-  const { insertRouteParam, routeParams } = useRoute<RoutePath.home>()
+  const { insertRouteParams, routeParams } = useRoute<RoutePath.home>()
   const { tokenInfo } = useNetwork()
   const tradeType = routeParams?.tradeType || TradeTypeEnum.buy
+  const tradeKind = routeParams?.tradeKind || TradeKindEnum.limitOrder
   const tradeBaseContract = tokenInfo[tradeBase].contractOrDenom
   const tradeBaseSymbol = tokenInfo[tradeBase].symbol
   const buyReturn = useBuy({
@@ -305,28 +370,49 @@ const Trade = ({
     pairContract,
   })
 
-  const myOrderReturn = useMyOrder({
-    forBuyDenom: tradeBaseContract,
-    toBuyContractOrDenom: token.contractOrDenom,
-    tokenForBuySymbol: tradeBaseSymbol,
-    tokenToBuySymbol: token.symbol,
-    pairContract,
-  })
+  const tokenListReturn = useTokenPairsList(token)
+  const { sortedList } = tokenListReturn
 
   return (
     <StyledCard>
       <StyledLayout isLimitOrder={supportLimitOrder(dex)}>
-        {supportLimitOrder(dex) && <MyOrder myOrderReturn={myOrderReturn} />}
         <View style={{ flex: 1 }}>
           <SelectTab
             options={[
-              { value: TradeTypeEnum.buy, label: 'BUY' },
-              { value: TradeTypeEnum.sell, label: 'SELL' },
+              {
+                value: TradeTypeEnum.buy,
+                value2: TradeKindEnum.limitOrder,
+                label: 'Buy',
+              },
+              {
+                value: TradeTypeEnum.sell,
+                value2: TradeKindEnum.limitOrder,
+                label: 'Sell',
+              },
+              {
+                value: TradeTypeEnum.buy,
+                value2: TradeKindEnum.instant,
+                label: 'Inst. Buy',
+              },
+              {
+                value: TradeTypeEnum.sell,
+                value2: TradeKindEnum.instant,
+                label: 'Inst. Sell',
+              },
             ]}
-            onSelect={(value): void => {
-              insertRouteParam('tradeType', value)
+            onSelect={(value, value2): void => {
+              insertRouteParams([
+                { key: 'tradeType', value: value },
+                { key: 'tradeKind', value: value2 },
+              ])
             }}
-            selected={tradeType}
+            selected={{ value: tradeType, value2: tradeKind }}
+          />
+
+          <SwapBase
+            pairList={sortedList}
+            pairType={pairType}
+            setSelectedPairToken={setSelectedPairToken}
           />
 
           {tradeType === TradeTypeEnum.buy ? (

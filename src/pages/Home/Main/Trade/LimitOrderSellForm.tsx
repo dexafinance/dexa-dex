@@ -39,22 +39,23 @@ const StyledRow = styled(View)`
 const StyledSlider = styled(View)`
   padding: 4px 8px 12px 8px;
   [data-reach-slider-track] {
-    background-color: ${({ theme }): string => theme.colors.inputBackground};
+    background-color: ${({ theme }): string => theme.colors.surfaceL2};
   }
   [data-reach-slider-range] {
     background-color: ${COLOR.gray._300};
   }
   [data-reach-slider-marker] {
+    z-index: 0;
     border-radius: 12px;
     width: 12px;
-    background-color: ${({ theme }): string => theme.colors.inputBackground};
-    border: solid 2px ${({ theme }): string => theme.colors.background};
+    background-color: ${({ theme }): string => theme.colors.surfaceL2};
+    border: solid 2px ${({ theme }): string => theme.colors.surface};
   }
   [data-reach-slider-marker][data-state='under-value'] {
     background-color: ${COLOR.gray._300};
   }
   [data-reach-slider-marker][data-state='at-value'] {
-    background-color: ${({ theme }): string => theme.colors.inputBackground};
+    background-color: ${({ theme }): string => theme.colors.surface};
     border: solid 4px;
   }
   [data-reach-slider-handle] {

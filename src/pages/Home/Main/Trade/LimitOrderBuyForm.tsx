@@ -39,22 +39,23 @@ const StyledRow = styled(View)`
 const StyledSlider = styled(View)`
   padding: 4px 8px 12px 8px;
   [data-reach-slider-track] {
-    background-color: ${({ theme }): string => theme.colors.inputBackground};
+    background-color: ${({ theme }): string => theme.colors.surfaceL2};
   }
   [data-reach-slider-range] {
     background-color: ${COLOR.gray._300};
   }
   [data-reach-slider-marker] {
+    z-index: 0;
     border-radius: 12px;
     width: 12px;
-    background-color: ${({ theme }): string => theme.colors.inputBackground};
-    border: solid 2px ${({ theme }): string => theme.colors.background};
+    background-color: ${({ theme }): string => theme.colors.surfaceL2};
+    border: solid 2px ${({ theme }): string => theme.colors.surface};
   }
   [data-reach-slider-marker][data-state='under-value'] {
     background-color: ${COLOR.gray._300};
   }
   [data-reach-slider-marker][data-state='at-value'] {
-    background-color: ${({ theme }): string => theme.colors.inputBackground};
+    background-color: ${({ theme }): string => theme.colors.surface};
     border: solid 4px;
   }
   [data-reach-slider-handle] {
@@ -67,6 +68,33 @@ const StyledMaxBalance = styled(Row)`
   padding-bottom: 8px;
   color: ${({ theme }): string => theme.colors.primaryText};
 `
+
+const StyledTextButton = styled(Row)`
+  ${STYLE.clickable}
+  border:none;
+  background-color: transparent;
+  align-items: center;
+  :hover {
+    opacity: 0.8;
+  }
+`
+type TextButtonProps = {
+  value: uToken
+  symbol?: string
+  onClick: (value: uToken) => void
+}
+
+const TextButton = ({
+  value,
+  symbol,
+  onClick,
+}: TextButtonProps): ReactElement => (
+  <StyledTextButton onClick={(): void => onClick(value)}>
+    <FormText fontType="R14">{`Remaining ${UTIL.formatAmount(value, {
+      toFix: UTIL.getFixed(+(UTIL.demicrofy(value) as string)),
+    })}${symbol && symbol.length > 0 ? ' ' + symbol : ''}`}</FormText>
+  </StyledTextButton>
+)
 
 const LimitOrderBuyForm = ({
   useLimitOrderBuyReturn,
@@ -106,33 +134,6 @@ const LimitOrderBuyForm = ({
   const { balance: offerTokenBal } = useMyBalance({
     contractOrDenom: offerDenom,
   })
-
-  const StyledTextButton = styled(Row)`
-    ${STYLE.clickable}
-    border:none;
-    background-color: transparent;
-    align-items: center;
-    :hover {
-      opacity: 0.8;
-    }
-  `
-  type TextButtonProps = {
-    value: uToken
-    symbol?: string
-    onClick: (value: uToken) => void
-  }
-
-  const TextButton = ({
-    value,
-    symbol,
-    onClick,
-  }: TextButtonProps): ReactElement => (
-    <StyledTextButton onClick={(): void => onClick(value)}>
-      <FormText fontType="R14">{`Remaining ${UTIL.formatAmount(value, {
-        toFix: UTIL.getFixed(+(UTIL.demicrofy(value) as string)),
-      })}${symbol && symbol.length > 0 ? ' ' + symbol : ''}`}</FormText>
-    </StyledTextButton>
-  )
 
   const feeData = useMemo(
     () =>

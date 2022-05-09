@@ -14,7 +14,12 @@ import FormText from './FormText'
 import Button from './Button'
 import { RoutePath } from 'types'
 import useRoute from 'hooks/common/useRoute'
-import { TradeTypeEnum, LpProvideTypeEnum, TokenKeyEnum } from 'types'
+import {
+  TradeTypeEnum,
+  TradeKindEnum,
+  LpProvideTypeEnum,
+  TokenKeyEnum,
+} from 'types'
 
 const StyledContainer = styled(View)``
 
@@ -49,6 +54,7 @@ const ErrorView = ({ error }: { error?: any }): ReactElement => {
               onClick={(): void => {
                 push(RoutePath.home, {
                   tradeType: TradeTypeEnum.buy,
+                  tradeKind: TradeKindEnum.limitOrder,
                   lpType: LpProvideTypeEnum.provide,
                   // limitOrder: 1,
                   // dex: DexEnum.astroport,

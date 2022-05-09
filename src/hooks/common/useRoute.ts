@@ -16,6 +16,9 @@ const useRoute = <RouteName extends keyof RouteParams>(): {
   goBack: () => void
   routeParams?: RouteParams[RouteName]
   insertRouteParam: (key: keyof RouteParams[RouteName], value: string) => void
+  insertRouteParams: (
+    params: { key: keyof RouteParams[RouteName]; value?: string }[]
+  ) => void
 } => {
   const history = useHistory()
   const { replace, location } = history
@@ -78,7 +81,42 @@ const useRoute = <RouteName extends keyof RouteParams>(): {
     refetchRouteParams()
   }
 
-  return { ...history, push, routeParams, insertRouteParam }
+  const insertRouteParams = (
+    params: { key: keyof RouteParams[RouteName]; value?: string }[]
+  ): void => {
+    const query = location.search.substr(1)
+    const kvp = query.split('&')
+
+    params.forEach((param) => {
+      const strKey = encodeURIComponent(param.key as string)
+      const value = encodeURIComponent(param.value || '')
+
+      let i = 0
+
+      for (; i < kvp.length; i++) {
+        if (kvp[i].startsWith(strKey + '=')) {
+          const pair = kvp[i].split('=')
+          pair[1] = value
+          kvp[i] = value && pair.join('=')
+          break
+        }
+      }
+
+      if (i >= kvp.length) {
+        kvp[kvp.length] = [strKey, value].join('=')
+      }
+    })
+
+    const new_params = kvp
+      .filter((x) => x)
+      .join('&')
+      .replace(/^&/, '')
+
+    replace(`${location.pathname}?${new_params}`)
+    refetchRouteParams()
+  }
+
+  return { ...history, push, routeParams, insertRouteParam, insertRouteParams }
 }
 
 export default useRoute

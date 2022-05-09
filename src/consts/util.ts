@@ -1,6 +1,13 @@
 import BigNumber from 'bignumber.js'
 import _ from 'lodash'
-import { Token, uToken } from 'types'
+import {
+  Token,
+  uToken,
+  DexEnum,
+  TokenDenomEnum,
+  AssetInfo,
+  ContractAddr,
+} from 'types'
 
 import asset from './asset'
 import currency from './currency'
@@ -38,6 +45,30 @@ const isNativeTerra = (str: string): boolean =>
 const isNativeDenom = (str: string): boolean =>
   str === 'uluna' || isNativeTerra(str)
 
+const getAssetInfo = (
+  contractOrDenom: TokenDenomEnum | ContractAddr,
+  dex: DexEnum = DexEnum.terraswap
+): AssetInfo => {
+  const info = isNativeDenom(contractOrDenom)
+    ? {
+        native_token: {
+          denom: contractOrDenom as TokenDenomEnum,
+        },
+      }
+    : {
+        token: { contract_addr: contractOrDenom as ContractAddr },
+      }
+
+  const prismInfo = isNativeDenom(contractOrDenom)
+    ? {
+        native: contractOrDenom as TokenDenomEnum,
+      }
+    : {
+        cw20: contractOrDenom as ContractAddr,
+      }
+  return dex === DexEnum.prism ? prismInfo : info
+}
+
 const isNumberString = (value: number | string): boolean =>
   false === new BigNumber(value || '').isNaN()
 
@@ -48,7 +79,6 @@ const isEven = (value: number): boolean => value % 2 === 0
 const isOdd = (value: number): boolean => !isEven(value)
 
 const getFixed = (value: number): number => (value > 2 ? 3 : 5)
-
 
 const microfy = (value: Token): uToken =>
   toBn(value).multipliedBy(asset.TERRA_DECIMAL).toString(10) as uToken
@@ -156,6 +186,7 @@ export default {
   extractNumber,
   isNativeTerra,
   isNativeDenom,
+  getAssetInfo,
   isNumberString,
   toBn,
   isEven,

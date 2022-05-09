@@ -1,10 +1,9 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { IconList } from '@tabler/icons'
 
-import { STYLE, COLOR } from 'consts'
+import { STYLE } from 'consts'
 
-import { View, Modal, FormText, Row } from 'components'
+import { View, Modal } from 'components'
 
 import {
   PairType,
@@ -15,25 +14,31 @@ import {
 } from 'types'
 
 import useRoute from 'hooks/common/useRoute'
-import useLayout from 'hooks/common/useLayout'
+// import useLayout from 'hooks/common/useLayout'
 import useTokenList from 'hooks/common/home/useTokenList'
 
-import Announcement from './Announcement'
+// import Announcement from './Announcement'
 
 import TokenInfo from './TokenInfo'
 import Trade from './Trade'
+import MyOrder from './Trade/MyOrder'
+
 // import OrderList from './OrderList'
 // import LpProvide from './LpProvide'
 import TokenList from './TokenList'
 import NoTokenSelected from './NoTokenSelected'
 // import TxInfoNew from './TxInfoNew'
 import TxInfoSplitView from './TxInfoSplitView'
-import AnalyticsCandle from './AnalyticsCandle'
+// import AnalyticsCandle from './AnalyticsCandle'
 
 import useNetwork from 'hooks/common/useNetwork'
 // padding: 0 20px;
 const StyledContainer = styled(View)`
-  max-width: 100%;
+  z-index: 0;
+  max-width: 1440px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   @media ${STYLE.media.tablet} {
   }
 `
@@ -54,9 +59,8 @@ const StyledContainer = styled(View)`
 const StyledLayout = styled(View)`
   display: grid;
   padding: 20px;
-  grid-template-columns: minmax(200px, 300px) 1fr 300px;
+  grid-template-columns: minmax(200px, 400px) minmax(300px, 500px) 1fr;
   column-gap: 12px;
-
   @media ${STYLE.media.tablet} {
     padding: 0;
     grid-template-columns: 300px auto;
@@ -68,22 +72,46 @@ const StyledLayout = styled(View)`
   }
 `
 
+// const StyledModal = styled(Modal)`
+//   z-index: 999;
+// `
+// const SearchBox = styled(View)`
+//   margin-bottom: 12px;
+//   display: grid;
+//   padding: 12px;
+//   grid-template-columns: minmax(300px, 400px) minmax(300px, 500px) 1fr;
+//   column-gap: 20px;
+//   background-color: ${({ theme }): string => theme.colors.surface};
+//   @media ${STYLE.media.tablet} {
+//     padding: 0;
+//     grid-template-columns: 300px auto;
+//   }
+
+//   @media ${STYLE.media.mobile} {
+//     padding: 0;
+//     grid-template-columns: 1fr;
+//   }
+// `
+
+// const SearchBox = styled(View)`
+//   padding: 12px;
+//   background-color: ${({ theme }): string => theme.colors.surface};
+//   grid-template-rows: max-content;
+//   border-radius: 8px;
+// `
+
 // grid-template-rows: auto 1fr;
-const StyledTokenInfoBox = styled(View)`
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 12px;
-`
+// const StyledTokenInfoBox = styled(View)`
+//   width: 100%;
+// `
 const StyledTokenListBox = styled(View)``
 
 const Main = (): ReactElement => {
   const { routeParams } = useRoute<RoutePath.home>()
   const tokenSymbol =
     routeParams?.symbol || TokenKeyEnum.LUNA + '_' + TokenKeyEnum.UST
-  // const dex = routeParams?.dex || DexEnum.astroport
-  // const limitOrder = routeParams?.limitOrder || 1
 
-  const { isTabletWidth, isMobileWidth } = useLayout()
+  // const { isTabletWidth, isMobileWidth } = useLayout()
   const { tokenInfo } = useNetwork()
   const [showList, setShowList] = useState(false)
 
@@ -92,7 +120,7 @@ const Main = (): ReactElement => {
   }
 
   const tokenListReturn = useTokenList()
-  const { sortedList } = tokenListReturn
+  const { sortedList, setFilter } = tokenListReturn
 
   const symbols = tokenSymbol.split('_')
 
@@ -127,93 +155,86 @@ const Main = (): ReactElement => {
 
   return (
     <StyledContainer>
-      <Announcement url="https://buttery-elderberry-89d.notion.site/Beta-launching-announcement-d9eab80fbe054e6481b5d7583dbefee6"></Announcement>
-      {isTabletWidth && (
-        <Row
-          onClick={(): void => {
-            setShowList(true)
-          }}
-          style={{
-            border: `1px solid ${COLOR.gray._800}`,
-            width: 'fit-content',
-            padding: '3px 8px',
-            borderRadius: 8,
-            backgroundColor: COLOR.white,
-            alignItems: 'center',
-            marginBottom: 10,
-          }}
-        >
-          <IconList size={14} />
-          <FormText fontType="R14">Show token list</FormText>
-        </Row>
+      {/* <Announcement url="https://buttery-elderberry-89d.notion.site/Beta-launching-announcement-d9eab80fbe054e6481b5d7583dbefee6"></Announcement> */}
+
+      {selectedPairToken ? (
+        <>
+          <TokenInfo
+            {...selectedPairToken}
+            setShowList={setShowList}
+            setFilter={setFilter}
+          />
+        </>
+      ) : (
+        <NoTokenSelected />
       )}
-      <StyledLayout>
-        {selectedPairToken && (
+      {selectedPairToken && (
+        <StyledLayout>
+          <MyOrder
+            token={selectedPairToken.token}
+            tradeBase={selectedPairToken.pairType.base}
+            pairContract={selectedPairToken.pairType.pair}
+            dex={selectedPairToken.pairType.dex}
+          />
+          <View>
+            <Trade
+              {...selectedPairToken}
+              tradeBase={selectedPairToken.pairType.base}
+              pairContract={selectedPairToken.pairType.pair}
+              dex={selectedPairToken.pairType.dex}
+              setSelectedPairToken={setSelectedPairToken}
+            />
+            {/* <AnalyticsCandle
+                token={selectedPairToken.token}
+                pairContract={selectedPairToken.pairType.pair}
+                tradeBase={selectedPairToken.pairType.base}
+              /> */}
+          </View>
           <StyledTokenListBox>
             {/* <OrderList
               tradeBase={selectedPairToken.pairType.base}
               pairContract={selectedPairToken.pairType.pair}
               {...selectedPairToken}
             /> */}
-            <TxInfoSplitView
-              title="Recent selling transaction"
-              tradeType={TradeTypeEnum.sell}
-              {...selectedPairToken}
-            ></TxInfoSplitView>
-            <TxInfoSplitView
-              title="Recent buying transaction"
-              tradeType={TradeTypeEnum.buy}
-              {...selectedPairToken}
-            ></TxInfoSplitView>
-          </StyledTokenListBox>
-        )}
-        <StyledTokenInfoBox>
-          {selectedPairToken ? (
-            <>
-              <TokenInfo
+            {routeParams?.tradeType === TradeTypeEnum.sell && (
+              <TxInfoSplitView
+                title="Recent selling transaction"
+                tradeType={TradeTypeEnum.sell}
                 {...selectedPairToken}
-                setSelectedPairToken={setSelectedPairToken}
-              />
-              {false === isMobileWidth && (
-                <AnalyticsCandle
-                  token={selectedPairToken.token}
-                  pairContract={selectedPairToken.pairType.pair}
-                  tradeBase={selectedPairToken.pairType.base}
-                />
-              )}
+              ></TxInfoSplitView>
+            )}
+            {routeParams?.tradeType === TradeTypeEnum.buy && (
+              <TxInfoSplitView
+                title="Recent buying transaction"
+                tradeType={TradeTypeEnum.buy}
+                {...selectedPairToken}
+              ></TxInfoSplitView>
+            )}
+          </StyledTokenListBox>
 
-              <Trade
-                token={selectedPairToken.token}
-                tradeBase={selectedPairToken.pairType.base}
-                pairContract={selectedPairToken.pairType.pair}
-                dex={selectedPairToken.pairType.dex}
-              />
-              {/* <LpProvide
+          {/* <LpProvide
                   token={selectedPairToken.token}
                   tradeBase={selectedPairToken.pairType.base}
                   pairContract={selectedPairToken.pairType.pair}
                   lpContract={selectedPairToken.pairType.lp}
                 /> */}
-            </>
-          ) : (
-            <NoTokenSelected />
-          )}
-        </StyledTokenInfoBox>
-        {isTabletWidth ? (
-          <Modal isOpen={showList}>
+          <Modal
+            isOpen={showList}
+            style={{
+              content: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
+            }}
+          >
             <TokenList
               closeModal={closeModal}
               tokenListReturn={tokenListReturn}
             />
-            {/* {selectedPairToken && <TxInfoNew {...selectedPairToken} />} */}
           </Modal>
-        ) : (
-          <StyledTokenListBox>
-            <TokenList tokenListReturn={tokenListReturn} />
-            {/* {selectedPairToken && <TxInfoNew {...selectedPairToken} />} */}
-          </StyledTokenListBox>
-        )}
-      </StyledLayout>
+        </StyledLayout>
+      )}
     </StyledContainer>
   )
 }

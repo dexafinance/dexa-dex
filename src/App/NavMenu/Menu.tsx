@@ -14,7 +14,7 @@ import useRoute from 'hooks/common/useRoute'
 import useLayout from 'hooks/common/useLayout'
 import { IconChevronDown } from '@tabler/icons'
 
-import { TradeTypeEnum, LpProvideTypeEnum } from 'types'
+import { TradeTypeEnum, TradeKindEnum, LpProvideTypeEnum } from 'types'
 import { useTheme } from 'styled-components'
 
 const StyledContainer = styled(Row)`
@@ -103,6 +103,7 @@ const Menu = (): ReactElement => {
             onClick={(): void => {
               push(RoutePath.home, {
                 tradeType: TradeTypeEnum.buy,
+                tradeKind: TradeKindEnum.limitOrder,
                 lpType: LpProvideTypeEnum.provide,
                 // limitOrder: 1,
                 // dex: DexEnum.astroport,
@@ -179,6 +180,7 @@ const Menu = (): ReactElement => {
         onClick={(): void =>
           push(RoutePath.home, {
             tradeType: TradeTypeEnum.buy,
+            tradeKind: TradeKindEnum.limitOrder,
             lpType: LpProvideTypeEnum.provide,
             // limitOrder: 1,
             // dex: DexEnum.astroport,

@@ -11,6 +11,7 @@ import {
   uLP,
   Token,
   TradeTypeEnum,
+  TradeKindEnum,
   LpProvideTypeEnum,
   uToken,
   // DexEnum,
@@ -230,6 +231,7 @@ const LpOfLpItem = ({
               onClick={(e): void => {
                 push(RoutePath.home, {
                   tradeType: TradeTypeEnum.buy,
+                  tradeKind: TradeKindEnum.limitOrder,
                   lpType: LpProvideTypeEnum.provide,
                   // dex: DexEnum.astroport,
                   // limitOrder: 1,
@@ -269,6 +271,7 @@ const LpOfLpItem = ({
               onClick={(e): void => {
                 push(RoutePath.home, {
                   tradeType: TradeTypeEnum.buy,
+                  tradeKind: TradeKindEnum.limitOrder,
                   lpType: LpProvideTypeEnum.provide,
                   // dex: DexEnum.astroport,
                   // limitOrder: 1,

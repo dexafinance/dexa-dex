@@ -18,6 +18,7 @@ export type FontType =
   | 'R14'
   | 'B12'
   | 'R12'
+  | 'R10'
 
 type FormTextProps = {
   fontType?: FontType | { default: FontType; mobile?: FontType }
@@ -60,6 +61,8 @@ const getFontStyle = (
       return { fontSize: 12, fontWeight: 600 }
     case 'R12':
       return { fontSize: 12, fontWeight: 400 }
+    case 'R10':
+      return { fontSize: 10, fontWeight: 400 }
   }
 }
 

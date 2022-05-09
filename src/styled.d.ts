@@ -12,13 +12,14 @@ declare module 'styled-components' {
       background: string
       surface: string
       banner: string
-      inputBackground: string
+      surfaceL2: string
       border: string
       borderFocused: string
       onPrimary: string
       onSecondary: string
       onBackground: string
       onSurface: string
+      onSurfaceL2Secondary: string
       onBanner: string
       primaryText: string
       secondaryText: string

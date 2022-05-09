@@ -1,52 +1,46 @@
 import { ReactElement, useMemo } from 'react'
-import styled, { useTheme } from 'styled-components'
+import styled from 'styled-components'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import {
   IconChartBar,
-  IconCircle,
-  IconCircleCheck,
   IconCopy,
-  IconLayout,
+  // IconLayout,
 } from '@tabler/icons'
 import { toast } from 'react-toastify'
-import _ from 'lodash'
-
-import terraswapLogo from 'images/terraswap.svg'
-import astroportLogo from 'images/astroport.svg'
-import prismLogo from 'images/prism.svg'
-import loopLogo from 'images/loop.png'
 
 import { UTIL, STYLE, COLOR, APIURL } from 'consts'
 
-import { FormText, Card, FormImage, Row, LinkA, View } from 'components'
-import { DexEnum, PairType, TokenType, Token } from 'types'
+import {
+  FormText,
+  Card,
+  FormImage,
+  Row,
+  LinkA,
+  FormInput,
+  View,
+} from 'components'
+import { PairType, TokenType, Token, RoutePath } from 'types'
 import useLayout from 'hooks/common/useLayout'
+import useRoute from 'hooks/common/useRoute'
 
 import usePool from 'hooks/query/pair/usePool'
 import useNetwork from 'hooks/common/useNetwork'
-import useTokenPairsList, {
-  SortedTokenPairType,
-} from 'hooks/common/home/useTokenPairsList'
 
-const factoryLogos: Record<DexEnum, string> = {
-  [DexEnum.terraswap]: terraswapLogo,
-  [DexEnum.astroport]: astroportLogo,
-  [DexEnum.prism]: prismLogo,
-  [DexEnum.loop]: loopLogo,
-}
-
-const factoryNames: Record<DexEnum, string> = {
-  [DexEnum.terraswap]: 'Terraswap',
-  [DexEnum.astroport]: 'Astroport',
-  [DexEnum.prism]: 'Prism',
-  [DexEnum.loop]: 'Loop',
-}
-
-const StyledContainer = styled(Card)``
-
-const StyledFormText = styled(FormText)`
-  margin-bottom: 4px;
+const StyledContainer = styled(Card)`
+  display: grid;
+  background-color: ${({ theme }): string => theme.colors.surface};
+  border: 1px solid ${({ theme }): string => theme.colors.surface};
+  grid-template-columns: minmax(300px, 500px) 1fr;
+  z-index: 99999;
+  @media ${STYLE.media.mobile} {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
 `
+
+// const StyledFormText = styled(FormText)`
+//   margin-bottom: 4px;
+// `
 
 const StyledSymbolPrice = styled(Row)`
   align-items: center;
@@ -79,94 +73,23 @@ const StyledLinkBox = styled(Row)`
   }
 `
 
-const StyledDexDenomItem = styled(Row)<{ selected: boolean }>`
-  ${STYLE.clickable}
-  border-radius: 8px;
-  padding: 3px 10px;
-  align-items: center;
-  border: 2px solid
-    ${({ selected, theme }): string =>
-      selected ? theme.colors.primary : COLOR.gray._300};
-  opacity: ${({ selected }): number => (selected ? 1 : 0.8)};
-  margin-right: 10px;
+const SearchBox = styled(View)`
+  display: grid;
+  grid-template-rows: auto;
+  row-gap: 12px;
 `
+
+const StyledPair = styled(FormText)`
+  margin-right: 8px;
+  :hover {
+    color: ${({ theme }): string => theme.colors.primaryText};
+    cursor: pointer;
+  }
+`
+
 // selectedPairToken.pairType.dex === DexEnum.terraswap
 // try support limit order for all dex
 // const supportLimitOrder = (dex: DexEnum):boolean => true
-
-const SwapBase = ({
-  pairList,
-  pairType,
-  setSelectedPairToken,
-}: {
-  pairList: SortedTokenPairType[]
-  pairType: PairType
-  setSelectedPairToken: React.Dispatch<
-    React.SetStateAction<
-      | {
-          token: TokenType
-          pairType: PairType
-        }
-      | undefined
-    >
-  >
-}): ReactElement => {
-  const theme = useTheme()
-  return (
-    <View style={{ borderTop: `1px solid gray`, paddingTop: 6, marginTop: 6 }}>
-      <StyledFormText fontType="B14">Select Dex / Denom</StyledFormText>
-      <Row>
-        {_.map(pairList, (x, i) => {
-          const dexSrc = factoryLogos[x.token.dex]
-          const selected = pairType.pair === x.token.pair
-          return (
-            <StyledDexDenomItem
-              key={`pairList-${i}`}
-              onClick={(): void => {
-                setSelectedPairToken((ori) => {
-                  if (ori) {
-                    return { ...ori, pairType: x.token }
-                  }
-                })
-              }}
-              selected={selected}
-            >
-              <View style={{ paddingRight: 6 }}>
-                {selected ? (
-                  <IconCircleCheck color={theme.colors.primary} />
-                ) : (
-                  <IconCircle color={COLOR.gray._300} />
-                )}
-              </View>
-              <View>
-                <Row style={{ alignItems: 'center' }}>
-                  <FormImage src={dexSrc} size={26} />
-                  <FormText style={{ padding: '0 4px' }}>
-                    {factoryNames[x.token.dex]}
-                  </FormText>
-                  {x.poolInfo && (
-                    <FormText fontType="R14">
-                      {UTIL.formatAmount(x.poolInfo.total_PoolSize!, {
-                        abbreviate: true,
-                        toFix: 0,
-                      })}
-                    </FormText>
-                  )}
-                </Row>
-                {/* {supportLimitOrder(x.dex) && (
-                  <View>
-                    <FormText fontType="R14">Limit order</FormText>
-                  </View>
-                )} */}
-                {/* <View></View> */}
-              </View>
-            </StyledDexDenomItem>
-          )
-        })}
-      </Row>
-    </View>
-  )
-}
 
 const TokenPrice = ({
   token,
@@ -201,113 +124,160 @@ const TokenPrice = ({
   )
 }
 
+const QuickPairs = (): ReactElement => {
+  const { insertRouteParam } = useRoute<RoutePath.home>()
+  return (
+    <Row style={{ paddingLeft: 12 }}>
+      <StyledPair
+        onClick={(): void => {
+          insertRouteParam('symbol', 'LUNA_UST')
+        }}
+      >
+        <div>
+          <b>LUNA</b>
+          -UST
+        </div>
+      </StyledPair>
+      <StyledPair
+        onClick={(): void => {
+          insertRouteParam('symbol', 'bLUNA_LUNA')
+        }}
+      >
+        <div>
+          <b>bLUNA</b>
+          -LUNA
+        </div>
+      </StyledPair>
+      <StyledPair
+        onClick={(): void => {
+          insertRouteParam('symbol', 'ASTRO_UST')
+        }}
+      >
+        <div>
+          <b>ASTRO</b>
+          -UST
+        </div>
+      </StyledPair>
+      <StyledPair
+        onClick={(): void => {
+          insertRouteParam('symbol', 'PRISM_UST')
+        }}
+      >
+        <div>
+          <b>PRISM</b>
+          -UST
+        </div>
+      </StyledPair>
+    </Row>
+  )
+}
+
 const TokenInfo = ({
   token,
   pairType,
-  setSelectedPairToken,
+  setShowList,
+  setFilter,
 }: {
   token: TokenType
   pairType: PairType
-  setSelectedPairToken: React.Dispatch<
-    React.SetStateAction<
-      | {
-          token: TokenType
-          pairType: PairType
-        }
-      | undefined
-    >
-  >
+  setShowList: React.Dispatch<React.SetStateAction<boolean>>
+  setFilter: (prevState: string) => void
 }): ReactElement => {
   const { isMobileWidth } = useLayout()
   const pairContract = pairType.pair
 
   const chartLink = APIURL.getCoinhallLink({ pairContract })
-  const dashboardLink = APIURL.getDashboardLink({ pairContract })
-
-  const tokenListReturn = useTokenPairsList(token)
-  const { sortedList } = tokenListReturn
+  // const dashboardLink = APIURL.getDashboardLink({ pairContract })
 
   return (
     <StyledContainer>
-      <StyledTokenLogo>
-        <StyledSymbolPrice>
-          <Row style={{ alignItems: 'center' }}>
-            <FormImage
-              src={token.logo}
-              size={32}
-              style={{ paddingRight: 10 }}
-            />
-            {false === isMobileWidth && (
-              <FormText
-                fontType={{ default: 'B24', mobile: 'B18' }}
+      <View>
+        <StyledTokenLogo>
+          <StyledSymbolPrice>
+            <Row style={{ alignItems: 'center' }}>
+              <FormImage
+                src={token.logo}
+                size={32}
                 style={{ paddingRight: 10 }}
+              />
+              {false === isMobileWidth && (
+                <FormText
+                  fontType={{ default: 'B24', mobile: 'B18' }}
+                  style={{ paddingRight: 10 }}
+                >
+                  {token.symbol}
+                </FormText>
+              )}
+            </Row>
+            <TokenPrice token={token} pairType={pairType} />
+          </StyledSymbolPrice>
+        </StyledTokenLogo>
+        <StyledNameAddress>
+          <FormText fontType="R16">{token.name}</FormText>
+          <CopyToClipboard
+            text={token.contractOrDenom}
+            onCopy={(): void => {
+              toast(`Copied ${token.symbol} address!`, {
+                position: 'top-center',
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              })
+            }}
+          >
+            <StyledCopy style={{ alignItems: 'center' }}>
+              <FormText
+                fontType={{ default: 'R16', mobile: 'R14' }}
+                color={COLOR.gray._400}
               >
-                {token.symbol}
+                {`(${UTIL.truncate(token.contractOrDenom, [10, 10])}`}
               </FormText>
-            )}
-          </Row>
-          <TokenPrice token={token} pairType={pairType} />
-        </StyledSymbolPrice>
-      </StyledTokenLogo>
-      <StyledNameAddress>
-        <FormText fontType="R16">{token.name}</FormText>
-        <CopyToClipboard
-          text={token.contractOrDenom}
-          onCopy={(): void => {
-            toast(`Copied ${token.symbol} address!`, {
-              position: 'top-center',
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            })
-          }}
-        >
-          <StyledCopy style={{ alignItems: 'center' }}>
-            <FormText
-              fontType={{ default: 'R16', mobile: 'R14' }}
-              color={COLOR.gray._400}
-            >
-              {`(${UTIL.truncate(token.contractOrDenom, [10, 10])}`}
-            </FormText>
-            <IconCopy size={18} color={COLOR.gray._400} />
-            <FormText
-              fontType={{ default: 'R16', mobile: 'R14' }}
-              color={COLOR.gray._400}
-            >
-              {')'}
-            </FormText>
-          </StyledCopy>
-        </CopyToClipboard>
-      </StyledNameAddress>
-      <StyledLinkBox>
-        {chartLink && (
-          <Row style={{ alignItems: 'center', paddingRight: 10 }}>
-            <IconChartBar size={14} style={{ paddingRight: 4 }} />
-            <LinkA link={chartLink}>
-              <FormText fontType={'R16'}>
-                {isMobileWidth ? 'Chart' : 'Coinhall Chart'}
+              <IconCopy size={18} color={COLOR.gray._400} />
+              <FormText
+                fontType={{ default: 'R16', mobile: 'R14' }}
+                color={COLOR.gray._400}
+              >
+                {')'}
               </FormText>
-            </LinkA>
-          </Row>
-        )}
-        {dashboardLink && (
-          <Row style={{ alignItems: 'center' }}>
-            <IconLayout size={14} style={{ paddingRight: 4 }} />
-            <LinkA link={dashboardLink}>
-              <FormText fontType={'R16'}>
-                {isMobileWidth ? 'Dashboard' : 'Terra Swap Dashboard'}
-              </FormText>
-            </LinkA>
-          </Row>
-        )}
-      </StyledLinkBox>
-      <SwapBase
-        pairList={sortedList}
-        pairType={pairType}
-        setSelectedPairToken={setSelectedPairToken}
-      />
+            </StyledCopy>
+          </CopyToClipboard>
+        </StyledNameAddress>
+        <StyledLinkBox>
+          {chartLink && (
+            <Row style={{ alignItems: 'center', paddingRight: 10 }}>
+              <IconChartBar size={14} style={{ paddingRight: 4 }} />
+              <LinkA link={chartLink}>
+                <FormText fontType={'R16'}>
+                  {isMobileWidth ? 'Chart' : 'Coinhall Chart'}
+                </FormText>
+              </LinkA>
+            </Row>
+          )}
+        </StyledLinkBox>
+      </View>
+      <SearchBox>
+        <View>
+          <FormInput
+            autoFocus={false}
+            onClick={(): void => {
+              setFilter('')
+              setShowList(true)
+            }}
+            inputProps={{
+              placeholder: 'Enter symbol or pair',
+              value: '',
+              readOnly: true,
+            }}
+            onChangeValue={(): void => {
+              setFilter('')
+              setShowList(true)
+            }}
+          />
+        </View>
+        <QuickPairs />
+      </SearchBox>
     </StyledContainer>
   )
 }

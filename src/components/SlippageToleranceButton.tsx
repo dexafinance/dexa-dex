@@ -23,23 +23,28 @@ const StyledOptionItem = styled(Row)<{ selected?: boolean }>`
   justify-content: center;
   margin: 0 3px;
   border-bottom: 2px solid ${COLOR.gray._800};
+  border-radius: 8px;
   background-color: ${({ selected }): string =>
     selected ? COLOR.brandColor.primary._400 : 'transparent'};
   :hover {
     border-bottom: 2px solid ${COLOR.brandColor.primary._400};
   }
 `
-
-const StyledInput = styled.input`
-  background: ${COLOR.gray._100};
+const StyledInput = styled.input<{ selected?: boolean }>`
+  margin-right: 2px;
+  background: transparent;
   outline: none;
   border: none;
   width: 40px;
-  color: ${COLOR.gray._800};
+  color: ${({ theme, selected }): string =>
+    selected ? theme.colors.primaryText : theme.colors.secondaryText};
   text-align: end;
   font-size: 14px;
   ::placeholder {
-    color: ${COLOR.gray._600};
+    color: ${({ theme }): string => theme.colors.secondaryText};
+  }
+  :focus {
+    color: ${({ theme }): string => theme.colors.primaryText};
   }
 `
 
@@ -47,6 +52,7 @@ enum SlippageValueEnum {
   per05 = '0.005',
   per1 = '0.01',
   per5 = '0.05',
+  custom = '',
 }
 
 const SlippageToleranceButton = ({
@@ -56,7 +62,9 @@ const SlippageToleranceButton = ({
   slippage: string
   updateSlippage: (value: string) => void
 }): ReactElement => {
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState(
+    (slippage ? +slippage * 100 : 0).toString()
+  )
 
   const theme = useTheme()
 
@@ -133,6 +141,7 @@ const SlippageToleranceButton = ({
             >
               <StyledInput
                 type="number"
+                selected={100 * +slippage === +inputValue}
                 value={inputValue}
                 placeholder={'0'}
                 maxLength={4}
@@ -142,7 +151,7 @@ const SlippageToleranceButton = ({
                   onChangeSlippage(bnValue.div(100).toString())
                 }}
               />
-              <FormText fontType="R12" color={COLOR.gray._800}>
+              <FormText fontType="R12" color={theme.colors.secondaryText}>
                 %
               </FormText>
             </StyledOptionItem>

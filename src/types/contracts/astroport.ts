@@ -1,4 +1,3 @@
-import { TokenDenomEnum } from 'types'
 import { AssetInfo } from '.'
 import { uToken } from '../currencies'
 import { ContractAddr } from './common'
@@ -37,39 +36,19 @@ export namespace astroport {
     assets: [
       {
         amount: T
-        info: {
-          token: {
-            contract_addr: ContractAddr
-          }
-        }
+        info: AssetInfo
       },
       {
         amount: T
-        info: {
-          native_token: {
-            denom: TokenDenomEnum
-          }
-        }
+        info: AssetInfo
       }
     ]
   }
 
-  export type SimulationInfo =
-    | {
-        token: {
-          contract_addr: ContractAddr
-        }
-      }
-    | {
-        native_token: {
-          denom: TokenDenomEnum
-        }
-      }
-
   export interface Simulation<T extends uToken> {
     simulation: {
       offer_asset: {
-        info: SimulationInfo
+        info: AssetInfo
         amount: T
       }
     }
@@ -81,22 +60,10 @@ export namespace astroport {
     spread_amount: T
   }
 
-  export type ReverseSimulationInfo =
-    | {
-        token: {
-          contract_addr: ContractAddr
-        }
-      }
-    | {
-        native_token: {
-          denom: TokenDenomEnum
-        }
-      }
-
   export interface ReverseSimulation<T extends uToken> {
     reverse_simulation: {
       ask_asset: {
-        info: ReverseSimulationInfo
+        info: AssetInfo
         amount: T
       }
     }
