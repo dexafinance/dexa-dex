@@ -57,8 +57,8 @@ const factoryLogos: Record<DexEnum, string> = {
 }
 
 const factoryNames: Record<DexEnum, string> = {
-  [DexEnum.terraswap]: 'Terraswap',
-  [DexEnum.astroport]: 'Astroport',
+  [DexEnum.terraswap]: 'Terra',
+  [DexEnum.astroport]: 'Astro',
   [DexEnum.prism]: 'Prism',
   [DexEnum.loop]: 'Loop',
 }

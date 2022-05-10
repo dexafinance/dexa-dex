@@ -137,7 +137,7 @@ const LimitOrderBuyForm = ({
 
   const feeData = useMemo(
     () =>
-      fee
+      (fee
         ? fee.amount.map((f) => ({
             title: 'Tx Fee',
             value: (
@@ -152,8 +152,36 @@ const LimitOrderBuyForm = ({
               title: 'Tx Fee',
               value: <BalanceFormat value={'0' as uToken} suffix={'UST'} />,
             },
-          ],
-    [fee]
+          ]
+      ).concat([
+        {
+          title: `Price per ${askTokenSymbol}`,
+          value: (
+            <BalanceFormat
+              value={UTIL.microfy(askPrice)}
+              suffix={offerTokenSymbol}
+            />
+          ),
+        },
+        {
+          title: `Price per ${offerTokenSymbol}`,
+          value: (
+            <BalanceFormat
+              value={
+                +askPrice > 0
+                  ? UTIL.microfy(
+                      UTIL.toBn(1)
+                        .dividedBy(UTIL.toBn(askPrice))
+                        .toString() as Token
+                    )
+                  : ('0' as uToken)
+              }
+              suffix={askTokenSymbol}
+            />
+          ),
+        },
+      ]),
+    [fee, askPrice]
   )
   // https://reach.tech/slider/
   return (

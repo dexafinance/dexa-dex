@@ -109,7 +109,7 @@ const LimitOrderSellForm = ({
 
   const feeData = useMemo(
     () =>
-      fee
+      (fee
         ? fee.amount.map((f) => ({
             title: 'Tx Fee',
             value: (
@@ -124,8 +124,36 @@ const LimitOrderSellForm = ({
               title: 'Tx Fee',
               value: <BalanceFormat value={'0' as uToken} suffix={'UST'} />,
             },
-          ],
-    [fee]
+          ]
+      ).concat([
+        {
+          title: `Price per ${offerTokenSymbol}`,
+          value: (
+            <BalanceFormat
+              value={UTIL.microfy(askPrice)}
+              suffix={askTokenSymbol}
+            />
+          ),
+        },
+        {
+          title: `Price per ${askTokenSymbol}`,
+          value: (
+            <BalanceFormat
+              value={
+                +askPrice > 0
+                  ? UTIL.microfy(
+                      UTIL.toBn(1)
+                        .dividedBy(UTIL.toBn(askPrice))
+                        .toString() as Token
+                    )
+                  : ('0' as uToken)
+              }
+              suffix={offerTokenSymbol}
+            />
+          ),
+        },
+      ]),
+    [fee, askPrice]
   )
 
   return (

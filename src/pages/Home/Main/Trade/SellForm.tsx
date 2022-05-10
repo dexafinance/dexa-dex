@@ -125,6 +125,19 @@ const SellForm = ({
           ),
         },
         {
+          title: `Price per ${fromTokenSymbol}`,
+          value: (
+            <BalanceFormat
+              value={UTIL.microfy(
+                UTIL.toBn(1000000)
+                  .dividedBy(UTIL.toBn(simulation.beliefPrice))
+                  .toString() as Token
+              )}
+              suffix={toTokenSymbol}
+            />
+          ),
+        },
+        {
           title: 'Minimum Received',
           value: (
             <BalanceFormat

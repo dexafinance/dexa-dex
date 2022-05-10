@@ -112,6 +112,7 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
 
   const simulationData = useMemo(() => {
     if (simulation) {
+      console.log(simulation.beliefPrice)
       return [
         {
           title: `Price per ${toTokenSymbol}`,
@@ -119,6 +120,19 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
             <BalanceFormat
               value={simulation.beliefPrice}
               suffix={fromTokenSymbol}
+            />
+          ),
+        },
+        {
+          title: `Price per ${fromTokenSymbol}`,
+          value: (
+            <BalanceFormat
+              value={UTIL.microfy(
+                UTIL.toBn(1000000)
+                  .dividedBy(UTIL.toBn(simulation.beliefPrice))
+                  .toString() as Token
+              )}
+              suffix={toTokenSymbol}
             />
           ),
         },
@@ -155,7 +169,7 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
           <FormInput
             number
             prefix="Mrk. Price"
-            suffix={toTokenSymbol}
+            suffix={fromTokenSymbol}
             // onChangeValue={(value): void => {
             //   updateAskPrice(value as Token)
             // }}
