@@ -1,7 +1,9 @@
 import { ReactElement, useMemo } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { ASSET, STYLE, UTIL, COLOR } from 'consts'
+
+import Select from 'react-select'
 
 import {
   View,
@@ -78,6 +80,17 @@ const StyledTextButton = styled(Row)`
     opacity: 0.8;
   }
 `
+
+const StyledSelectBox = styled(Row)`
+  align-items: center;
+  justify-content: space-between;
+  z-index: 9999;
+  @media ${STYLE.media.mobile} {
+    flex-direction: column-reverse;
+    align-items: inherit;
+  }
+`
+
 type TextButtonProps = {
   value: uToken
   symbol?: string
@@ -119,12 +132,19 @@ const LimitOrderBuyForm = ({
     updateAskPrice,
     askPriceErrMsg,
 
+    swapbackAskPrice,
+    updateSwapbackAskPrice,
+    swapbackAskPriceErrMsg,
+
     feeToken,
     feeTokenAmount,
     setFeeTokenAmount,
     feeTokenAmountErrMsg,
 
     fee,
+
+    recurringTimes,
+    setRecurringTimes,
   } = useLimitOrderBuyReturn
 
   const { balance: feeTokenBal } = useMyBalance({
@@ -134,6 +154,45 @@ const LimitOrderBuyForm = ({
   const { balance: offerTokenBal } = useMyBalance({
     contractOrDenom: offerDenom,
   })
+
+  const theme = useTheme()
+  let recurringOptions: any[] = []
+  for (let i = 0; i <= 10; i++) {
+    recurringOptions.push({
+      value: i,
+      label: i === 0 ? 'One time order' : `Loop ${i} times`,
+    })
+  }
+  const colourStyles = {
+    menuList: (provided: any, state: any): any => ({
+      ...provided,
+      height: 200,
+    }),
+    control: (styles: any): any => ({
+      ...styles,
+      backgroundColor: theme.colors.surfaceL2,
+      border: theme.colors.surfaceL2,
+      color: theme.colors.secondaryText,
+    }),
+    option: (styles: any, { data }: any): any => {
+      return {
+        ...styles,
+        backgroundColor: theme.colors.surfaceL2,
+      }
+    },
+    placeholder: (styles: any): any => ({
+      ...styles,
+      backgroundColor: theme.colors.surfaceL2,
+      color: theme.colors.secondaryText,
+    }),
+    singleValue: (styles: any, { data }: any): any => ({
+      ...styles,
+      color: theme.colors.secondaryText,
+    }),
+  }
+  const onChangeOption = (value: number): void => {
+    setRecurringTimes(value)
+  }
 
   const feeData = useMemo(
     () =>
@@ -289,6 +348,39 @@ const LimitOrderBuyForm = ({
             isError={!!askAmountErrMsg}
             helperText={askAmountErrMsg}
           />
+        </StyledRow>
+        <StyledRow style={{ alignItems: 'flex-end' }}>
+          <StyledSelectBox>
+            <View style={{ width: 200 }}>
+              <Select
+                options={recurringOptions}
+                defaultValue={recurringOptions[0]}
+                value={recurringOptions[recurringTimes]}
+                styles={colourStyles}
+                onChange={(sel): void => {
+                  sel && onChangeOption(sel.value)
+                }}
+              />
+            </View>
+          </StyledSelectBox>
+        </StyledRow>
+        <StyledRow>
+          {recurringTimes > 0 && (
+            <FormInput
+              number
+              prefix="Sell price"
+              suffix={offerTokenSymbol}
+              onChangeValue={(value): void => {
+                updateSwapbackAskPrice(value as Token)
+              }}
+              inputProps={{
+                placeholder: '0',
+                value: swapbackAskPrice,
+              }}
+              isError={!!swapbackAskPriceErrMsg}
+              helperText={swapbackAskPriceErrMsg}
+            />
+          )}
         </StyledRow>
         {false && (
           <View>

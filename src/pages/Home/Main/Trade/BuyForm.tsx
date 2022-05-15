@@ -112,7 +112,6 @@ const BuyForm = ({ buyReturn }: { buyReturn: UseBuyReturn }): ReactElement => {
 
   const simulationData = useMemo(() => {
     if (simulation) {
-      console.log(simulation.beliefPrice)
       return [
         {
           title: `Price per ${toTokenSymbol}`,

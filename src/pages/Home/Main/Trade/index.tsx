@@ -120,6 +120,8 @@ const Buy = ({
 
   const buyLimitOrder = tradeKind === TradeKindEnum.limitOrder
 
+  // console.log("check transaction valid", invalidLoBuyForm, loFee, loBuySubmitErrMsg)
+
   return (
     <>
       {buyLimitOrder ? (

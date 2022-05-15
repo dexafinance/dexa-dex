@@ -21,6 +21,8 @@ export type ExtractLimitOrdersType = {
   offerContractOrDenom: ContractAddr | TokenDenomEnum
   askContractOrDenom: ContractAddr | TokenDenomEnum
   action: TradeTypeEnum
+  totalLoop: number
+  remainingLoop: number
 }
 
 export type UseTokenInfoReturn = {
@@ -81,6 +83,8 @@ const useOrders = ({
           askAmount: item.ask_asset.amount,
           offerContractOrDenom,
           askContractOrDenom,
+          totalLoop: item.recurring?.total_loop || 0,
+          remainingLoop: item.recurring?.remaining_loop || 0,
         } as ExtractLimitOrdersType
       }
     )

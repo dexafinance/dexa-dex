@@ -137,3 +137,8 @@ export type LpStakingType = {
   lpPair: ContractAddr
   lpStaking: ContractAddr
 }
+
+export type TerraResponse = {
+  code: number
+  message: string
+}

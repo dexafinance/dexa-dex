@@ -4,6 +4,8 @@ import { useDebouncedCallback } from 'use-debounce'
 import usePostTx from './usePostTx'
 import { useConnectedWallet } from '@terra-money/wallet-provider'
 
+import { TerraResponse } from 'types'
+
 const useCalcFee = ({
   isValid,
   txOptions,
@@ -12,13 +14,27 @@ const useCalcFee = ({
   txOptions: CreateTxOptions
 }): {
   fee?: Fee
+  networkResponse: TerraResponse
 } => {
   const [fee, setFee] = useState<Fee>()
   const connectedWallet = useConnectedWallet()
   const { getFee } = usePostTx()
+  let networkResponse = { code: 0, message: 'Ok' }
   const dbcGetFee = useDebouncedCallback(async () => {
-    const txOptionsFee = await getFee({ txOptions })
-    setFee(txOptionsFee)
+    try {
+      const txOptionsFee = await getFee({ txOptions })
+      setFee(txOptionsFee)
+    } catch (err: any) {
+      // console.log(
+      //   'err',
+      //   err?.response?.data || { code: 999, message: 'Unknown error' }
+      // )
+      networkResponse = err?.response?.data || {
+        code: 999,
+        message: 'Unknown error',
+      }
+    } finally {
+    }
   }, 400)
 
   useEffect(() => {
@@ -35,6 +51,7 @@ const useCalcFee = ({
 
   return {
     fee,
+    networkResponse,
   }
 }
 

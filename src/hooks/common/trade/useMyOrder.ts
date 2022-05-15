@@ -44,6 +44,8 @@ export type UseMyOrderReturn = {
     toSellAmount: uToken
     offerContractOrDenom: ContractAddr | TokenDenomEnum
     askContractOrDenom: ContractAddr | TokenDenomEnum
+    totalLoop: number
+    remainingLoop: number
   }[]
 
   fee?: Fee
@@ -126,6 +128,8 @@ const useMyOrder = ({
           type === TradeTypeEnum.buy ? item.offerAmount : item.askAmount,
         offerContractOrDenom: item.offerContractOrDenom,
         askContractOrDenom: item.askContractOrDenom,
+        totalLoop: item.totalLoop,
+        remainingLoop: item.remainingLoop,
       }
     })
   }, [orders])

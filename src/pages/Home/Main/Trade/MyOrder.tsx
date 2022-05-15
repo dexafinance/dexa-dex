@@ -126,6 +126,11 @@ const MyOrder = ({
                 <FormText>
                   {UTIL.formatAmount(UTIL.microfy(item.price), { toFix: 6 })}
                 </FormText>
+                {item.totalLoop > 0 && (
+                  <FormText>
+                    {`(${item.remainingLoop}/${item.totalLoop})`}
+                  </FormText>
+                )}
               </View>
               <View style={{ flex: 1, alignItems: 'center' }}>
                 <FormText>{`${UTIL.formatAmount(item.toBuyAmount)} ${

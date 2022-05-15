@@ -290,6 +290,8 @@ export type FabricateSubmitOrderOption = {
   askContractOrDenom: ContractAddr | TokenDenomEnum
   feeContractOrDenom: ContractAddr | TokenDenomEnum
   feeAmount: Token
+  swapbackPrice?: Token
+  loop?: number
 }
 
 export const fabricateSubmitOrder = ({
@@ -302,6 +304,8 @@ export const fabricateSubmitOrder = ({
   askContractOrDenom,
   feeContractOrDenom,
   feeAmount,
+  swapbackPrice = '0' as Token,
+  loop = 0,
 }: FabricateSubmitOrderOption): MsgExecuteContract[] => {
   const offerIsNativeDenom = UTIL.isNativeDenom(offerContractOrDenom)
 
@@ -355,14 +359,35 @@ export const fabricateSubmitOrder = ({
     new MsgExecuteContract(
       sender,
       limitOrderContract,
-      {
-        submit_order: {
-          pair_addr: pairContract,
-          offer_asset: { info: offerInfo, amount: UTIL.microfy(offerAmount) },
-          ask_asset: { info: askInfo, amount: UTIL.microfy(askAmount) },
-          fee_amount: UTIL.microfy(feeAmount),
-        },
-      },
+      loop === 0
+        ? {
+            submit_order: {
+              pair_addr: pairContract,
+              offer_asset: {
+                info: offerInfo,
+                amount: UTIL.microfy(offerAmount),
+              },
+              ask_asset: { info: askInfo, amount: UTIL.microfy(askAmount) },
+              fee_amount: UTIL.microfy(feeAmount),
+            },
+          }
+        : {
+            submit_order: {
+              pair_addr: pairContract,
+              offer_asset: {
+                info: offerInfo,
+                amount: UTIL.microfy(offerAmount),
+              },
+              ask_asset: { info: askInfo, amount: UTIL.microfy(askAmount) },
+              fee_amount: UTIL.microfy(feeAmount),
+              recurring: {
+                belief_price: (+offerAmount / +askAmount).toFixed(6).toString(),
+                swapback_belief_price: swapbackPrice,
+                total_loop: loop,
+                remaining_loop: loop,
+              },
+            },
+          },
       coins
     ),
   ])

@@ -16,6 +16,7 @@ import {
 import useRoute from 'hooks/common/useRoute'
 // import useLayout from 'hooks/common/useLayout'
 import useTokenList from 'hooks/common/home/useTokenList'
+// import useTerraResponse from 'hooks/common/home/useTerraResponse'
 
 // import Announcement from './Announcement'
 
@@ -148,6 +149,8 @@ const Main = (): ReactElement => {
       })
     }
   }, [selectedToken?.token])
+
+  // const { terraResponse, setTerraResponse } = useTerraResponse()
 
   // selectedPairToken.pairType.dex === DexEnum.terraswap
   // try support limit order for all dex

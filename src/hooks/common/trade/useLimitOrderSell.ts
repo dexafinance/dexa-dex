@@ -47,6 +47,10 @@ export type UseLimitOrderSellReturn = {
   updateAskPrice: (value: Token) => void
   askPriceErrMsg: string
 
+  swapbackAskPrice: Token
+  updateSwapbackAskPrice: (value: Token) => void
+  swapbackAskPriceErrMsg: string
+
   feeToken: TokenInfoType
   feeTokenAmount: Token
   setFeeTokenAmount: (value: Token) => void
@@ -57,6 +61,9 @@ export type UseLimitOrderSellReturn = {
   onClickLimitOrderSell: () => void
   invalidForm: boolean
   submitErrMsg: string
+
+  recurringTimes: number
+  setRecurringTimes: (value: number) => void
 }
 
 const useLimitOrderSell = ({
@@ -123,21 +130,26 @@ const useLimitOrderSell = ({
     })
   }, [askPrice, askTokenPrice])
 
+  const [swapbackAskPrice, setSwapbackAskPrice] = useState(askTokenPrice)
+  const swapbackAskPriceErrMsg = useMemo(() => {
+    return validateFormInputAmount({
+      input: swapbackAskPrice,
+      max: UTIL.toBn(askPrice).dp(6).toString(10) as Token,
+    })
+  }, [askPrice, swapbackAskPrice])
+
+  const updateSwapbackAskPrice = async (
+    nextSwapbackAskPrice: Token
+  ): Promise<void> => {
+    setSwapbackAskPrice(nextSwapbackAskPrice.trim() as Token)
+  }
+
   const [askAmount, setAskAmount] = useState('' as Token)
   const askAmountErrMsg = useMemo(() => {
     return validateFormInputAmountDecimal({
       input: askAmount,
     })
   }, [askAmount])
-  // const askAmount = useMemo(() => {
-  //   if (offerAmount && askPrice) {
-  //     return UTIL.toBn(offerAmount)
-  //       .multipliedBy(askPrice)
-  //       .dp(6)
-  //       .toString(10) as Token
-  //   }
-  //   return '0' as Token
-  // }, [offerAmount, askPrice])
 
   const myFeeTokenAmount = UTIL.demicrofy(feeTokenBal)
   const [feeTokenAmount, setFeeTokenAmount] = useState<Token>('0.0' as Token)
@@ -148,6 +160,8 @@ const useLimitOrderSell = ({
       min: '0.0' as Token,
     })
   }, [feeTokenAmount, myFeeTokenAmount])
+
+  const [recurringTimes, setRecurringTimes] = useState(0)
 
   const invalidForm =
     postTxResult.status === PostTxStatus.BROADCAST ||
@@ -168,6 +182,8 @@ const useLimitOrderSell = ({
         askContractOrDenom: askDenom,
         feeContractOrDenom: feeToken.contractOrDenom,
         feeAmount: feeTokenAmount,
+        loop: recurringTimes,
+        swapbackPrice: swapbackAskPrice,
       })
     }
 
@@ -214,6 +230,13 @@ const useLimitOrderSell = ({
         UTIL.toBn(askAmount).dividedBy(nextAskPrice).dp(6).toString(10) as Token
       )
     }
+
+    if (+nextAskPrice > 0 && +swapbackAskPrice <= 0) {
+      setSwapbackAskPrice(askTokenPrice)
+    }
+    if (+swapbackAskPrice > +nextAskPrice) {
+      updateSwapbackAskPrice(nextAskPrice)
+    }
   }
 
   const submitErrMsg = useMemo(() => {
@@ -241,7 +264,7 @@ const useLimitOrderSell = ({
 
   const initForm = (): void => {
     updateOfferAmount('' as Token)
-    setAskPrice(askTokenPrice as Token)
+    updateAskPrice(askTokenPrice as Token)
   }
 
   useEffect(() => {
@@ -272,6 +295,10 @@ const useLimitOrderSell = ({
     updateAskPrice,
     askPriceErrMsg,
 
+    swapbackAskPrice,
+    updateSwapbackAskPrice,
+    swapbackAskPriceErrMsg,
+
     feeToken,
     feeTokenAmount,
     setFeeTokenAmount,
@@ -281,6 +308,9 @@ const useLimitOrderSell = ({
     onClickLimitOrderSell,
     invalidForm,
     submitErrMsg,
+
+    recurringTimes,
+    setRecurringTimes,
   }
 }
 

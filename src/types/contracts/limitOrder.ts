@@ -19,6 +19,12 @@ export namespace limitOrder {
     }
   }
 
+  export interface RecurringOpt {
+    belief_price: string
+    swapback_belief_price: string
+    total_loop: number
+    remaining_loop: number
+  }
   export interface OrderResponse {
     order_id: number
     bidder_addr: string
@@ -26,6 +32,7 @@ export namespace limitOrder {
     offer_asset: terraswap.Asset
     ask_asset: terraswap.Asset
     fee_amount: uCW20
+    recurring?: RecurringOpt
   }
 
   export interface Orders {
